@@ -1,0 +1,27 @@
+#========================================
+# Common settings
+#========================================
+spring:
+  application:
+    name: api-service-systemregister
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    password: ${config.datasource.password}
+    url: ${config.datasource.url}
+    username: ${config.datasource.username}
+  flyway:
+    enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+
+#========================================
+# OpenAPI
+#========================================
+openapi:
+  name: ${spring.application.name}
+  title: Systemregistret API
+  version: 1.0

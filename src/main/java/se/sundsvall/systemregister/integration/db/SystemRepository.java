@@ -1,0 +1,18 @@
+package se.sundsvall.systemregister.integration.db;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import se.sundsvall.systemregister.integration.db.model.SystemEntity;
+import se.sundsvall.systemregister.integration.db.model.enums.SystemStatus;
+
+@CircuitBreaker(name = "SystemRepository")
+public interface SystemRepository extends JpaRepository<SystemEntity, String>, JpaSpecificationExecutor<SystemEntity> {
+
+	List<SystemEntity> findBySystemId(String systemId);
+
+	List<SystemEntity> findByStatus(SystemStatus status);
+
+	List<SystemEntity> findByOwnerOrganizationId(String ownerOrganizationId);
+}
