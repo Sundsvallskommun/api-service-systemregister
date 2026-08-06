@@ -27,6 +27,7 @@ public final class SystemMapper {
 				.withTillganglighet(e.getTillganglighet())
 				.withOwnerOrganizationId(e.getOwnerOrganizationId())
 				.withSystemOwnerId(e.getSystemOwnerId())
+				.withSystemManagerId(e.getSystemManagerId())
 				.withTechnicalContactId(e.getTechnicalContactId())
 				.withHostingType(Optional.ofNullable(e.getHostingType()).map(HostingType::toString).orElse(null))
 				.withSupplierId(e.getSupplierId()))
@@ -56,6 +57,7 @@ public final class SystemMapper {
 				.withTillganglighet(m.getTillganglighet())
 				.withOwnerOrganizationId(m.getOwnerOrganizationId())
 				.withSystemOwnerId(m.getSystemOwnerId())
+				.withSystemManagerId(m.getSystemManagerId())
 				.withTechnicalContactId(m.getTechnicalContactId())
 				.withHostingType(Optional.ofNullable(m.getHostingType())
 					.flatMap(h -> {
@@ -100,6 +102,7 @@ public final class SystemMapper {
 			Optional.ofNullable(m.getTillganglighet()).ifPresent(entity::withTillganglighet);
 			Optional.ofNullable(m.getOwnerOrganizationId()).ifPresent(entity::withOwnerOrganizationId);
 			Optional.ofNullable(m.getSystemOwnerId()).ifPresent(entity::withSystemOwnerId);
+			Optional.ofNullable(m.getSystemManagerId()).ifPresent(entity::withSystemManagerId);
 			Optional.ofNullable(m.getTechnicalContactId()).ifPresent(entity::withTechnicalContactId);
 			Optional.ofNullable(m.getHostingType())
 				.flatMap(h -> {

@@ -38,6 +38,7 @@ class SystemTest {
 		final var tillganglighet = 1;
 		final var ownerOrganizationId = "ownerOrganizationId";
 		final var systemOwnerId = "systemOwnerId";
+		final var systemManagerId = "systemManagerId";
 		final var technicalContactId = "technicalContactId";
 		final var hostingType = "hostingType";
 		final var supplierId = "supplierId";
@@ -56,6 +57,7 @@ class SystemTest {
 			.withTillganglighet(tillganglighet)
 			.withOwnerOrganizationId(ownerOrganizationId)
 			.withSystemOwnerId(systemOwnerId)
+			.withSystemManagerId(systemManagerId)
 			.withTechnicalContactId(technicalContactId)
 			.withHostingType(hostingType)
 			.withSupplierId(supplierId);
@@ -74,6 +76,7 @@ class SystemTest {
 		assertThat(result.getTillganglighet()).isEqualTo(tillganglighet);
 		assertThat(result.getOwnerOrganizationId()).isEqualTo(ownerOrganizationId);
 		assertThat(result.getSystemOwnerId()).isEqualTo(systemOwnerId);
+		assertThat(result.getSystemManagerId()).isEqualTo(systemManagerId);
 		assertThat(result.getTechnicalContactId()).isEqualTo(technicalContactId);
 		assertThat(result.getHostingType()).isEqualTo(hostingType);
 		assertThat(result.getSupplierId()).isEqualTo(supplierId);

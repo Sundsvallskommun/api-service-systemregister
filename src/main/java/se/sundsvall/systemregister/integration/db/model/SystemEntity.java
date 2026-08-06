@@ -50,6 +50,9 @@ public class SystemEntity extends AbstractAuditableEntity {
 	@Column(name = "system_owner_id")
 	private String systemOwnerId;
 
+	@Column(name = "system_manager_id")
+	private String systemManagerId;
+
 	@Column(name = "technical_contact_id")
 	private String technicalContactId;
 
@@ -217,6 +220,19 @@ public class SystemEntity extends AbstractAuditableEntity {
 
 	public SystemEntity withSystemOwnerId(final String systemOwnerId) {
 		this.systemOwnerId = systemOwnerId;
+		return this;
+	}
+
+	public String getSystemManagerId() {
+		return this.systemManagerId;
+	}
+
+	public void setSystemManagerId(final String systemManagerId) {
+		this.systemManagerId = systemManagerId;
+	}
+
+	public SystemEntity withSystemManagerId(final String systemManagerId) {
+		this.systemManagerId = systemManagerId;
 		return this;
 	}
 
