@@ -26,6 +26,7 @@ class SystemMapperTest {
 			.withTillganglighet(3)
 			.withOwnerOrganizationId("org-1")
 			.withSystemOwnerId("person-1")
+			.withSystemManagerId("person-3")
 			.withTechnicalContactId("person-2")
 			.withHostingType(HostingType.CLOUD)
 			.withSupplierId("supplier-1");
@@ -47,6 +48,7 @@ class SystemMapperTest {
 		assertThat(result.getTillganglighet()).isEqualTo(3);
 		assertThat(result.getOwnerOrganizationId()).isEqualTo("org-1");
 		assertThat(result.getSystemOwnerId()).isEqualTo("person-1");
+		assertThat(result.getSystemManagerId()).isEqualTo("person-3");
 		assertThat(result.getTechnicalContactId()).isEqualTo("person-2");
 		assertThat(result.getHostingType()).isEqualTo("CLOUD");
 		assertThat(result.getSupplierId()).isEqualTo("supplier-1");
@@ -87,6 +89,7 @@ class SystemMapperTest {
 			.withTillganglighet(3)
 			.withOwnerOrganizationId("org-1")
 			.withSystemOwnerId("person-1")
+			.withSystemManagerId("person-3")
 			.withTechnicalContactId("person-2")
 			.withHostingType("CLOUD")
 			.withSupplierId("supplier-1");
@@ -106,6 +109,7 @@ class SystemMapperTest {
 		assertThat(result.getTillganglighet()).isEqualTo(3);
 		assertThat(result.getOwnerOrganizationId()).isEqualTo("org-1");
 		assertThat(result.getSystemOwnerId()).isEqualTo("person-1");
+		assertThat(result.getSystemManagerId()).isEqualTo("person-3");
 		assertThat(result.getTechnicalContactId()).isEqualTo("person-2");
 		assertThat(result.getHostingType()).isEqualTo(HostingType.CLOUD);
 		assertThat(result.getSupplierId()).isEqualTo("supplier-1");

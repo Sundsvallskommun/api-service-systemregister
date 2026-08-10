@@ -197,7 +197,6 @@ CREATE TABLE systems (
     tillganglighet INT,
     owner_organization_id VARCHAR(255),
     system_owner_id VARCHAR(255),
-    system_manager_id VARCHAR(255),
     technical_contact_id VARCHAR(255),
     hosting_type VARCHAR(50),
     supplier_id VARCHAR(255),
@@ -208,7 +207,6 @@ CREATE TABLE systems (
     CONSTRAINT fk_systems_criticality FOREIGN KEY (criticality_level_id) REFERENCES criticality_levels(id),
     CONSTRAINT fk_systems_owner_org FOREIGN KEY (owner_organization_id) REFERENCES organizations(id),
     CONSTRAINT fk_systems_owner FOREIGN KEY (system_owner_id) REFERENCES persons(id),
-    CONSTRAINT fk_systems_manager FOREIGN KEY (system_manager_id) REFERENCES persons(id),
     CONSTRAINT fk_systems_tech_contact FOREIGN KEY (technical_contact_id) REFERENCES persons(id),
     CONSTRAINT fk_systems_supplier FOREIGN KEY (supplier_id) REFERENCES suppliers(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -296,6 +296,7 @@ public class SystemEntity extends AbstractAuditableEntity {
 			Objects.equals(this.tillganglighet, that.tillganglighet) &&
 			Objects.equals(this.ownerOrganizationId, that.ownerOrganizationId) &&
 			Objects.equals(this.systemOwnerId, that.systemOwnerId) &&
+			Objects.equals(this.systemManagerId, that.systemManagerId) &&
 			Objects.equals(this.technicalContactId, that.technicalContactId) &&
 			this.hostingType == that.hostingType &&
 			Objects.equals(this.supplierId, that.supplierId);
@@ -305,7 +306,7 @@ public class SystemEntity extends AbstractAuditableEntity {
 	public int hashCode() {
 		return Objects.hash(this.getId(), this.systemId, this.name, this.description, this.status, this.version,
 			this.documentationUrl, this.criticalityLevelId, this.konfidentialitet, this.riktighet,
-			this.tillganglighet, this.ownerOrganizationId, this.systemOwnerId, this.technicalContactId,
+			this.tillganglighet, this.ownerOrganizationId, this.systemOwnerId, this.systemManagerId, this.technicalContactId,
 			this.hostingType, this.supplierId);
 	}
 
@@ -325,6 +326,7 @@ public class SystemEntity extends AbstractAuditableEntity {
 			", tillganglighet=" + this.tillganglighet +
 			", ownerOrganizationId='" + this.ownerOrganizationId + '\'' +
 			", systemOwnerId='" + this.systemOwnerId + '\'' +
+			", systemManagerId='" + this.systemManagerId + '\'' +
 			", technicalContactId='" + this.technicalContactId + '\'' +
 			", hostingType=" + this.hostingType +
 			", supplierId='" + this.supplierId + '\'' +
