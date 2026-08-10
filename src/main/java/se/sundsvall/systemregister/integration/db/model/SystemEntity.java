@@ -455,9 +455,12 @@ public class SystemEntity extends AbstractAuditableEntity {
 			", samhallsviktigtMotivering=" + this.samhallsviktigtMotivering +
 			", ownerOrganizationId='" + this.ownerOrganizationId + '\'' +
 			", systemOwnerId='" + this.systemOwnerId + '\'' +
+			", systemManagerId='" + this.systemManagerId + '\'' +
 			", technicalContactId='" + this.technicalContactId + '\'' +
 			", hostingType='" + this.hostingType + '\'' +
 			", supplierId='" + this.supplierId + '\'' +
+			", riskAnalysed=" + this.riskAnalysed +
+			", riskAnalysedDate=" + this.riskAnalysedDate +
 			'}';
 	}
 }

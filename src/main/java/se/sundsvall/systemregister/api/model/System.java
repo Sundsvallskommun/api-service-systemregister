@@ -444,7 +444,7 @@ public class System {
 			this.riktighet, this.tillganglighet, this.riktighetMotivering, this.tillganglighetMotivering,
 			this.ownerOrganizationId, this.systemOwnerId, this.technicalContactId, this.hostingType,
 			this.supplierId, this.samhallsviktigt, this.systemManagerId, this.samhallsviktigtMotivering,
-            this.riskAnalysed, this.riskAnalysedDate);
+			this.riskAnalysed, this.riskAnalysedDate);
 	}
 
 	@Override
