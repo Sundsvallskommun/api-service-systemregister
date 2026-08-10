@@ -20,15 +20,24 @@ public class Informationsklassning {
 	})
 	private Integer konfidentialitet;
 
+	@Schema(description = "Motivation of Confidentiality level", example = "This level of Confidentiality level was set because of reason XYZ")
+	private String konfidentialitetMotivering;
+
 	@Schema(description = "Correctness level", allowableValues = {
 		"OKÄND", "LAG", "MEDEL", "HÖG"
 	})
 	private Integer riktighet;
 
+	@Schema(description = "Motivation of Correctness level", example = "This level of Correctness level was set because of reason XYZ")
+	private String riktighetMotivering;
+
 	@Schema(description = "Availability level", allowableValues = {
 		"OKÄND", "LAG", "MEDEL", "HÖG"
 	})
 	private Integer tillganglighet;
+
+	@Schema(description = "Motivation of Availability level", example = "This level of Availability level was set because of reason XYZ")
+	private String tillganglighetMotivering;
 
 	@Schema(description = "Durability/Longevity level", allowableValues = {
 		"OKÄND", "KORT", "MEDEL", "LANG"
@@ -41,8 +50,11 @@ public class Informationsklassning {
 	@Schema(description = "Classified by (person/role)")
 	private String klassadAv;
 
-	@Schema(description = "Classification motivation/reasoning")
-	private String motivering;
+	@Schema(description = "Is system a essential service ", example = "true")
+	private Boolean samhallsviktigt;
+
+	@Schema(description = "Essential status motivation/reasoning")
+	private String samhallsviktigtMotivering;
 
 	public static Informationsklassning create() {
 		return new Informationsklassning();
@@ -87,6 +99,19 @@ public class Informationsklassning {
 		return this;
 	}
 
+	public String getKonfidentialitetMotivering() {
+		return this.konfidentialitetMotivering;
+	}
+
+	public void setKonfidentialitetMotivering(final String konfidentialitetMotivering) {
+		this.konfidentialitetMotivering = konfidentialitetMotivering;
+	}
+
+	public Informationsklassning withKonfidentialitetMotivering(final String konfidentialitetMotivering) {
+		this.konfidentialitetMotivering = konfidentialitetMotivering;
+		return this;
+	}
+
 	public Integer getRiktighet() {
 		return this.riktighet;
 	}
@@ -100,6 +125,19 @@ public class Informationsklassning {
 		return this;
 	}
 
+	public String getRiktighetMotivering() {
+		return this.riktighetMotivering;
+	}
+
+	public void setRiktighetMotivering(final String riktighetMotivering) {
+		this.riktighetMotivering = riktighetMotivering;
+	}
+
+	public Informationsklassning withRiktighetMotivering(final String riktighetMotivering) {
+		this.riktighetMotivering = riktighetMotivering;
+		return this;
+	}
+
 	public Integer getTillganglighet() {
 		return this.tillganglighet;
 	}
@@ -110,6 +148,19 @@ public class Informationsklassning {
 
 	public Informationsklassning withTillganglighet(final Integer tillganglighet) {
 		this.tillganglighet = tillganglighet;
+		return this;
+	}
+
+	public String getTillganglighetMotivering() {
+		return this.tillganglighetMotivering;
+	}
+
+	public void setTillganglighetMotivering(final String tillganglighetMotivering) {
+		this.tillganglighetMotivering = tillganglighetMotivering;
+	}
+
+	public Informationsklassning withTillganglighetMotivering(final String tillganglighetMotivering) {
+		this.tillganglighetMotivering = tillganglighetMotivering;
 		return this;
 	}
 
@@ -152,16 +203,29 @@ public class Informationsklassning {
 		return this;
 	}
 
-	public String getMotivering() {
-		return this.motivering;
+	public Boolean getSamhallsviktigt() {
+		return this.samhallsviktigt;
 	}
 
-	public void setMotivering(final String motivering) {
-		this.motivering = motivering;
+	public void setSamhallsviktigt(final Boolean samhallsviktigt) {
+		this.samhallsviktigt = samhallsviktigt;
 	}
 
-	public Informationsklassning withMotivering(final String motivering) {
-		this.motivering = motivering;
+	public Informationsklassning withSamhallsviktigt(final Boolean samhallsviktigt) {
+		this.samhallsviktigt = samhallsviktigt;
+		return this;
+	}
+
+	public String getSamhallsviktigtMotivering() {
+		return this.samhallsviktigtMotivering;
+	}
+
+	public void setSamhallsviktigtMotivering(final String samhallsviktigtMotivering) {
+		this.samhallsviktigtMotivering = samhallsviktigtMotivering;
+	}
+
+	public Informationsklassning withSamhallsviktigtMotivering(final String samhallsviktigtMotivering) {
+		this.samhallsviktigtMotivering = samhallsviktigtMotivering;
 		return this;
 	}
 
@@ -176,18 +240,23 @@ public class Informationsklassning {
 		return Objects.equals(this.id, that.id) &&
 			Objects.equals(this.handlingstypId, that.handlingstypId) &&
 			Objects.equals(this.konfidentialitet, that.konfidentialitet) &&
+			Objects.equals(this.konfidentialitetMotivering, that.konfidentialitetMotivering) &&
 			Objects.equals(this.riktighet, that.riktighet) &&
+			Objects.equals(this.riktighetMotivering, that.riktighetMotivering) &&
 			Objects.equals(this.tillganglighet, that.tillganglighet) &&
+			Objects.equals(this.tillganglighetMotivering, that.tillganglighetMotivering) &&
 			Objects.equals(this.sparbarhet, that.sparbarhet) &&
 			Objects.equals(this.klassningDatum, that.klassningDatum) &&
 			Objects.equals(this.klassadAv, that.klassadAv) &&
-			Objects.equals(this.motivering, that.motivering);
+			Objects.equals(this.samhallsviktigt, that.samhallsviktigt) &&
+			Objects.equals(this.samhallsviktigtMotivering, that.samhallsviktigtMotivering);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.id, this.handlingstypId, this.konfidentialitet, this.riktighet,
-			this.tillganglighet, this.sparbarhet, this.klassningDatum, this.klassadAv, this.motivering);
+		return Objects.hash(this.id, this.handlingstypId, this.konfidentialitet, this.konfidentialitetMotivering,
+			this.riktighet, this.riktighetMotivering, this.tillganglighet, tillganglighetMotivering,
+			this.sparbarhet, this.klassningDatum, this.klassadAv, this.samhallsviktigt, this.samhallsviktigtMotivering);
 	}
 
 	@Override
@@ -196,12 +265,16 @@ public class Informationsklassning {
 			"id='" + this.id + '\'' +
 			", handlingstypId='" + this.handlingstypId + '\'' +
 			", konfidentialitet=" + this.konfidentialitet +
+			", konfidentialitetMotivering=" + this.konfidentialitetMotivering +
 			", riktighet=" + this.riktighet +
+			", riktighetMotivering=" + this.riktighetMotivering +
 			", tillganglighet=" + this.tillganglighet +
+			", tillganglighetMotivering=" + this.tillganglighetMotivering +
 			", sparbarhet=" + this.sparbarhet +
 			", klassningDatum=" + this.klassningDatum +
 			", klassadAv='" + this.klassadAv + '\'' +
-			", motivering='" + this.motivering + '\'' +
+			", samhallsviktigt='" + this.samhallsviktigt + '\'' +
+			", samhallsviktigtMotivering='" + this.samhallsviktigtMotivering + '\'' +
 			'}';
 	}
 }

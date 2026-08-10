@@ -16,11 +16,20 @@ public class InformationsklassningEntity extends AbstractAuditableEntity {
 	@Column(name = "konfidentialitet")
 	private Integer konfidentialitet;
 
+	@Column(name = "konfidentialitet_motivering")
+	private String konfidentialitetMotivering;
+
 	@Column(name = "riktighet")
 	private Integer riktighet;
 
+	@Column(name = "riktighet_motivering")
+	private String riktighetMotivering;
+
 	@Column(name = "tillganglighet")
 	private Integer tillganglighet;
+
+	@Column(name = "tillganglighet_motivering")
+	private String tillganglighetMotivering;
 
 	@Column(name = "sparbarhet")
 	private Integer sparbarhet;
@@ -31,8 +40,11 @@ public class InformationsklassningEntity extends AbstractAuditableEntity {
 	@Column(name = "klassad_av")
 	private String klassadAv;
 
-	@Column(name = "motivering")
-	private String motivering;
+	@Column(name = "samhallsviktigt")
+	private Boolean samhallsviktigt;
+
+	@Column(name = "samhallsviktigt_motivering")
+	private String samhallsviktigtMotivering;
 
 	public static InformationsklassningEntity create() {
 		return new InformationsklassningEntity();
@@ -64,6 +76,19 @@ public class InformationsklassningEntity extends AbstractAuditableEntity {
 		return this;
 	}
 
+	public String getKonfidentialitetMotivering() {
+		return this.konfidentialitetMotivering;
+	}
+
+	public void setKonfidentialitetMotivering(final String konfidentialitetMotivering) {
+		this.konfidentialitetMotivering = konfidentialitetMotivering;
+	}
+
+	public InformationsklassningEntity withKonfidentialitetMotivering(final String konfidentialitetMotivering) {
+		this.konfidentialitetMotivering = konfidentialitetMotivering;
+		return this;
+	}
+
 	public Integer getRiktighet() {
 		return this.riktighet;
 	}
@@ -77,6 +102,19 @@ public class InformationsklassningEntity extends AbstractAuditableEntity {
 		return this;
 	}
 
+	public String getRiktighetMotivering() {
+		return this.riktighetMotivering;
+	}
+
+	public void setRiktighetMotivering(final String riktighetMotivering) {
+		this.riktighetMotivering = riktighetMotivering;
+	}
+
+	public InformationsklassningEntity withRiktighetMotivering(final String riktighetMotivering) {
+		this.riktighetMotivering = riktighetMotivering;
+		return this;
+	}
+
 	public Integer getTillganglighet() {
 		return this.tillganglighet;
 	}
@@ -87,6 +125,19 @@ public class InformationsklassningEntity extends AbstractAuditableEntity {
 
 	public InformationsklassningEntity withTillganglighet(final Integer tillganglighet) {
 		this.tillganglighet = tillganglighet;
+		return this;
+	}
+
+	public String getTillganglighetMotivering() {
+		return this.tillganglighetMotivering;
+	}
+
+	public void setTillganglighetMotivering(final String tillganglighetMotivering) {
+		this.tillganglighetMotivering = tillganglighetMotivering;
+	}
+
+	public InformationsklassningEntity withTillganglighetMotivering(final String tillganglighetMotivering) {
+		this.tillganglighetMotivering = tillganglighetMotivering;
 		return this;
 	}
 
@@ -129,16 +180,29 @@ public class InformationsklassningEntity extends AbstractAuditableEntity {
 		return this;
 	}
 
-	public String getMotivering() {
-		return this.motivering;
+	public Boolean getSamhallsviktigt() {
+		return this.samhallsviktigt;
 	}
 
-	public void setMotivering(final String motivering) {
-		this.motivering = motivering;
+	public void setSamhallsviktigt(final Boolean samhallsviktigt) {
+		this.samhallsviktigt = samhallsviktigt;
 	}
 
-	public InformationsklassningEntity withMotivering(final String motivering) {
-		this.motivering = motivering;
+	public InformationsklassningEntity withSamhallsviktigt(final Boolean samhallsviktigt) {
+		this.samhallsviktigt = samhallsviktigt;
+		return this;
+	}
+
+	public String getSamhallsviktigtMotivering() {
+		return this.samhallsviktigtMotivering;
+	}
+
+	public void setSamhallsviktigtMotivering(final String samhallsviktigtMotivering) {
+		this.samhallsviktigtMotivering = samhallsviktigtMotivering;
+	}
+
+	public InformationsklassningEntity withSamhallsviktigtMotivering(final String samhallsviktigtMotivering) {
+		this.samhallsviktigtMotivering = samhallsviktigtMotivering;
 		return this;
 	}
 
@@ -153,18 +217,23 @@ public class InformationsklassningEntity extends AbstractAuditableEntity {
 		return Objects.equals(this.getId(), that.getId()) &&
 			Objects.equals(this.handlingstypId, that.handlingstypId) &&
 			Objects.equals(this.konfidentialitet, that.konfidentialitet) &&
+			Objects.equals(this.konfidentialitetMotivering, that.konfidentialitetMotivering) &&
 			Objects.equals(this.riktighet, that.riktighet) &&
+			Objects.equals(this.riktighetMotivering, that.riktighetMotivering) &&
 			Objects.equals(this.tillganglighet, that.tillganglighet) &&
+			Objects.equals(this.tillganglighetMotivering, that.tillganglighetMotivering) &&
 			Objects.equals(this.sparbarhet, that.sparbarhet) &&
 			Objects.equals(this.klassningDatum, that.klassningDatum) &&
 			Objects.equals(this.klassadAv, that.klassadAv) &&
-			Objects.equals(this.motivering, that.motivering);
+			Objects.equals(this.samhallsviktigt, that.samhallsviktigt) &&
+			Objects.equals(this.samhallsviktigtMotivering, that.samhallsviktigtMotivering);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.getId(), this.handlingstypId, this.konfidentialitet, this.riktighet,
-			this.tillganglighet, this.sparbarhet, this.klassningDatum, this.klassadAv, this.motivering);
+		return Objects.hash(this.getId(), this.handlingstypId, this.konfidentialitet, this.konfidentialitetMotivering,
+			this.riktighet, this.riktighetMotivering, this.tillganglighet, tillganglighetMotivering,
+			this.sparbarhet, this.klassningDatum, this.klassadAv, this.samhallsviktigt, this.samhallsviktigtMotivering);
 	}
 
 	@Override
@@ -173,12 +242,16 @@ public class InformationsklassningEntity extends AbstractAuditableEntity {
 			"id='" + this.getId() + '\'' +
 			", handlingstypId='" + this.handlingstypId + '\'' +
 			", konfidentialitet=" + this.konfidentialitet +
+			", konfidentialitetMotivering=" + this.konfidentialitetMotivering +
 			", riktighet=" + this.riktighet +
+			", riktighetMotivering=" + this.riktighetMotivering +
 			", tillganglighet=" + this.tillganglighet +
+			", tillganglighetMotivering=" + this.tillganglighetMotivering +
 			", sparbarhet=" + this.sparbarhet +
 			", klassningDatum=" + this.klassningDatum +
 			", klassadAv='" + this.klassadAv + '\'' +
-			", motivering='" + this.motivering + '\'' +
+			", samhallsviktigt='" + this.samhallsviktigt + '\'' +
+			", samhallsviktigtMotivering='" + this.samhallsviktigtMotivering + '\'' +
 			'}';
 	}
 }
