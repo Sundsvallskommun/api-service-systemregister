@@ -21,9 +21,14 @@ class SystemMapperTest {
 			.withVersion("1.0.0")
 			.withDocumentationUrl("https://docs.example.com")
 			.withCriticalityLevelId("critical-1")
-			.withKonfidentialitet(3)
+			.withKonfidentialitet(1)
+			.withKonfidentialitetMotivering("KonfidentialitetMotivering")
 			.withRiktighet(2)
+			.withRiktighetMotivering("RiktighetMotivering")
 			.withTillganglighet(3)
+			.withTillganglighetMotivering("TillganglighetMotivering")
+			.withSamhallsviktigt(true)
+			.withSamhallsviktigtMotivering("SamhallsviktigtMotivering")
 			.withOwnerOrganizationId("org-1")
 			.withSystemOwnerId("person-1")
 			.withTechnicalContactId("person-2")
@@ -42,9 +47,12 @@ class SystemMapperTest {
 		assertThat(result.getVersion()).isEqualTo("1.0.0");
 		assertThat(result.getDocumentationUrl()).isEqualTo("https://docs.example.com");
 		assertThat(result.getCriticalityLevelId()).isEqualTo("critical-1");
-		assertThat(result.getKonfidentialitet()).isEqualTo(3);
+		assertThat(result.getKonfidentialitet()).isEqualTo(1);
+		assertThat(result.getKonfidentialitetMotivering()).isEqualTo("KonfidentialitetMotivering");
 		assertThat(result.getRiktighet()).isEqualTo(2);
+		assertThat(result.getRiktighetMotivering()).isEqualTo("RiktighetMotivering");
 		assertThat(result.getTillganglighet()).isEqualTo(3);
+		assertThat(result.getTillganglighetMotivering()).isEqualTo("TillganglighetMotivering");
 		assertThat(result.getOwnerOrganizationId()).isEqualTo("org-1");
 		assertThat(result.getSystemOwnerId()).isEqualTo("person-1");
 		assertThat(result.getTechnicalContactId()).isEqualTo("person-2");
@@ -82,9 +90,14 @@ class SystemMapperTest {
 			.withVersion("1.0.0")
 			.withDocumentationUrl("https://docs.example.com")
 			.withCriticalityLevelId("critical-1")
-			.withKonfidentialitet(3)
+			.withKonfidentialitet(1)
+			.withKonfidentialitetMotivering("KonfidentialitetMotivering")
 			.withRiktighet(2)
+			.withRiktighetMotivering("RiktighetMotivering")
 			.withTillganglighet(3)
+			.withTillganglighetMotivering("TillganglighetMotivering")
+			.withSamhallsviktigt(true)
+			.withSamhallsviktigtMotivering("SamhallsviktigtMotivering")
 			.withOwnerOrganizationId("org-1")
 			.withSystemOwnerId("person-1")
 			.withTechnicalContactId("person-2")
@@ -101,9 +114,14 @@ class SystemMapperTest {
 		assertThat(result.getVersion()).isEqualTo("1.0.0");
 		assertThat(result.getDocumentationUrl()).isEqualTo("https://docs.example.com");
 		assertThat(result.getCriticalityLevelId()).isEqualTo("critical-1");
-		assertThat(result.getKonfidentialitet()).isEqualTo(3);
+		assertThat(result.getKonfidentialitet()).isEqualTo(1);
+		assertThat(result.getKonfidentialitetMotivering()).isEqualTo("KonfidentialitetMotivering");
 		assertThat(result.getRiktighet()).isEqualTo(2);
+		assertThat(result.getRiktighetMotivering()).isEqualTo("RiktighetMotivering");
 		assertThat(result.getTillganglighet()).isEqualTo(3);
+		assertThat(result.getTillganglighetMotivering()).isEqualTo("TillganglighetMotivering");
+		assertThat(result.getSamhallsviktigt()).isEqualTo(true);
+		assertThat(result.getSamhallsviktigtMotivering()).isEqualTo("SamhallsviktigtMotivering");
 		assertThat(result.getOwnerOrganizationId()).isEqualTo("org-1");
 		assertThat(result.getSystemOwnerId()).isEqualTo("person-1");
 		assertThat(result.getTechnicalContactId()).isEqualTo("person-2");

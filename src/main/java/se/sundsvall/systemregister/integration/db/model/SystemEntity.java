@@ -6,6 +6,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import java.util.Objects;
+
 import se.sundsvall.systemregister.integration.db.model.enums.HostingType;
 import se.sundsvall.systemregister.integration.db.model.enums.SystemStatus;
 
@@ -38,11 +39,26 @@ public class SystemEntity extends AbstractAuditableEntity {
 	@Column(name = "konfidentialitet")
 	private Integer konfidentialitet;
 
+	@Column(name = "konfidentialitet_motivering")
+	private String konfidentialitetMotivering;
+
 	@Column(name = "riktighet")
 	private Integer riktighet;
 
+	@Column(name = "riktighet_motivering")
+	private String riktighetMotivering;
+
 	@Column(name = "tillganglighet")
 	private Integer tillganglighet;
+
+	@Column(name = "tillganglighet_motivering")
+	private String tillganglighetMotivering;
+
+	@Column(name = "samhallsviktigt")
+	private Boolean samhallsviktigt;
+
+	@Column(name = "samhallsviktigt_motivering")
+	private String samhallsviktigtMotivering;
 
 	@Column(name = "owner_organization_id")
 	private String ownerOrganizationId;
@@ -168,6 +184,19 @@ public class SystemEntity extends AbstractAuditableEntity {
 		return this;
 	}
 
+	public String getKonfidentialitetMotivering() {
+		return this.konfidentialitetMotivering;
+	}
+
+	public void setKonfidentialitetMotivering(final String konfidentialitetMotivering) {
+		this.konfidentialitetMotivering = konfidentialitetMotivering;
+	}
+
+	public SystemEntity withKonfidentialitetMotivering(final String konfidentialitetMotivering) {
+		this.konfidentialitetMotivering = konfidentialitetMotivering;
+		return this;
+	}
+
 	public Integer getRiktighet() {
 		return this.riktighet;
 	}
@@ -181,6 +210,19 @@ public class SystemEntity extends AbstractAuditableEntity {
 		return this;
 	}
 
+	public String getRiktighetMotivering() {
+		return this.riktighetMotivering;
+	}
+
+	public void setRiktighetMotivering(final String riktighetMotivering) {
+		this.riktighetMotivering = riktighetMotivering;
+	}
+
+	public SystemEntity withRiktighetMotivering(final String riktighetMotivering) {
+		this.riktighetMotivering = riktighetMotivering;
+		return this;
+	}
+
 	public Integer getTillganglighet() {
 		return this.tillganglighet;
 	}
@@ -191,6 +233,45 @@ public class SystemEntity extends AbstractAuditableEntity {
 
 	public SystemEntity withTillganglighet(final Integer tillganglighet) {
 		this.tillganglighet = tillganglighet;
+		return this;
+	}
+
+	public String getTillganglighetMotivering() {
+		return this.tillganglighetMotivering;
+	}
+
+	public void setTillganglighetMotivering(final String tillganglighetMotivering) {
+		this.tillganglighetMotivering = tillganglighetMotivering;
+	}
+
+	public SystemEntity withTillganglighetMotivering(final String tillganglighetMotivering) {
+		this.tillganglighetMotivering = tillganglighetMotivering;
+		return this;
+	}
+
+	public Boolean getSamhallsviktigt() {
+		return this.samhallsviktigt;
+	}
+
+	public void setSamhallsviktigt(final Boolean samhallsviktigt) {
+		this.samhallsviktigt = samhallsviktigt;
+	}
+
+	public SystemEntity withSamhallsviktigt(final Boolean samhallsviktigt) {
+		this.samhallsviktigt = samhallsviktigt;
+		return this;
+	}
+
+	public String getSamhallsviktigtMotivering() {
+		return this.samhallsviktigtMotivering;
+	}
+
+	public void setSamhallsviktigtMotivering(final String samhallsviktigtMotivering) {
+		this.samhallsviktigtMotivering = samhallsviktigtMotivering;
+	}
+
+	public SystemEntity withSamhallsviktigtMotivering(final String samhallsviktigtMotivering) {
+		this.samhallsviktigtMotivering = samhallsviktigtMotivering;
 		return this;
 	}
 
@@ -271,26 +352,32 @@ public class SystemEntity extends AbstractAuditableEntity {
 			Objects.equals(this.systemId, that.systemId) &&
 			Objects.equals(this.name, that.name) &&
 			Objects.equals(this.description, that.description) &&
-			this.status == that.status &&
+			Objects.equals(this.status, that.status) &&
 			Objects.equals(this.version, that.version) &&
 			Objects.equals(this.documentationUrl, that.documentationUrl) &&
 			Objects.equals(this.criticalityLevelId, that.criticalityLevelId) &&
 			Objects.equals(this.konfidentialitet, that.konfidentialitet) &&
+			Objects.equals(this.konfidentialitetMotivering, that.konfidentialitetMotivering) &&
 			Objects.equals(this.riktighet, that.riktighet) &&
+			Objects.equals(this.riktighetMotivering, that.riktighetMotivering) &&
 			Objects.equals(this.tillganglighet, that.tillganglighet) &&
+			Objects.equals(this.tillganglighetMotivering, that.tillganglighetMotivering) &&
+			Objects.equals(this.samhallsviktigt, that.samhallsviktigt) &&
+			Objects.equals(this.samhallsviktigtMotivering, that.samhallsviktigtMotivering) &&
 			Objects.equals(this.ownerOrganizationId, that.ownerOrganizationId) &&
 			Objects.equals(this.systemOwnerId, that.systemOwnerId) &&
 			Objects.equals(this.technicalContactId, that.technicalContactId) &&
-			this.hostingType == that.hostingType &&
+			Objects.equals(this.hostingType, that.hostingType) &&
 			Objects.equals(this.supplierId, that.supplierId);
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.getId(), this.systemId, this.name, this.description, this.status, this.version,
-			this.documentationUrl, this.criticalityLevelId, this.konfidentialitet, this.riktighet,
-			this.tillganglighet, this.ownerOrganizationId, this.systemOwnerId, this.technicalContactId,
-			this.hostingType, this.supplierId);
+			this.documentationUrl, this.criticalityLevelId, this.konfidentialitet, this.konfidentialitetMotivering,
+			this.riktighet, this.tillganglighet, this.riktighetMotivering, this.tillganglighetMotivering,
+			this.ownerOrganizationId, this.systemOwnerId, this.technicalContactId, this.hostingType,
+			this.supplierId, this.samhallsviktigt, this.samhallsviktigtMotivering);
 	}
 
 	@Override
@@ -300,17 +387,22 @@ public class SystemEntity extends AbstractAuditableEntity {
 			", systemId='" + this.systemId + '\'' +
 			", name='" + this.name + '\'' +
 			", description='" + this.description + '\'' +
-			", status=" + this.status +
+			", status='" + this.status + '\'' +
 			", version='" + this.version + '\'' +
 			", documentationUrl='" + this.documentationUrl + '\'' +
 			", criticalityLevelId='" + this.criticalityLevelId + '\'' +
 			", konfidentialitet=" + this.konfidentialitet +
+			", konfidentialitetMotivering=" + this.konfidentialitetMotivering +
 			", riktighet=" + this.riktighet +
+			", riktighetMotivering=" + this.riktighetMotivering +
 			", tillganglighet=" + this.tillganglighet +
+			", tillganglighetMotivering=" + this.tillganglighetMotivering +
+			", samhallsviktigt=" + this.samhallsviktigt +
+			", samhallsviktigtMotivering=" + this.samhallsviktigtMotivering +
 			", ownerOrganizationId='" + this.ownerOrganizationId + '\'' +
 			", systemOwnerId='" + this.systemOwnerId + '\'' +
 			", technicalContactId='" + this.technicalContactId + '\'' +
-			", hostingType=" + this.hostingType +
+			", hostingType='" + this.hostingType + '\'' +
 			", supplierId='" + this.supplierId + '\'' +
 			'}';
 	}

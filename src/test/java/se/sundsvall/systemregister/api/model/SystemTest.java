@@ -34,8 +34,13 @@ class SystemTest {
 		final var documentationUrl = "documentationUrl";
 		final var criticalityLevelId = "criticalityLevelId";
 		final var konfidentialitet = 3;
+		final var konfidentialitetMotivering = "konfidentialitetMotivering";
 		final var riktighet = 2;
+		final var riktighetMotivering = "riktighetMotiveringMotivering";
 		final var tillganglighet = 1;
+		final var tillganglighetMotiveringt = "tillganglighetMotiveringtMotivering";
+		final var samhallsviktigt = true;
+		final var samhallsviktigtMotivering = "samhallsviktigtMotivering";
 		final var ownerOrganizationId = "ownerOrganizationId";
 		final var systemOwnerId = "systemOwnerId";
 		final var technicalContactId = "technicalContactId";
@@ -52,8 +57,13 @@ class SystemTest {
 			.withDocumentationUrl(documentationUrl)
 			.withCriticalityLevelId(criticalityLevelId)
 			.withKonfidentialitet(konfidentialitet)
+			.withKonfidentialitetMotivering(konfidentialitetMotivering)
 			.withRiktighet(riktighet)
+			.withRiktighetMotivering(riktighetMotivering)
 			.withTillganglighet(tillganglighet)
+			.withTillganglighetMotivering(tillganglighetMotiveringt)
+			.withSamhallsviktigt(samhallsviktigt)
+			.withSamhallsviktigtMotivering(samhallsviktigtMotivering)
 			.withOwnerOrganizationId(ownerOrganizationId)
 			.withSystemOwnerId(systemOwnerId)
 			.withTechnicalContactId(technicalContactId)
@@ -69,9 +79,11 @@ class SystemTest {
 		assertThat(result.getVersion()).isEqualTo(version);
 		assertThat(result.getDocumentationUrl()).isEqualTo(documentationUrl);
 		assertThat(result.getCriticalityLevelId()).isEqualTo(criticalityLevelId);
-		assertThat(result.getKonfidentialitet()).isEqualTo(konfidentialitet);
+		assertThat(result.getKonfidentialitetMotivering()).isEqualTo(konfidentialitetMotivering);
 		assertThat(result.getRiktighet()).isEqualTo(riktighet);
+		assertThat(result.getRiktighetMotivering()).isEqualTo(riktighetMotivering);
 		assertThat(result.getTillganglighet()).isEqualTo(tillganglighet);
+		assertThat(result.getTillganglighetMotivering()).isEqualTo(tillganglighetMotiveringt);
 		assertThat(result.getOwnerOrganizationId()).isEqualTo(ownerOrganizationId);
 		assertThat(result.getSystemOwnerId()).isEqualTo(systemOwnerId);
 		assertThat(result.getTechnicalContactId()).isEqualTo(technicalContactId);
