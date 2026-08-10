@@ -39,32 +39,44 @@ class InformationsklassningEntityTest {
 	void testBuilderMethods() {
 		final var handlingstypId = "handlingstypId";
 		final var konfidentialitet = 3;
+		final var konfidentialitetMotivering = "konfidentialitetMotivering";
 		final var riktighet = 2;
+		final var riktighetMotivering = "riktighetMotivering";
 		final var tillganglighet = 1;
+		final var tillganglighetMotivering = "tillganglighetMotivering";
 		final var sparbarhet = 3;
 		final var klassningDatum = LocalDate.now();
 		final var klassadAv = "klassadAv";
-		final var motivering = "motivering";
+		final var samhallsviktig = true;
+		final var samhallsviktigMotivering = "motivering";
 
 		final var result = InformationsklassningEntity.create()
 			.withHandlingstypId(handlingstypId)
 			.withKonfidentialitet(konfidentialitet)
+			.withKonfidentialitetMotivering(konfidentialitetMotivering)
 			.withRiktighet(riktighet)
+			.withRiktighetMotivering(riktighetMotivering)
 			.withTillganglighet(tillganglighet)
+			.withTillganglighetMotivering(tillganglighetMotivering)
 			.withSparbarhet(sparbarhet)
 			.withKlassningDatum(klassningDatum)
 			.withKlassadAv(klassadAv)
-			.withMotivering(motivering);
+			.withSamhallsviktigt(samhallsviktig)
+			.withSamhallsviktigtMotivering(samhallsviktigMotivering);
 
 		assertThat(result).isNotNull().hasNoNullFieldsOrPropertiesExcept("id", "createdAt", "updatedAt", "createdBy", "updatedBy");
 		assertThat(result.getHandlingstypId()).isEqualTo(handlingstypId);
 		assertThat(result.getKonfidentialitet()).isEqualTo(konfidentialitet);
+		assertThat(result.getKonfidentialitetMotivering()).isEqualTo(konfidentialitetMotivering);
 		assertThat(result.getRiktighet()).isEqualTo(riktighet);
+		assertThat(result.getRiktighetMotivering()).isEqualTo(riktighetMotivering);
 		assertThat(result.getTillganglighet()).isEqualTo(tillganglighet);
+		assertThat(result.getTillganglighetMotivering()).isEqualTo(tillganglighetMotivering);
 		assertThat(result.getSparbarhet()).isEqualTo(sparbarhet);
 		assertThat(result.getKlassningDatum()).isEqualTo(klassningDatum);
 		assertThat(result.getKlassadAv()).isEqualTo(klassadAv);
-		assertThat(result.getMotivering()).isEqualTo(motivering);
+		assertThat(result.getSamhallsviktigt()).isEqualTo(samhallsviktig);
+		assertThat(result.getSamhallsviktigtMotivering()).isEqualTo(samhallsviktigMotivering);
 	}
 
 	@Test

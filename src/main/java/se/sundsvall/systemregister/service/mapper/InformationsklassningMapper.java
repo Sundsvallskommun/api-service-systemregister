@@ -15,12 +15,16 @@ public final class InformationsklassningMapper {
 				.withId(e.getId())
 				.withHandlingstypId(e.getHandlingstypId())
 				.withKonfidentialitet(e.getKonfidentialitet())
+				.withKonfidentialitetMotivering(e.getKonfidentialitetMotivering())
 				.withRiktighet(e.getRiktighet())
+				.withRiktighetMotivering(e.getRiktighetMotivering())
 				.withTillganglighet(e.getTillganglighet())
+				.withTillganglighetMotivering(e.getTillganglighetMotivering())
 				.withSparbarhet(e.getSparbarhet())
 				.withKlassningDatum(e.getKlassningDatum())
 				.withKlassadAv(e.getKlassadAv())
-				.withMotivering(e.getMotivering()))
+				.withSamhallsviktigt(e.getSamhallsviktigt())
+				.withSamhallsviktigtMotivering(e.getSamhallsviktigtMotivering()))
 			.orElse(null);
 	}
 
@@ -37,12 +41,16 @@ public final class InformationsklassningMapper {
 				final var entity = InformationsklassningEntity.create();
 				entity.withHandlingstypId(m.getHandlingstypId());
 				entity.withKonfidentialitet(m.getKonfidentialitet());
+				entity.withKonfidentialitetMotivering(m.getKonfidentialitetMotivering());
 				entity.withRiktighet(m.getRiktighet());
+				entity.withRiktighetMotivering(m.getRiktighetMotivering());
 				entity.withTillganglighet(m.getTillganglighet());
+				entity.withTillganglighetMotivering(m.getTillganglighetMotivering());
 				entity.withSparbarhet(m.getSparbarhet());
 				entity.withKlassningDatum(m.getKlassningDatum());
 				entity.withKlassadAv(m.getKlassadAv());
-				entity.withMotivering(m.getMotivering());
+				entity.withSamhallsviktigt(m.getSamhallsviktigt());
+				entity.withSamhallsviktigtMotivering(m.getSamhallsviktigtMotivering());
 				if (m.getId() != null) {
 					entity.withId(m.getId());
 				}
