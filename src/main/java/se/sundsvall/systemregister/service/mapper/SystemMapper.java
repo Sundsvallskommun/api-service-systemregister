@@ -30,7 +30,9 @@ public final class SystemMapper {
 				.withSystemManagerId(e.getSystemManagerId())
 				.withTechnicalContactId(e.getTechnicalContactId())
 				.withHostingType(Optional.ofNullable(e.getHostingType()).map(HostingType::toString).orElse(null))
-				.withSupplierId(e.getSupplierId()))
+				.withSupplierId(e.getSupplierId())
+				.withRiskAnalysed(e.getRiskAnalysed())
+				.withRiskAnalysedDate(e.getRiskAnalysedDate()))
 			.orElse(null);
 	}
 
@@ -68,7 +70,9 @@ public final class SystemMapper {
 						}
 					})
 					.orElse(null))
-				.withSupplierId(m.getSupplierId()))
+				.withSupplierId(m.getSupplierId())
+				.withRiskAnalysed(m.getRiskAnalysed())
+				.withRiskAnalysedDate(m.getRiskAnalysedDate()))
 			.orElse(null);
 	}
 
@@ -114,6 +118,8 @@ public final class SystemMapper {
 				})
 				.ifPresent(entity::withHostingType);
 			Optional.ofNullable(m.getSupplierId()).ifPresent(entity::withSupplierId);
+			Optional.ofNullable(m.getRiskAnalysed()).ifPresent(entity::withRiskAnalysed);
+			Optional.ofNullable(m.getRiskAnalysedDate()).ifPresent(entity::withRiskAnalysedDate);
 		});
 	}
 }

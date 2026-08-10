@@ -1,5 +1,7 @@
 package se.sundsvall.systemregister.service.mapper;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import se.sundsvall.systemregister.api.model.System;
@@ -29,7 +31,9 @@ class SystemMapperTest {
 			.withSystemManagerId("person-3")
 			.withTechnicalContactId("person-2")
 			.withHostingType(HostingType.CLOUD)
-			.withSupplierId("supplier-1");
+			.withSupplierId("supplier-1")
+			.withRiskAnalysed(true)
+			.withRiskAnalysedDate(LocalDate.of(2026, Month.JUNE, 17));
 		entity.withId("id-1");
 
 		final var result = SystemMapper.toSystem(entity);
@@ -52,6 +56,8 @@ class SystemMapperTest {
 		assertThat(result.getTechnicalContactId()).isEqualTo("person-2");
 		assertThat(result.getHostingType()).isEqualTo("CLOUD");
 		assertThat(result.getSupplierId()).isEqualTo("supplier-1");
+		assertThat(result.getRiskAnalysed()).isEqualTo(true);
+		assertThat(result.getRiskAnalysedDate()).isEqualTo(LocalDate.of(2026, Month.JUNE, 17));
 	}
 
 	@Test
@@ -92,7 +98,9 @@ class SystemMapperTest {
 			.withSystemManagerId("person-3")
 			.withTechnicalContactId("person-2")
 			.withHostingType("CLOUD")
-			.withSupplierId("supplier-1");
+			.withSupplierId("supplier-1")
+			.withRiskAnalysed(true)
+			.withRiskAnalysedDate(LocalDate.of(2026, Month.JUNE, 17));
 
 		final var result = SystemMapper.toSystemEntity(model);
 
@@ -113,6 +121,8 @@ class SystemMapperTest {
 		assertThat(result.getTechnicalContactId()).isEqualTo("person-2");
 		assertThat(result.getHostingType()).isEqualTo(HostingType.CLOUD);
 		assertThat(result.getSupplierId()).isEqualTo("supplier-1");
+		assertThat(result.getRiskAnalysed()).isEqualTo(true);
+		assertThat(result.getRiskAnalysedDate()).isEqualTo(LocalDate.of(2026, Month.JUNE, 17));
 	}
 
 	@Test

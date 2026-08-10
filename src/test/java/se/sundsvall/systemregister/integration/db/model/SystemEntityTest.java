@@ -1,5 +1,7 @@
 package se.sundsvall.systemregister.integration.db.model;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.time.OffsetDateTime;
 import java.util.Random;
 import org.junit.jupiter.api.BeforeAll;
@@ -23,6 +25,7 @@ class SystemEntityTest {
 	@BeforeAll
 	static void setup() {
 		registerValueGenerator(() -> now().plusDays(new Random().nextInt()), OffsetDateTime.class);
+		registerValueGenerator(() -> LocalDate.now().plusDays(new Random().nextInt()), LocalDate.class);
 	}
 
 	@Test
@@ -53,6 +56,8 @@ class SystemEntityTest {
 		final var technicalContactId = "technicalContactId";
 		final var hostingType = HostingType.values()[0];
 		final var supplierId = "supplierId";
+		final var riskAnalysed = true;
+		final var riskAnalysedDate = LocalDate.of(2026, Month.JUNE, 23);
 
 		final var result = SystemEntity.create()
 			.withSystemId(systemId)
@@ -70,7 +75,9 @@ class SystemEntityTest {
 			.withSystemManagerId(systemManagerId)
 			.withTechnicalContactId(technicalContactId)
 			.withHostingType(hostingType)
-			.withSupplierId(supplierId);
+			.withSupplierId(supplierId)
+			.withRiskAnalysed(riskAnalysed)
+			.withRiskAnalysedDate(riskAnalysedDate);
 
 		assertThat(result).isNotNull().hasNoNullFieldsOrPropertiesExcept("id", "createdAt", "updatedAt", "createdBy", "updatedBy");
 		assertThat(result.getSystemId()).isEqualTo(systemId);
@@ -89,6 +96,8 @@ class SystemEntityTest {
 		assertThat(result.getTechnicalContactId()).isEqualTo(technicalContactId);
 		assertThat(result.getHostingType()).isEqualTo(hostingType);
 		assertThat(result.getSupplierId()).isEqualTo(supplierId);
+		assertThat(result.getRiskAnalysed()).isEqualTo(riskAnalysed);
+		assertThat(result.getRiskAnalysedDate()).isEqualTo(riskAnalysedDate);
 	}
 
 	@Test
