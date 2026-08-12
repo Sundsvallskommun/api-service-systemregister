@@ -67,7 +67,7 @@ public class System {
 	private String supplierId;
 
 	@Schema(description = "Risk analysed done", example = "true")
-	private Boolean riskAnalysed;
+	private boolean riskAnalysed;
 
 	@Schema(description = "Date of done risk analysation", example = "2026-06-07")
 	private LocalDate riskAnalysedDate;
@@ -297,15 +297,15 @@ public class System {
 		return this;
 	}
 
-	public Boolean getRiskAnalysed() {
+	public boolean getRiskAnalysed() {
 		return this.riskAnalysed;
 	}
 
-	public void setRiskAnalysed(final Boolean riskAnalysed) {
+	public void setRiskAnalysed(final boolean riskAnalysed) {
 		this.riskAnalysed = riskAnalysed;
 	}
 
-	public System withRiskAnalysed(final Boolean riskAnalysed) {
+	public System withRiskAnalysed(final boolean riskAnalysed) {
 		this.riskAnalysed = riskAnalysed;
 		return this;
 	}
