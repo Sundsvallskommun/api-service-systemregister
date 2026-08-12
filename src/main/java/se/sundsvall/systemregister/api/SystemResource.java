@@ -89,10 +89,11 @@ class SystemResource {
 		@Parameter(name = "municipalityId", description = "Municipality ID", example = "2281") @PathVariable @ValidMunicipalityId final String municipalityId,
 		@Parameter(name = "status", description = "Filter by status", example = "PRODUCTION") @RequestParam(required = false) final String status,
 		@Parameter(name = "search", description = "Search by name or system ID", example = "HR") @RequestParam(required = false) final String search,
+		@Parameter(name = "systemManagerId", description = "Filter by system manager id", example = "per-david") @RequestParam(required = false) final String systemManagerId,
 		@Parameter(name = "page", description = "Page number (1-based)", example = "1") @RequestParam(defaultValue = "1") final int page,
 		@Parameter(name = "limit", description = "Number of items per page", example = "20") @RequestParam(defaultValue = "20") final int limit) {
 
-		return ok(systemService.search(status, search, page, limit));
+		return ok(systemService.search(status, search, systemManagerId, page, limit));
 	}
 
 	@PutMapping(path = "/{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)

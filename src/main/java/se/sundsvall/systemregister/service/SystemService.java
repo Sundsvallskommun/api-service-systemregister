@@ -43,8 +43,8 @@ public class SystemService {
 		return SystemMapper.toSystem(entity);
 	}
 
-	public PagedSystemsResponse search(final String status, final String search, final int page, final int limit) {
-		final Specification<SystemEntity> spec = buildSpecification(status, search);
+	public PagedSystemsResponse search(final String status, final String search, final String systemManagerId, final int page, final int limit) {
+		final Specification<SystemEntity> spec = buildSpecification(status, search, systemManagerId);
 		final var result = systemRepository.findAll(spec, PageRequest.of(page - 1, limit, Sort.by("name")));
 		final var systems = result.getContent().stream().map(SystemMapper::toSystem).toList();
 		return PagedSystemsResponse.create()
@@ -72,7 +72,7 @@ public class SystemService {
 		systemRepository.deleteById(id);
 	}
 
-	private Specification<SystemEntity> buildSpecification(final String status, final String search) {
+	private Specification<SystemEntity> buildSpecification(final String status, final String search, final String systemManagerId) {
 		return (root, _, cb) -> {
 			final var predicates = new ArrayList<Predicate>();
 			Optional.ofNullable(status).ifPresent(s -> predicates.add(cb.equal(root.get("status"), SystemStatus.valueOf(s.toUpperCase()))));
@@ -82,6 +82,7 @@ public class SystemService {
 					cb.like(cb.lower(root.get("name")), pattern),
 					cb.like(cb.lower(root.get("systemId")), pattern)));
 			});
+			Optional.ofNullable(systemManagerId).ifPresent(id -> predicates.add(cb.equal(root.get("systemManagerId"), id)));
 			return cb.and(predicates.toArray(new Predicate[0]));
 		};
 	}
