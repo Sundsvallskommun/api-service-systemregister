@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
+
+import java.time.LocalDate;
 import java.util.Objects;
 
 import se.sundsvall.systemregister.integration.db.model.enums.HostingType;
@@ -54,11 +56,14 @@ public class SystemEntity extends AbstractAuditableEntity {
 	@Column(name = "tillganglighet_motivering")
 	private String tillganglighetMotivering;
 
-	@Column(name = "samhallsviktigt")
+	@Column(name = "samhallsviktigt", columnDefinition = "BOOLEAN DEFAULT false")
 	private Boolean samhallsviktigt;
 
 	@Column(name = "samhallsviktigt_motivering")
 	private String samhallsviktigtMotivering;
+
+	@Column(name = "klassningsdatum")
+	private LocalDate klassningsdatum;
 
 	@Column(name = "owner_organization_id")
 	private String ownerOrganizationId;
@@ -275,6 +280,19 @@ public class SystemEntity extends AbstractAuditableEntity {
 		return this;
 	}
 
+	public LocalDate getKlassningsdatum() {
+		return this.klassningsdatum;
+	}
+
+	public void setKlassningsdatum(final LocalDate klassningsdatum) {
+		this.klassningsdatum = klassningsdatum;
+	}
+
+	public SystemEntity withKlassningsdatum(final LocalDate klassningsdatum) {
+		this.klassningsdatum = klassningsdatum;
+		return this;
+	}
+
 	public String getOwnerOrganizationId() {
 		return this.ownerOrganizationId;
 	}
@@ -364,6 +382,7 @@ public class SystemEntity extends AbstractAuditableEntity {
 			Objects.equals(this.tillganglighetMotivering, that.tillganglighetMotivering) &&
 			Objects.equals(this.samhallsviktigt, that.samhallsviktigt) &&
 			Objects.equals(this.samhallsviktigtMotivering, that.samhallsviktigtMotivering) &&
+			Objects.equals(this.klassningsdatum, that.klassningsdatum) &&
 			Objects.equals(this.ownerOrganizationId, that.ownerOrganizationId) &&
 			Objects.equals(this.systemOwnerId, that.systemOwnerId) &&
 			Objects.equals(this.technicalContactId, that.technicalContactId) &&
@@ -377,7 +396,7 @@ public class SystemEntity extends AbstractAuditableEntity {
 			this.documentationUrl, this.criticalityLevelId, this.konfidentialitet, this.konfidentialitetMotivering,
 			this.riktighet, this.tillganglighet, this.riktighetMotivering, this.tillganglighetMotivering,
 			this.ownerOrganizationId, this.systemOwnerId, this.technicalContactId, this.hostingType,
-			this.supplierId, this.samhallsviktigt, this.samhallsviktigtMotivering);
+			this.supplierId, this.samhallsviktigt, this.samhallsviktigtMotivering, klassningsdatum);
 	}
 
 	@Override
@@ -399,6 +418,7 @@ public class SystemEntity extends AbstractAuditableEntity {
 			", tillganglighetMotivering=" + this.tillganglighetMotivering +
 			", samhallsviktigt=" + this.samhallsviktigt +
 			", samhallsviktigtMotivering=" + this.samhallsviktigtMotivering +
+			", klassningsdatum=" + this.klassningsdatum +
 			", ownerOrganizationId='" + this.ownerOrganizationId + '\'' +
 			", systemOwnerId='" + this.systemOwnerId + '\'' +
 			", technicalContactId='" + this.technicalContactId + '\'' +

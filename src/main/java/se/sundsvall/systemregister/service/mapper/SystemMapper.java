@@ -30,6 +30,7 @@ public final class SystemMapper {
 				.withTillganglighetMotivering(e.getTillganglighetMotivering())
 				.withSamhallsviktigt(e.getSamhallsviktigt())
 				.withSamhallsviktigtMotivering(e.getSamhallsviktigtMotivering())
+				.withKlassningsdatum(e.getKlassningsdatum())
 				.withOwnerOrganizationId(e.getOwnerOrganizationId())
 				.withSystemOwnerId(e.getSystemOwnerId())
 				.withTechnicalContactId(e.getTechnicalContactId())
@@ -62,8 +63,9 @@ public final class SystemMapper {
 				.withRiktighetMotivering(m.getRiktighetMotivering())
 				.withTillganglighet(m.getTillganglighet())
 				.withTillganglighetMotivering(m.getTillganglighetMotivering())
-				.withSamhallsviktigt(m.getSamhallsviktigt())
+				.withSamhallsviktigt(Optional.ofNullable(m.getSamhallsviktigt()).orElse(false))
 				.withSamhallsviktigtMotivering(m.getSamhallsviktigtMotivering())
+				.withKlassningsdatum(m.getKlassningsdatum())
 				.withOwnerOrganizationId(m.getOwnerOrganizationId())
 				.withSystemOwnerId(m.getSystemOwnerId())
 				.withTechnicalContactId(m.getTechnicalContactId())
@@ -113,6 +115,7 @@ public final class SystemMapper {
 			Optional.ofNullable(m.getTillganglighetMotivering()).ifPresent(entity::withTillganglighetMotivering);
 			Optional.ofNullable(m.getSamhallsviktigt()).ifPresent(entity::setSamhallsviktigt);
 			Optional.ofNullable(m.getSamhallsviktigtMotivering()).ifPresent(entity::withSamhallsviktigtMotivering);
+			Optional.ofNullable(m.getKlassningsdatum()).ifPresent(entity::withKlassningsdatum);
 			Optional.ofNullable(m.getOwnerOrganizationId()).ifPresent(entity::withOwnerOrganizationId);
 			Optional.ofNullable(m.getSystemOwnerId()).ifPresent(entity::withSystemOwnerId);
 			Optional.ofNullable(m.getTechnicalContactId()).ifPresent(entity::withTechnicalContactId);

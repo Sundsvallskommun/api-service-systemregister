@@ -1,5 +1,7 @@
 package se.sundsvall.systemregister.integration.db.model;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.time.OffsetDateTime;
 import java.util.Random;
 import org.junit.jupiter.api.BeforeAll;
@@ -57,6 +59,7 @@ class SystemEntityTest {
 		final var technicalContactId = "technicalContactId";
 		final var hostingType = HostingType.values()[0];
 		final var supplierId = "supplierId";
+		final var klassningsdatum = LocalDate.of(2026, Month.JUNE, 12);
 
 		final var result = SystemEntity.create()
 			.withSystemId(systemId)
@@ -74,6 +77,7 @@ class SystemEntityTest {
 			.withTillganglighetMotivering(tillganglighetMotivering)
 			.withSamhallsviktigt(samhallsviktig)
 			.withSamhallsviktigtMotivering(samhallsviktigMotivering)
+			.withKlassningsdatum(klassningsdatum)
 			.withOwnerOrganizationId(ownerOrganizationId)
 			.withSystemOwnerId(systemOwnerId)
 			.withTechnicalContactId(technicalContactId)
@@ -96,6 +100,7 @@ class SystemEntityTest {
 		assertThat(result.getTillganglighetMotivering()).isEqualTo(tillganglighetMotivering);
 		assertThat(result.getSamhallsviktigt()).isEqualTo(samhallsviktig);
 		assertThat(result.getSamhallsviktigtMotivering()).isEqualTo(samhallsviktigMotivering);
+		assertThat(result.getKlassningsdatum()).isEqualTo(klassningsdatum);
 		assertThat(result.getOwnerOrganizationId()).isEqualTo(ownerOrganizationId);
 		assertThat(result.getSystemOwnerId()).isEqualTo(systemOwnerId);
 		assertThat(result.getTechnicalContactId()).isEqualTo(technicalContactId);

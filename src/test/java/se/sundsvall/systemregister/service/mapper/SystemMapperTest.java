@@ -1,5 +1,7 @@
 package se.sundsvall.systemregister.service.mapper;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import se.sundsvall.systemregister.api.model.System;
@@ -98,6 +100,7 @@ class SystemMapperTest {
 			.withTillganglighetMotivering("TillganglighetMotivering")
 			.withSamhallsviktigt(true)
 			.withSamhallsviktigtMotivering("SamhallsviktigtMotivering")
+			.withKlassningsdatum(LocalDate.of(2026, Month.JUNE, 12))
 			.withOwnerOrganizationId("org-1")
 			.withSystemOwnerId("person-1")
 			.withTechnicalContactId("person-2")
@@ -120,6 +123,7 @@ class SystemMapperTest {
 		assertThat(result.getRiktighetMotivering()).isEqualTo("RiktighetMotivering");
 		assertThat(result.getTillganglighet()).isEqualTo(3);
 		assertThat(result.getTillganglighetMotivering()).isEqualTo("TillganglighetMotivering");
+		assertThat(result.getKlassningsdatum()).isEqualTo(LocalDate.of(2026, Month.JUNE, 12));
 		assertThat(result.getSamhallsviktigt()).isEqualTo(true);
 		assertThat(result.getSamhallsviktigtMotivering()).isEqualTo("SamhallsviktigtMotivering");
 		assertThat(result.getOwnerOrganizationId()).isEqualTo("org-1");
