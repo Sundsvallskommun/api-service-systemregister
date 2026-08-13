@@ -67,7 +67,7 @@ public class SystemEntity extends AbstractAuditableEntity {
 	private String supplierId;
 
 	@Column(name = "risk_analysed", columnDefinition = "BOOLEAN DEFAULT false")
-	private boolean riskAnalysed = false;
+	private Boolean riskAnalysed;
 
 	@Column(name = "risk_analysed_date")
 	private LocalDate riskAnalysedDate;
@@ -284,15 +284,15 @@ public class SystemEntity extends AbstractAuditableEntity {
 		return this;
 	}
 
-	public boolean getRiskAnalysed() {
+	public Boolean getRiskAnalysed() {
 		return this.riskAnalysed;
 	}
 
-	public void setRiskAnalysed(final boolean riskAnalysed) {
+	public void setRiskAnalysed(final Boolean riskAnalysed) {
 		this.riskAnalysed = riskAnalysed;
 	}
 
-	public SystemEntity withRiskAnalysed(final boolean riskAnalysed) {
+	public SystemEntity withRiskAnalysed(final Boolean riskAnalysed) {
 		this.riskAnalysed = riskAnalysed;
 		return this;
 	}
