@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.Random;
 import org.junit.jupiter.api.BeforeAll;
-import java.time.LocalDate;
-import java.time.Month;
 import org.junit.jupiter.api.Test;
 
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
