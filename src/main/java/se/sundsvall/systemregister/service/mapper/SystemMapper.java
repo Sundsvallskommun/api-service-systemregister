@@ -83,7 +83,7 @@ public final class SystemMapper {
 					})
 					.orElse(null))
 				.withSupplierId(m.getSupplierId())
-				.withRiskAnalysed(m.getRiskAnalysed())
+				.withRiskAnalysed(Optional.ofNullable(m.getRiskAnalysed()).orElse(false))
 				.withRiskAnalysedDate(m.getRiskAnalysedDate()))
 			.orElse(null);
 	}
