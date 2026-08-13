@@ -106,6 +106,7 @@ class SystemMapperTest {
 			.withTillganglighetMotivering("TillganglighetMotivering")
 			.withSamhallsviktigt(true)
 			.withSamhallsviktigtMotivering("SamhallsviktigtMotivering")
+			.withKlassningsdatum(LocalDate.of(2026, Month.JUNE, 12))
 			.withOwnerOrganizationId("org-1")
 			.withSystemOwnerId("person-1")
 			.withSystemManagerId("person-3")
@@ -131,6 +132,7 @@ class SystemMapperTest {
 		assertThat(result.getRiktighetMotivering()).isEqualTo("RiktighetMotivering");
 		assertThat(result.getTillganglighet()).isEqualTo(3);
 		assertThat(result.getTillganglighetMotivering()).isEqualTo("TillganglighetMotivering");
+		assertThat(result.getKlassningsdatum()).isEqualTo(LocalDate.of(2026, Month.JUNE, 12));
 		assertThat(result.getSamhallsviktigt()).isEqualTo(true);
 		assertThat(result.getSamhallsviktigtMotivering()).isEqualTo("SamhallsviktigtMotivering");
 		assertThat(result.getOwnerOrganizationId()).isEqualTo("org-1");

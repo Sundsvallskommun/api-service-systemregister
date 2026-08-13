@@ -56,11 +56,14 @@ public class SystemEntity extends AbstractAuditableEntity {
 	@Column(name = "tillganglighet_motivering")
 	private String tillganglighetMotivering;
 
-	@Column(name = "samhallsviktigt")
+	@Column(name = "samhallsviktigt", columnDefinition = "BOOLEAN DEFAULT false")
 	private Boolean samhallsviktigt;
 
 	@Column(name = "samhallsviktigt_motivering")
 	private String samhallsviktigtMotivering;
+
+	@Column(name = "klassningsdatum")
+	private LocalDate klassningsdatum;
 
 	@Column(name = "owner_organization_id")
 	private String ownerOrganizationId;
@@ -286,6 +289,19 @@ public class SystemEntity extends AbstractAuditableEntity {
 		return this;
 	}
 
+	public LocalDate getKlassningsdatum() {
+		return this.klassningsdatum;
+	}
+
+	public void setKlassningsdatum(final LocalDate klassningsdatum) {
+		this.klassningsdatum = klassningsdatum;
+	}
+
+	public SystemEntity withKlassningsdatum(final LocalDate klassningsdatum) {
+		this.klassningsdatum = klassningsdatum;
+		return this;
+	}
+
 	public String getOwnerOrganizationId() {
 		return this.ownerOrganizationId;
 	}
@@ -414,6 +430,7 @@ public class SystemEntity extends AbstractAuditableEntity {
 			Objects.equals(this.tillganglighetMotivering, that.tillganglighetMotivering) &&
 			Objects.equals(this.samhallsviktigt, that.samhallsviktigt) &&
 			Objects.equals(this.samhallsviktigtMotivering, that.samhallsviktigtMotivering) &&
+			Objects.equals(this.klassningsdatum, that.klassningsdatum) &&
 			Objects.equals(this.ownerOrganizationId, that.ownerOrganizationId) &&
 			Objects.equals(this.systemOwnerId, that.systemOwnerId) &&
 			Objects.equals(this.systemManagerId, that.systemManagerId) &&
@@ -431,7 +448,7 @@ public class SystemEntity extends AbstractAuditableEntity {
 			this.riktighet, this.tillganglighet, this.riktighetMotivering, this.tillganglighetMotivering,
 			this.ownerOrganizationId, this.systemOwnerId, this.technicalContactId, this.hostingType,
 			this.supplierId, this.samhallsviktigt, this.samhallsviktigtMotivering, this.systemManagerId,
-			this.riskAnalysed, this.riskAnalysedDate);
+			this.riskAnalysed, this.riskAnalysedDate, this.klassningsdatum);
 	}
 
 	@Override
@@ -453,6 +470,7 @@ public class SystemEntity extends AbstractAuditableEntity {
 			", tillganglighetMotivering=" + this.tillganglighetMotivering +
 			", samhallsviktigt=" + this.samhallsviktigt +
 			", samhallsviktigtMotivering=" + this.samhallsviktigtMotivering +
+			", klassningsdatum=" + this.klassningsdatum +
 			", ownerOrganizationId='" + this.ownerOrganizationId + '\'' +
 			", systemOwnerId='" + this.systemOwnerId + '\'' +
 			", systemManagerId='" + this.systemManagerId + '\'' +

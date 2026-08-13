@@ -63,6 +63,7 @@ class SystemEntityTest {
 		final var supplierId = "supplierId";
 		final var riskAnalysed = true;
 		final var riskAnalysedDate = LocalDate.of(2026, Month.JUNE, 23);
+		final var klassningsdatum = LocalDate.of(2026, Month.JUNE, 12);
 
 		final var result = SystemEntity.create()
 			.withSystemId(systemId)
@@ -80,6 +81,7 @@ class SystemEntityTest {
 			.withTillganglighetMotivering(tillganglighetMotivering)
 			.withSamhallsviktigt(samhallsviktig)
 			.withSamhallsviktigtMotivering(samhallsviktigMotivering)
+			.withKlassningsdatum(klassningsdatum)
 			.withOwnerOrganizationId(ownerOrganizationId)
 			.withSystemOwnerId(systemOwnerId)
 			.withSystemManagerId(systemManagerId)
@@ -105,6 +107,7 @@ class SystemEntityTest {
 		assertThat(result.getTillganglighetMotivering()).isEqualTo(tillganglighetMotivering);
 		assertThat(result.getSamhallsviktigt()).isEqualTo(samhallsviktig);
 		assertThat(result.getSamhallsviktigtMotivering()).isEqualTo(samhallsviktigMotivering);
+		assertThat(result.getKlassningsdatum()).isEqualTo(klassningsdatum);
 		assertThat(result.getOwnerOrganizationId()).isEqualTo(ownerOrganizationId);
 		assertThat(result.getSystemOwnerId()).isEqualTo(systemOwnerId);
 		assertThat(result.getSystemManagerId()).isEqualTo(systemManagerId);

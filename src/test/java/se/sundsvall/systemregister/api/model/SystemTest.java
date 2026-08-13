@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.Random;
 import org.junit.jupiter.api.BeforeAll;
+import java.time.LocalDate;
+import java.time.Month;
 import org.junit.jupiter.api.Test;
 
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
@@ -58,6 +60,7 @@ class SystemTest {
 		final var technicalContactId = "technicalContactId";
 		final var hostingType = "hostingType";
 		final var supplierId = "supplierId";
+		final var klassningsdatum = LocalDate.of(2026, Month.JUNE, 12);
 		final var riskAnalysed = true;
 		final var riskAnalysedDate = LocalDate.of(2026, Month.JUNE, 23);
 
@@ -78,6 +81,7 @@ class SystemTest {
 			.withTillganglighetMotivering(tillganglighetMotiveringt)
 			.withSamhallsviktigt(samhallsviktigt)
 			.withSamhallsviktigtMotivering(samhallsviktigtMotivering)
+			.withKlassningsdatum(klassningsdatum)
 			.withOwnerOrganizationId(ownerOrganizationId)
 			.withSystemOwnerId(systemOwnerId)
 			.withSystemManagerId(systemManagerId)
@@ -101,6 +105,7 @@ class SystemTest {
 		assertThat(result.getRiktighetMotivering()).isEqualTo(riktighetMotivering);
 		assertThat(result.getTillganglighet()).isEqualTo(tillganglighet);
 		assertThat(result.getTillganglighetMotivering()).isEqualTo(tillganglighetMotiveringt);
+		assertThat(result.getKlassningsdatum()).isEqualTo(klassningsdatum);
 		assertThat(result.getOwnerOrganizationId()).isEqualTo(ownerOrganizationId);
 		assertThat(result.getSystemOwnerId()).isEqualTo(systemOwnerId);
 		assertThat(result.getSystemManagerId()).isEqualTo(systemManagerId);

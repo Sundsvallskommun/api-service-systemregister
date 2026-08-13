@@ -61,6 +61,9 @@ public class System {
 	@Schema(description = "Essential status motivation/reasoning")
 	private String samhallsviktigtMotivering;
 
+	@Schema(description = "Date of the last of the system classification done")
+	private LocalDate klassningsdatum;
+
 	@Schema(description = "Owner organization ID", example = "org-1")
 	private String ownerOrganizationId;
 
@@ -299,6 +302,19 @@ public class System {
 		return this;
 	}
 
+	public LocalDate getKlassningsdatum() {
+		return this.klassningsdatum;
+	}
+
+	public void setKlassningsdatum(final LocalDate klassningsdatum) {
+		this.klassningsdatum = klassningsdatum;
+	}
+
+	public System withKlassningsdatum(final LocalDate klassningsdatum) {
+		this.klassningsdatum = klassningsdatum;
+		return this;
+	}
+
 	public String getOwnerOrganizationId() {
 		return this.ownerOrganizationId;
 	}
@@ -421,6 +437,7 @@ public class System {
 			Objects.equals(this.criticalityLevelId, that.criticalityLevelId) &&
 			Objects.equals(this.konfidentialitet, that.konfidentialitet) &&
 			Objects.equals(this.konfidentialitetMotivering, that.konfidentialitetMotivering) &&
+			Objects.equals(this.klassningsdatum, that.klassningsdatum) &&
 			Objects.equals(this.riktighet, that.riktighet) &&
 			Objects.equals(this.riktighetMotivering, that.riktighetMotivering) &&
 			Objects.equals(this.tillganglighet, that.tillganglighet) &&
@@ -444,7 +461,7 @@ public class System {
 			this.riktighet, this.tillganglighet, this.riktighetMotivering, this.tillganglighetMotivering,
 			this.ownerOrganizationId, this.systemOwnerId, this.technicalContactId, this.hostingType,
 			this.supplierId, this.samhallsviktigt, this.systemManagerId, this.samhallsviktigtMotivering,
-			this.riskAnalysed, this.riskAnalysedDate);
+            this.klassningsdatum, this.riskAnalysed, this.riskAnalysedDate);
 	}
 
 	@Override
@@ -466,6 +483,7 @@ public class System {
 			", tillganglighetMotivering=" + this.tillganglighetMotivering +
 			", samhallsviktigt=" + this.samhallsviktigt +
 			", samhallsviktigtMotivering=" + this.samhallsviktigtMotivering +
+			", klassningsdatum=" + this.klassningsdatum +
 			", ownerOrganizationId='" + this.ownerOrganizationId + '\'' +
 			", systemOwnerId='" + this.systemOwnerId + '\'' +
 			", systemManagerId='" + this.systemManagerId + '\'' +
