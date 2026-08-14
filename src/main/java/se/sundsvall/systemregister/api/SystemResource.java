@@ -98,14 +98,14 @@ class SystemResource {
 		return ok(systemService.search(status, search, systemManagerId, ownerOrganizationId, page, limit));
 	}
 
-	@GetMapping(path = "/myOrg")
-	ResponseEntity<List<System>> getMyOrgsSystems(String organizationId) {
-		return ok(systemService.getAllByOwnerOrganizationId(organizationId));
+	@GetMapping(path = "/ownerOrganization/{ownerOrganizationId}")
+	ResponseEntity<List<System>> getMyOrganizationsSystems(@PathVariable String ownerOrganizationId) {
+		return ok(systemService.getAllByOwnerOrganizationId(ownerOrganizationId));
 	}
 
-	@GetMapping(path = "/mine")
-	ResponseEntity<List<System>> getMySystems(String systemMangerId) {
-		return ok(systemService.getAllByMangerId(systemMangerId));
+	@GetMapping(path = "/systemManager/{systemManagerId}")
+	ResponseEntity<List<System>> getMySystems(@PathVariable String systemManagerId) {
+		return ok(systemService.getAllByMangerId(systemManagerId));
 	}
 
 	@PutMapping(path = "/{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
