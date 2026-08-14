@@ -95,7 +95,7 @@ class SystemResourceTest {
 				System.create().withId("id-2").withSystemId("SYS-002")))
 			.withMetadata(PagingMetaData.create().withPage(1).withLimit(20).withCount(2).withTotalRecords(2).withTotalPages(1));
 
-		when(serviceMock.search(isNull(), isNull(), isNull(), eq(1), eq(20))).thenReturn(pagedResponse);
+		when(serviceMock.search(isNull(), isNull(), isNull(), isNull(), eq(1), eq(20))).thenReturn(pagedResponse);
 
 		final var response = webTestClient.get()
 			.uri(builder -> builder.path(PATH).build(Map.of("municipalityId", MUNICIPALITY_ID)))
@@ -109,7 +109,7 @@ class SystemResourceTest {
 		assertThat(response.getSystems()).hasSize(2);
 		assertThat(response.getMetadata().getPage()).isEqualTo(1);
 		assertThat(response.getMetadata().getTotalRecords()).isEqualTo(2);
-		verify(serviceMock).search(isNull(), isNull(), isNull(), eq(1), eq(20));
+		verify(serviceMock).search(isNull(), isNull(), isNull(), isNull(), eq(1), eq(20));
 	}
 
 	@Test
@@ -118,7 +118,7 @@ class SystemResourceTest {
 			.withSystems(List.of(System.create().withId("id-1").withSystemId("SYS-001").withStatus("PRODUCTION")))
 			.withMetadata(PagingMetaData.create().withPage(1).withLimit(20).withCount(1).withTotalRecords(1).withTotalPages(1));
 
-		when(serviceMock.search(eq("PRODUCTION"), isNull(), isNull(), eq(1), eq(20))).thenReturn(pagedResponse);
+		when(serviceMock.search(eq("PRODUCTION"), isNull(), isNull(), isNull(), eq(1), eq(20))).thenReturn(pagedResponse);
 
 		final var response = webTestClient.get()
 			.uri(builder -> builder.path(PATH)
@@ -132,7 +132,7 @@ class SystemResourceTest {
 
 		assertThat(response).isNotNull();
 		assertThat(response.getSystems()).hasSize(1);
-		verify(serviceMock).search(eq("PRODUCTION"), isNull(), isNull(), eq(1), eq(20));
+		verify(serviceMock).search(eq("PRODUCTION"), isNull(), isNull(), isNull(), eq(1), eq(20));
 	}
 
 	@Test
@@ -141,7 +141,7 @@ class SystemResourceTest {
 			.withSystems(List.of(System.create().withId("id-1").withSystemId("SYS-001").withName("HR System")))
 			.withMetadata(PagingMetaData.create().withPage(2).withLimit(10).withCount(1).withTotalRecords(11).withTotalPages(2));
 
-		when(serviceMock.search(isNull(), eq("HR"), isNull(), eq(2), eq(10))).thenReturn(pagedResponse);
+		when(serviceMock.search(isNull(), eq("HR"), isNull(), isNull(), eq(2), eq(10))).thenReturn(pagedResponse);
 
 		final var response = webTestClient.get()
 			.uri(builder -> builder.path(PATH)
@@ -159,7 +159,7 @@ class SystemResourceTest {
 		assertThat(response.getSystems()).hasSize(1);
 		assertThat(response.getMetadata().getPage()).isEqualTo(2);
 		assertThat(response.getMetadata().getTotalRecords()).isEqualTo(11);
-		verify(serviceMock).search(isNull(), eq("HR"), isNull(), eq(2), eq(10));
+		verify(serviceMock).search(isNull(), eq("HR"), isNull(), isNull(), eq(2), eq(10));
 	}
 
 	@Test

@@ -14,5 +14,7 @@ public interface SystemRepository extends JpaRepository<SystemEntity, String>, J
 
 	List<SystemEntity> findByStatus(SystemStatus status);
 
+	List<SystemEntity> findBySystemManagerId(String systemManagerId);
+
 	List<SystemEntity> findByOwnerOrganizationId(String ownerOrganizationId);
 }

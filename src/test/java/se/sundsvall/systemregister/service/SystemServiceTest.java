@@ -101,7 +101,7 @@ class SystemServiceTest {
 
 		when(systemRepository.findAll(specCaptor.capture(), eq(pageRequest))).thenReturn(page);
 
-		systemService.search("PRODUCTION", "HR", null, 1, 20);
+		systemService.search("PRODUCTION", "HR", null, null, 1, 20);
 
 		// Execute the captured specification to cover the lambda body
 		final var spec = specCaptor.getValue();
@@ -150,7 +150,7 @@ class SystemServiceTest {
 
 		when(systemRepository.findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest))).thenReturn(page);
 
-		final var result = systemService.search(null, null, null, 1, 20);
+		final var result = systemService.search(null, null, null, null, 1, 20);
 
 		assertThat(result).isNotNull();
 		assertThat(result.getSystems()).hasSize(2);
@@ -174,7 +174,7 @@ class SystemServiceTest {
 
 		when(systemRepository.findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest))).thenReturn(page);
 
-		final var result = systemService.search("PRODUCTION", null, null, 1, 10);
+		final var result = systemService.search("PRODUCTION", null, null, null, 1, 10);
 
 		assertThat(result).isNotNull();
 		assertThat(result.getSystems()).hasSize(1);
@@ -194,7 +194,7 @@ class SystemServiceTest {
 
 		when(systemRepository.findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest))).thenReturn(page);
 
-		final var result = systemService.search(null, "HR", "systemManager", 1, 20);
+		final var result = systemService.search(null, "HR", null, null, 1, 20);
 
 		assertThat(result).isNotNull();
 		assertThat(result.getSystems()).hasSize(1);
@@ -214,7 +214,7 @@ class SystemServiceTest {
 
 		when(systemRepository.findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest))).thenReturn(page);
 
-		final var result = systemService.search(null, null, null, 2, 10);
+		final var result = systemService.search(null, null, null, null, 2, 10);
 
 		assertThat(result).isNotNull();
 		assertThat(result.getSystems()).hasSize(1);
@@ -232,7 +232,7 @@ class SystemServiceTest {
 
 		when(systemRepository.findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest))).thenReturn(page);
 
-		final var result = systemService.search(null, null, null, 1, 20);
+		final var result = systemService.search(null, null, null, null, 1, 20);
 
 		assertThat(result).isNotNull();
 		assertThat(result.getSystems()).isEmpty();
