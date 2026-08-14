@@ -1,0 +1,122 @@
+-- ============================================================================
+-- Lägger till data till motiveringsfälten
+-- ============================================================================
+UPDATE systems SET
+                   konfidentialitet_motivering = 'Systemet hanterar ekonomisk information och löneuppgifter som klassas som känsliga enligt kommunens dataklassificeringspolicy.',
+                   riktighet_motivering = 'Felaktiga uppgifter i redovisning eller fakturahantering kan få allvarliga ekonomiska och juridiska konsekvenser för kommunen.',
+                   tillganglighet_motivering = 'Systemet måste vara tillgängligt för att kommunen ska kunna betala löner och fakturor i tid.',
+                   samhallsviktigt = TRUE,
+                   samhallsviktigt_motivering = 'Ekonomisystemet är en förutsättning för kommunens grundläggande funktion, inklusive löneutbetalningar och betalning av leverantörer.',
+                   klassningsdatum = '2025-06-07'
+WHERE id = 'sys-001';
+
+UPDATE systems SET
+                   konfidentialitet_motivering = 'Innehåller personuppgifter och fastighetsinformation i bygglovsärenden, men klassas som medelkänslig då stora delar av informationen är offentlig handling.',
+                   riktighet_motivering = 'Felaktig handläggningsinformation kan leda till felaktiga beslut i bygglovsärenden med juridiska konsekvenser.',
+                   tillganglighet_motivering = 'Systemet behöver vara tillgängligt under kontorstid för ärendehantering, men kortare avbrott är hanterbara.',
+                   samhallsviktigt = FALSE,
+                   klassningsdatum = '2026-06-07'
+WHERE id = 'sys-002';
+
+UPDATE systems SET
+                   konfidentialitet_motivering = 'Hanterar känsliga personuppgifter om hälsa inom socialtjänst, LSS och äldreomsorg enligt OSL och GDPR artikel 9.',
+                   riktighet_motivering = 'Felaktig information i journaler och vårdplaner kan direkt påverka enskildas hälsa och säkerhet.',
+                   tillganglighet_motivering = 'Systemet används dagligen i vård- och omsorgsarbete och driftstopp kan påverka omsorgen om utsatta personer.',
+                   samhallsviktigt = TRUE,
+                   samhallsviktigt_motivering = 'Klassas som samhällsviktig verksamhet då systemet stödjer vård och omsorg om äldre och personer med funktionsnedsättning.',
+                   klassningsdatum = '2026-07-19'
+WHERE id = 'sys-003';
+
+UPDATE systems SET
+                   konfidentialitet_motivering = 'Innehåller främst intern, icke-känslig kommunikation och dokumentation.',
+                   riktighet_motivering = 'Felaktig information i intranätet har begränsad påverkan då det inte används för myndighetsutövning.',
+                   tillganglighet_motivering = 'Ett kortare avbrott i intranätet påverkar inte kommunens kärnverksamhet.',
+                   samhallsviktigt = FALSE,
+                   klassningsdatum = '2026-06-07'
+WHERE id = 'sys-004';
+
+-- ============================================================================
+-- Lägger till fler system
+-- ============================================================================
+
+INSERT INTO systems (
+    id, system_id, name, description, status, version, hosting_type,
+    konfidentialitet, riktighet, tillganglighet,
+    owner_organization_id, system_owner_id, technical_contact_id, system_manager_id,
+    supplier_id, criticality_level_id, created_by,
+    risk_analysed, risk_analysed_date,
+    konfidentialitet_motivering, riktighet_motivering, tillganglighet_motivering,
+    samhallsviktigt, samhallsviktigt_motivering, klassningsdatum
+) VALUES
+      ('sys-005', 'SYS-005', 'Skolsystemet Vklass',
+       'Lärplattform och kommunikationsverktyg mellan skola, elever och vårdnadshavare för kommunens grundskolor.',
+       'PRODUCTION', '2024.1', 'CLOUD',
+       3, 3, 3,
+       'org-kommunen', 'per-anna', 'per-bertil', 'per-david',
+       'sup-cloudnordic', 'crit-p2', 'seed',
+       TRUE, '2026-03-14',
+       'Innehåller personuppgifter om minderåriga elever, vilket kräver extra skyddsnivå enligt GDPR.',
+       'Felaktig information kan påverka kommunikationen mellan skola och vårdnadshavare kring elevers skolgång.',
+       'Systemet används dagligen i undervisningen och behöver vara tillgängligt under skoltid.',
+       TRUE, 'Utbildning är en samhällsviktig verksamhet och systemet stödjer grundskolans dagliga arbete.',
+       '2026-03-14'),
+
+      ('sys-006', 'SYS-006', 'Miljö- och hälsoskyddssystemet EDP Vision',
+       'Ärendehantering för miljötillsyn, hälsoskydd och livsmedelskontroll.',
+       'PRODUCTION', '5.2', 'INTERNAL',
+       2, 3, 2,
+       'org-stadsbyggnad', 'per-david', 'per-bertil', 'per-david',
+       'sup-techsys', 'crit-p3', 'seed',
+       TRUE, '2026-02-01',
+       'Innehåller uppgifter om verksamhetsutövare och tillsynsobjekt, till största delen offentlig handling.',
+       'Felaktiga tillsynsuppgifter kan leda till felaktiga beslut i miljö- och hälsoskyddsärenden.',
+       'Kortare avbrott påverkar inte akut ärendehantering.',
+       FALSE, 'Bedöms inte som samhällsviktig verksamhet enligt MSB:s definition.',
+       '2026-02-01'),
+
+      ('sys-007', 'SYS-007', 'Biblioteksystemet Book-IT',
+       'Katalog- och låntagarsystem för kommunens folkbibliotek.',
+       'PLANNED', '9.0', 'CLOUD',
+       2, 2, 2,
+       'org-kommunen', 'per-anna', 'per-bertil', 'per-anna',
+       'sup-cloudnordic', 'crit-p4', 'seed',
+       FALSE, NULL,
+       NULL, NULL, NULL,
+       FALSE, NULL, NULL),
+
+      ('sys-008', 'SYS-008', 'E-tjänsteplattformen',
+       'Självbetjäningsportal under utveckling där medborgare ska kunna ansöka om kommunala tjänster digitalt.',
+       'DEVELOPMENT', '0.9.0-beta', 'CLOUD',
+       3, 3, 2,
+       'org-it-avd', 'per-anna', 'per-bertil', 'per-david',
+       'sup-cloudnordic', 'crit-p2', 'seed',
+       FALSE, NULL,
+       NULL, NULL, NULL,
+       FALSE, NULL, NULL),
+
+      ('sys-009', 'SYS-009', 'Ärendehanteringssystemet W3D3',
+       'Äldre diarie- och ärendehanteringssystem som successivt fasas ut till förmån för en ny plattform.',
+       'DEPRECATED', '3.5', 'INTERNAL',
+       3, 3, 2,
+       'org-kommunen', 'per-cecilia', 'per-bertil', 'per-anna',
+       'sup-techsys', 'crit-p2', 'seed',
+       TRUE, '2024-09-12',
+       'Innehåller diarieförda ärenden, varav vissa innehåller personuppgifter och sekretessbelagt material.',
+       'Systemet är väl beprövat men underhålls inte längre aktivt, vilket ökar risken för fel över tid.',
+       'Systemet är under utfasning och kortare avbrott accepteras i väntan på ersättningssystem.',
+       FALSE, 'Ersätts inom kort av ny plattform och bedöms inte längre som samhällsviktigt att upprätthålla på lång sikt.',
+       '2024-09-12'),
+
+      ('sys-010', 'SYS-010', 'Gamla Diariesystemet',
+       'Föråldrat diariesystem, helt avvecklat och ersatt. Kvarstår endast för arkivändamål.',
+       'RETIRED', '1.0', 'INTERNAL',
+       2, 2, 1,
+       'org-kommunen', 'per-cecilia', 'per-bertil', 'per-anna',
+       NULL, 'crit-p4', 'seed',
+       TRUE, '2022-01-15',
+       'Innehåller historiska diarieuppgifter, viss sekretessbelagd information kvarstår i arkivet.',
+       'Ingen aktiv inmatning sker längre, låg risk för nya felaktigheter.',
+       'Systemet är avvecklat och tillgänglighet är inte affärskritisk.',
+       FALSE, 'Avvecklat system utan pågående verksamhet, bedöms inte som samhällsviktigt.',
+       '2022-01-15');
+
