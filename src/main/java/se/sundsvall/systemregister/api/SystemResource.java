@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -89,10 +90,22 @@ class SystemResource {
 		@Parameter(name = "municipalityId", description = "Municipality ID", example = "2281") @PathVariable @ValidMunicipalityId final String municipalityId,
 		@Parameter(name = "status", description = "Filter by status", example = "PRODUCTION") @RequestParam(required = false) final String status,
 		@Parameter(name = "search", description = "Search by name or system ID", example = "HR") @RequestParam(required = false) final String search,
+		@Parameter(name = "systemManagerId", description = "Filter by system manager id", example = "per-david") @RequestParam(required = false) final String systemManagerId,
+		@Parameter(name = "ownerOrganizationId", description = "Filter by owner organization id", example = "org-kommunen") @RequestParam(required = false) final String ownerOrganizationId,
 		@Parameter(name = "page", description = "Page number (1-based)", example = "1") @RequestParam(defaultValue = "1") final int page,
 		@Parameter(name = "limit", description = "Number of items per page", example = "20") @RequestParam(defaultValue = "20") final int limit) {
 
-		return ok(systemService.search(status, search, page, limit));
+		return ok(systemService.search(status, search, systemManagerId, ownerOrganizationId, page, limit));
+	}
+
+	@GetMapping(path = "/ownerOrganization/{ownerOrganizationId}")
+	ResponseEntity<List<System>> getOrganizationsSystemsByOwnerOrganizationId(@PathVariable String ownerOrganizationId) {
+		return ok(systemService.getAllByOwnerOrganizationId(ownerOrganizationId));
+	}
+
+	@GetMapping(path = "/systemManager/{systemManagerId}")
+	ResponseEntity<List<System>> getSystemsBySystemManagerId(@PathVariable String systemManagerId) {
+		return ok(systemService.getAllByMangerId(systemManagerId));
 	}
 
 	@PutMapping(path = "/{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
