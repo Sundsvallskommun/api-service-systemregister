@@ -89,7 +89,7 @@ public class SystemService {
 		};
 	}
 
-	public List<System> getAllByMangerId(final String systemManagerId) {
+	public List<System> getAllByManagerId(final String systemManagerId) {
 		return systemRepository.findBySystemManagerId(systemManagerId).stream()
 			.map(SystemMapper::toSystem)
 			.toList();

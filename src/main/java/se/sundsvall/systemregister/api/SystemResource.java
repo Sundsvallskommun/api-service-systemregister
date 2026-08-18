@@ -99,13 +99,19 @@ class SystemResource {
 	}
 
 	@GetMapping(path = "/ownerOrganization/{ownerOrganizationId}")
+	@Operation(description = "Get all systems belonging to a specific organisation", responses = {
+			@ApiResponse(responseCode = "200", description = "OK - Successful operation", useReturnTypeSchema = true)
+	})
 	ResponseEntity<List<System>> getOrganizationsSystemsByOwnerOrganizationId(@PathVariable String ownerOrganizationId) {
 		return ok(systemService.getAllByOwnerOrganizationId(ownerOrganizationId));
 	}
 
 	@GetMapping(path = "/systemManager/{systemManagerId}")
+	@Operation(description = "Get all systems for a specific system manager", responses = {
+			@ApiResponse(responseCode = "200", description = "OK - Successful operation", useReturnTypeSchema = true)
+	})
 	ResponseEntity<List<System>> getSystemsBySystemManagerId(@PathVariable String systemManagerId) {
-		return ok(systemService.getAllByMangerId(systemManagerId));
+		return ok(systemService.getAllByManagerId(systemManagerId));
 	}
 
 	@PutMapping(path = "/{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)

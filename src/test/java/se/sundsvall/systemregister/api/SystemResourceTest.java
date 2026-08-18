@@ -163,6 +163,50 @@ class SystemResourceTest {
 	}
 
 	@Test
+	void getSystemsBySystemManagerId() {
+		final var systems = List.of(
+			System.create().withId("id-1").withSystemId("SYS-001").withSystemManagerId("per-david"));
+
+		when(serviceMock.getAllByManagerId("per-david")).thenReturn(systems);
+
+		final var response = webTestClient.get()
+			.uri(builder -> builder.path(PATH + "/systemManager/{systemManagerId}")
+				.build(Map.of("municipalityId", MUNICIPALITY_ID, "systemManagerId", "per-david")))
+			.exchange()
+			.expectStatus().isOk()
+			.expectBodyList(System.class)
+			.returnResult()
+			.getResponseBody();
+
+		assertThat(response).isNotNull();
+		assertThat(response).hasSize(1);
+		assertThat(response.getFirst().getSystemId()).isEqualTo("SYS-001");
+		verify(serviceMock).getAllByManagerId("per-david");
+	}
+
+	@Test
+	void getSystemsByOwnerOrganizationId() {
+		final var systems = List.of(
+			System.create().withId("id-1").withSystemId("SYS-001").withOwnerOrganizationId("org-kommunen"));
+
+		when(serviceMock.getAllByOwnerOrganizationId("org-kommunen")).thenReturn(systems);
+
+		final var response = webTestClient.get()
+			.uri(builder -> builder.path(PATH + "/ownerOrganization/{ownerOrganizationId}")
+				.build(Map.of("municipalityId", MUNICIPALITY_ID, "ownerOrganizationId", "org-kommunen")))
+			.exchange()
+			.expectStatus().isOk()
+			.expectBodyList(System.class)
+			.returnResult()
+			.getResponseBody();
+
+		assertThat(response).isNotNull();
+		assertThat(response).hasSize(1);
+		assertThat(response.getFirst().getSystemId()).isEqualTo("SYS-001");
+		verify(serviceMock).getAllByOwnerOrganizationId("org-kommunen");
+	}
+
+	@Test
 	void updateSystem() {
 		final var updateModel = System.create()
 			.withSystemId("SYS-001")
