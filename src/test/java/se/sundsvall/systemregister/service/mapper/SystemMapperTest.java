@@ -21,12 +21,11 @@ class SystemMapperTest {
 			.withVersion("1.0.0")
 			.withDocumentationUrl("https://docs.example.com")
 			.withCriticalityLevelId("critical-1")
-			.withKonfidentialitet(1)
+			.withKonfidentialitet(3)
 			.withRiktighet(2)
 			.withTillganglighet(3)
 			.withOwnerOrganizationId("org-1")
 			.withSystemOwnerId("person-1")
-			.withSystemManagerId("person-3")
 			.withTechnicalContactId("person-2")
 			.withHostingType(HostingType.CLOUD)
 			.withSupplierId("supplier-1");
@@ -43,12 +42,11 @@ class SystemMapperTest {
 		assertThat(result.getVersion()).isEqualTo("1.0.0");
 		assertThat(result.getDocumentationUrl()).isEqualTo("https://docs.example.com");
 		assertThat(result.getCriticalityLevelId()).isEqualTo("critical-1");
-		assertThat(result.getKonfidentialitet()).isEqualTo(1);
+		assertThat(result.getKonfidentialitet()).isEqualTo(3);
 		assertThat(result.getRiktighet()).isEqualTo(2);
 		assertThat(result.getTillganglighet()).isEqualTo(3);
 		assertThat(result.getOwnerOrganizationId()).isEqualTo("org-1");
 		assertThat(result.getSystemOwnerId()).isEqualTo("person-1");
-		assertThat(result.getSystemManagerId()).isEqualTo("person-3");
 		assertThat(result.getTechnicalContactId()).isEqualTo("person-2");
 		assertThat(result.getHostingType()).isEqualTo("CLOUD");
 		assertThat(result.getSupplierId()).isEqualTo("supplier-1");
@@ -84,15 +82,15 @@ class SystemMapperTest {
 			.withVersion("1.0.0")
 			.withDocumentationUrl("https://docs.example.com")
 			.withCriticalityLevelId("critical-1")
-			.withKonfidentialitet(1)
+			.withKonfidentialitet(3)
 			.withRiktighet(2)
 			.withTillganglighet(3)
 			.withOwnerOrganizationId("org-1")
 			.withSystemOwnerId("person-1")
-			.withSystemManagerId("person-3")
 			.withTechnicalContactId("person-2")
 			.withHostingType("CLOUD")
 			.withSupplierId("supplier-1");
+
 		final var result = SystemMapper.toSystemEntity(model);
 
 		assertThat(result).isNotNull();
@@ -103,12 +101,11 @@ class SystemMapperTest {
 		assertThat(result.getVersion()).isEqualTo("1.0.0");
 		assertThat(result.getDocumentationUrl()).isEqualTo("https://docs.example.com");
 		assertThat(result.getCriticalityLevelId()).isEqualTo("critical-1");
-		assertThat(result.getKonfidentialitet()).isEqualTo(1);
+		assertThat(result.getKonfidentialitet()).isEqualTo(3);
 		assertThat(result.getRiktighet()).isEqualTo(2);
 		assertThat(result.getTillganglighet()).isEqualTo(3);
 		assertThat(result.getOwnerOrganizationId()).isEqualTo("org-1");
 		assertThat(result.getSystemOwnerId()).isEqualTo("person-1");
-		assertThat(result.getSystemManagerId()).isEqualTo("person-3");
 		assertThat(result.getTechnicalContactId()).isEqualTo("person-2");
 		assertThat(result.getHostingType()).isEqualTo(HostingType.CLOUD);
 		assertThat(result.getSupplierId()).isEqualTo("supplier-1");

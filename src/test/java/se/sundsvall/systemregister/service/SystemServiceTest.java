@@ -101,7 +101,7 @@ class SystemServiceTest {
 
 		when(systemRepository.findAll(specCaptor.capture(), eq(pageRequest))).thenReturn(page);
 
-		systemService.search("PRODUCTION", "HR", null, null, 1, 20);
+		systemService.search("PRODUCTION", "HR", 1, 20);
 
 		// Execute the captured specification to cover the lambda body
 		final var spec = specCaptor.getValue();
@@ -135,36 +135,6 @@ class SystemServiceTest {
 	}
 
 	@Test
-	void searchSpecificationWithOwnerOrganizationIdAndSystemManagerId() {
-		final var pageRequest = PageRequest.of(0, 20, Sort.by("name"));
-		final var page = new PageImpl<>(List.<SystemEntity>of(), pageRequest, 0);
-
-		when(systemRepository.findAll(specCaptor.capture(), eq(pageRequest))).thenReturn(page);
-
-		systemService.search(null, null, "systemManagerId", "ownerOrganizationId", 1, 20);
-
-		// Execute the captured specification to cover the lambda body
-		final var spec = specCaptor.getValue();
-		final Root<SystemEntity> root = mock();
-		final CriteriaQuery<?> query = mock();
-		final CriteriaBuilder cb = mock();
-		final Path<String> systemManagerIdPath = mock();
-		final Path<String> ownerOrganizationIdPath = mock();
-		final Predicate systemManagerIdPred = mock();
-		final Predicate ownerOrganizationIdPred = mock();
-		final Predicate andPred = mock();
-
-		doReturn(systemManagerIdPath).when(root).get("systemManagerId");
-		doReturn(ownerOrganizationIdPath).when(root).get("ownerOrganizationId");
-		when(cb.equal(systemManagerIdPath, "systemManagerId")).thenReturn(systemManagerIdPred);
-		when(cb.equal(ownerOrganizationIdPath, "ownerOrganizationId")).thenReturn(ownerOrganizationIdPred);
-		when(cb.and(any(Predicate[].class))).thenReturn(andPred);
-
-		final var result = spec.toPredicate(root, query, cb);
-		assertThat(result).isEqualTo(andPred);
-	}
-
-	@Test
 	void searchWithDefaults() {
 		final var entity1 = SystemEntity.create()
 			.withSystemId("SYS-001")
@@ -180,7 +150,7 @@ class SystemServiceTest {
 
 		when(systemRepository.findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest))).thenReturn(page);
 
-		final var result = systemService.search(null, null, null, null, 1, 20);
+		final var result = systemService.search(null, null, 1, 20);
 
 		assertThat(result).isNotNull();
 		assertThat(result.getSystems()).hasSize(2);
@@ -204,7 +174,7 @@ class SystemServiceTest {
 
 		when(systemRepository.findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest))).thenReturn(page);
 
-		final var result = systemService.search("PRODUCTION", null, null, null, 1, 10);
+		final var result = systemService.search("PRODUCTION", null, 1, 10);
 
 		assertThat(result).isNotNull();
 		assertThat(result.getSystems()).hasSize(1);
@@ -224,51 +194,11 @@ class SystemServiceTest {
 
 		when(systemRepository.findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest))).thenReturn(page);
 
-		final var result = systemService.search(null, "HR", null, null, 1, 20);
+		final var result = systemService.search(null, "HR", 1, 20);
 
 		assertThat(result).isNotNull();
 		assertThat(result.getSystems()).hasSize(1);
 		assertThat(result.getSystems().getFirst().getName()).isEqualTo("HR Management");
-		verify(systemRepository).findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest));
-	}
-
-	@Test
-	void searchWithSystemManagerId() {
-		final var entity1 = SystemEntity.create()
-			.withSystemId("SYS-001")
-			.withSystemManagerId("manager");
-		entity1.withId("id-1");
-
-		final var pageRequest = PageRequest.of(0, 20, Sort.by("name"));
-		final var page = new PageImpl<>(List.of(entity1), pageRequest, 1);
-
-		when(systemRepository.findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest))).thenReturn(page);
-
-		final var result = systemService.search(null, null, "manager", null, 1, 20);
-
-		assertThat(result).isNotNull();
-		assertThat(result.getSystems()).hasSize(1);
-		assertThat(result.getSystems().getFirst().getSystemManagerId()).isEqualTo("manager");
-		verify(systemRepository).findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest));
-	}
-
-	@Test
-	void searchWithOwnerOrganization() {
-		final var entity1 = SystemEntity.create()
-			.withSystemId("SYS-001")
-			.withOwnerOrganizationId("org-test");
-		entity1.withId("id-1");
-
-		final var pageRequest = PageRequest.of(0, 20, Sort.by("name"));
-		final var page = new PageImpl<>(List.of(entity1), pageRequest, 1);
-
-		when(systemRepository.findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest))).thenReturn(page);
-
-		final var result = systemService.search(null, null, null, "org-test", 1, 20);
-
-		assertThat(result).isNotNull();
-		assertThat(result.getSystems()).hasSize(1);
-		assertThat(result.getSystems().getFirst().getOwnerOrganizationId()).isEqualTo("org-test");
 		verify(systemRepository).findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest));
 	}
 
@@ -284,7 +214,7 @@ class SystemServiceTest {
 
 		when(systemRepository.findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest))).thenReturn(page);
 
-		final var result = systemService.search(null, null, null, null, 2, 10);
+		final var result = systemService.search(null, null, 2, 10);
 
 		assertThat(result).isNotNull();
 		assertThat(result.getSystems()).hasSize(1);
@@ -302,47 +232,13 @@ class SystemServiceTest {
 
 		when(systemRepository.findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest))).thenReturn(page);
 
-		final var result = systemService.search(null, null, null, null, 1, 20);
+		final var result = systemService.search(null, null, 1, 20);
 
 		assertThat(result).isNotNull();
 		assertThat(result.getSystems()).isEmpty();
 		assertThat(result.getMetadata().getTotalRecords()).isZero();
 		assertThat(result.getMetadata().getTotalPages()).isZero();
 		verify(systemRepository).findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest));
-	}
-
-	@Test
-	void getAllByManagerId() {
-		final var entity1 = SystemEntity.create()
-			.withSystemId("SYS-001")
-			.withName("System 1")
-			.withSystemManagerId("per-david");
-		entity1.withId("id-1");
-
-		when(systemRepository.findBySystemManagerId("per-david")).thenReturn(List.of(entity1));
-
-		final var result = systemService.getAllByManagerId("per-david");
-
-		assertThat(result).hasSize(1);
-		assertThat(result.getFirst().getSystemId()).isEqualTo("SYS-001");
-		verify(systemRepository).findBySystemManagerId("per-david");
-	}
-
-	@Test
-	void getAllByOwnerOrganization() {
-		final var entity1 = SystemEntity.create()
-			.withSystemId("SYS-002")
-			.withName("System 2")
-			.withOwnerOrganizationId("org-kommunen");
-		entity1.withId("id-2");
-
-		when(systemRepository.findByOwnerOrganizationId("org-kommunen")).thenReturn(List.of(entity1));
-
-		final var result = systemService.getAllByOwnerOrganizationId("org-kommunen");
-
-		assertThat(result).hasSize(1);
-		assertThat(result.getFirst().getSystemId()).isEqualTo("SYS-002");
-		verify(systemRepository).findByOwnerOrganizationId("org-kommunen");
 	}
 
 	@Test

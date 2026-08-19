@@ -5,9 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
-
 import java.util.Objects;
-
 import se.sundsvall.systemregister.integration.db.model.enums.HostingType;
 import se.sundsvall.systemregister.integration.db.model.enums.SystemStatus;
 
@@ -51,9 +49,6 @@ public class SystemEntity extends AbstractAuditableEntity {
 
 	@Column(name = "system_owner_id")
 	private String systemOwnerId;
-
-	@Column(name = "system_manager_id")
-	private String systemManagerId;
 
 	@Column(name = "technical_contact_id")
 	private String technicalContactId;
@@ -225,19 +220,6 @@ public class SystemEntity extends AbstractAuditableEntity {
 		return this;
 	}
 
-	public String getSystemManagerId() {
-		return this.systemManagerId;
-	}
-
-	public void setSystemManagerId(final String systemManagerId) {
-		this.systemManagerId = systemManagerId;
-	}
-
-	public SystemEntity withSystemManagerId(final String systemManagerId) {
-		this.systemManagerId = systemManagerId;
-		return this;
-	}
-
 	public String getTechnicalContactId() {
 		return this.technicalContactId;
 	}
@@ -289,7 +271,7 @@ public class SystemEntity extends AbstractAuditableEntity {
 			Objects.equals(this.systemId, that.systemId) &&
 			Objects.equals(this.name, that.name) &&
 			Objects.equals(this.description, that.description) &&
-			Objects.equals(this.status, that.status) &&
+			this.status == that.status &&
 			Objects.equals(this.version, that.version) &&
 			Objects.equals(this.documentationUrl, that.documentationUrl) &&
 			Objects.equals(this.criticalityLevelId, that.criticalityLevelId) &&
@@ -298,9 +280,8 @@ public class SystemEntity extends AbstractAuditableEntity {
 			Objects.equals(this.tillganglighet, that.tillganglighet) &&
 			Objects.equals(this.ownerOrganizationId, that.ownerOrganizationId) &&
 			Objects.equals(this.systemOwnerId, that.systemOwnerId) &&
-			Objects.equals(this.systemManagerId, that.systemManagerId) &&
 			Objects.equals(this.technicalContactId, that.technicalContactId) &&
-			Objects.equals(this.hostingType, that.hostingType) &&
+			this.hostingType == that.hostingType &&
 			Objects.equals(this.supplierId, that.supplierId);
 	}
 
@@ -309,7 +290,7 @@ public class SystemEntity extends AbstractAuditableEntity {
 		return Objects.hash(this.getId(), this.systemId, this.name, this.description, this.status, this.version,
 			this.documentationUrl, this.criticalityLevelId, this.konfidentialitet, this.riktighet,
 			this.tillganglighet, this.ownerOrganizationId, this.systemOwnerId, this.technicalContactId,
-			this.hostingType, this.supplierId, this.systemManagerId);
+			this.hostingType, this.supplierId);
 	}
 
 	@Override
@@ -319,7 +300,7 @@ public class SystemEntity extends AbstractAuditableEntity {
 			", systemId='" + this.systemId + '\'' +
 			", name='" + this.name + '\'' +
 			", description='" + this.description + '\'' +
-			", status='" + this.status + '\'' +
+			", status=" + this.status +
 			", version='" + this.version + '\'' +
 			", documentationUrl='" + this.documentationUrl + '\'' +
 			", criticalityLevelId='" + this.criticalityLevelId + '\'' +
@@ -328,9 +309,8 @@ public class SystemEntity extends AbstractAuditableEntity {
 			", tillganglighet=" + this.tillganglighet +
 			", ownerOrganizationId='" + this.ownerOrganizationId + '\'' +
 			", systemOwnerId='" + this.systemOwnerId + '\'' +
-			", systemManagerId='" + this.systemManagerId + '\'' +
 			", technicalContactId='" + this.technicalContactId + '\'' +
-			", hostingType='" + this.hostingType + '\'' +
+			", hostingType=" + this.hostingType +
 			", supplierId='" + this.supplierId + '\'' +
 			'}';
 	}
