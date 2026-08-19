@@ -1,5 +1,6 @@
 package se.sundsvall.systemregister.integration.db.model;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.Random;
 import org.junit.jupiter.api.BeforeAll;
@@ -23,6 +24,7 @@ class SystemEntityTest {
 	@BeforeAll
 	static void setup() {
 		registerValueGenerator(() -> now().plusDays(new Random().nextInt()), OffsetDateTime.class);
+		registerValueGenerator(() -> LocalDate.now().plusDays(new Random().nextInt()), LocalDate.class);
 	}
 
 	@Test
@@ -49,6 +51,7 @@ class SystemEntityTest {
 		final var tillganglighet = 1;
 		final var ownerOrganizationId = "ownerOrganizationId";
 		final var systemOwnerId = "systemOwnerId";
+		final var systemManagerId = "systemManagerId";
 		final var technicalContactId = "technicalContactId";
 		final var hostingType = HostingType.values()[0];
 		final var supplierId = "supplierId";
@@ -66,6 +69,7 @@ class SystemEntityTest {
 			.withTillganglighet(tillganglighet)
 			.withOwnerOrganizationId(ownerOrganizationId)
 			.withSystemOwnerId(systemOwnerId)
+			.withSystemManagerId(systemManagerId)
 			.withTechnicalContactId(technicalContactId)
 			.withHostingType(hostingType)
 			.withSupplierId(supplierId);
@@ -83,6 +87,7 @@ class SystemEntityTest {
 		assertThat(result.getTillganglighet()).isEqualTo(tillganglighet);
 		assertThat(result.getOwnerOrganizationId()).isEqualTo(ownerOrganizationId);
 		assertThat(result.getSystemOwnerId()).isEqualTo(systemOwnerId);
+		assertThat(result.getSystemManagerId()).isEqualTo(systemManagerId);
 		assertThat(result.getTechnicalContactId()).isEqualTo(technicalContactId);
 		assertThat(result.getHostingType()).isEqualTo(hostingType);
 		assertThat(result.getSupplierId()).isEqualTo(supplierId);

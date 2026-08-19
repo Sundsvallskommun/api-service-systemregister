@@ -2,6 +2,7 @@ package se.sundsvall.systemregister.api.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+
 import java.util.Objects;
 
 @Schema(description = "System")
@@ -49,6 +50,9 @@ public class System {
 
 	@Schema(description = "System owner person ID", example = "person-1")
 	private String systemOwnerId;
+
+	@Schema(description = "System manager ID", example = "person-2")
+	private String systemManagerId;
 
 	@Schema(description = "Technical contact person ID", example = "person-2")
 	private String technicalContactId;
@@ -234,6 +238,19 @@ public class System {
 		return this;
 	}
 
+	public String getSystemManagerId() {
+		return this.systemManagerId;
+	}
+
+	public void setSystemManagerId(final String systemManagerId) {
+		this.systemManagerId = systemManagerId;
+	}
+
+	public System withSystemManagerId(final String systemManagerId) {
+		this.systemManagerId = systemManagerId;
+		return this;
+	}
+
 	public String getTechnicalContactId() {
 		return this.technicalContactId;
 	}
@@ -294,6 +311,7 @@ public class System {
 			Objects.equals(this.tillganglighet, that.tillganglighet) &&
 			Objects.equals(this.ownerOrganizationId, that.ownerOrganizationId) &&
 			Objects.equals(this.systemOwnerId, that.systemOwnerId) &&
+			Objects.equals(this.systemManagerId, that.systemManagerId) &&
 			Objects.equals(this.technicalContactId, that.technicalContactId) &&
 			Objects.equals(this.hostingType, that.hostingType) &&
 			Objects.equals(this.supplierId, that.supplierId);
@@ -304,7 +322,7 @@ public class System {
 		return Objects.hash(this.id, this.systemId, this.name, this.description, this.status, this.version,
 			this.documentationUrl, this.criticalityLevelId, this.konfidentialitet, this.riktighet,
 			this.tillganglighet, this.ownerOrganizationId, this.systemOwnerId, this.technicalContactId,
-			this.hostingType, this.supplierId);
+			this.hostingType, this.supplierId, this.systemManagerId);
 	}
 
 	@Override
@@ -323,6 +341,7 @@ public class System {
 			", tillganglighet=" + this.tillganglighet +
 			", ownerOrganizationId='" + this.ownerOrganizationId + '\'' +
 			", systemOwnerId='" + this.systemOwnerId + '\'' +
+			", systemManagerId='" + this.systemManagerId + '\'' +
 			", technicalContactId='" + this.technicalContactId + '\'' +
 			", hostingType='" + this.hostingType + '\'' +
 			", supplierId='" + this.supplierId + '\'' +

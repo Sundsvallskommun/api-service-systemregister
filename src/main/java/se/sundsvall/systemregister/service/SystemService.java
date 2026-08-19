@@ -2,6 +2,7 @@ package se.sundsvall.systemregister.service;
 
 import jakarta.persistence.criteria.Predicate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -43,8 +44,8 @@ public class SystemService {
 		return SystemMapper.toSystem(entity);
 	}
 
-	public PagedSystemsResponse search(final String status, final String search, final int page, final int limit) {
-		final Specification<SystemEntity> spec = buildSpecification(status, search);
+	public PagedSystemsResponse search(final String status, final String search, final String systemManagerId, final String organizationId, final int page, final int limit) {
+		final Specification<SystemEntity> spec = buildSpecification(status, search, systemManagerId, organizationId);
 		final var result = systemRepository.findAll(spec, PageRequest.of(page - 1, limit, Sort.by("name")));
 		final var systems = result.getContent().stream().map(SystemMapper::toSystem).toList();
 		return PagedSystemsResponse.create()
@@ -72,7 +73,7 @@ public class SystemService {
 		systemRepository.deleteById(id);
 	}
 
-	private Specification<SystemEntity> buildSpecification(final String status, final String search) {
+	private Specification<SystemEntity> buildSpecification(final String status, final String search, final String systemManagerId, final String ownerOrganizationId) {
 		return (root, _, cb) -> {
 			final var predicates = new ArrayList<Predicate>();
 			Optional.ofNullable(status).ifPresent(s -> predicates.add(cb.equal(root.get("status"), SystemStatus.valueOf(s.toUpperCase()))));
@@ -82,7 +83,23 @@ public class SystemService {
 					cb.like(cb.lower(root.get("name")), pattern),
 					cb.like(cb.lower(root.get("systemId")), pattern)));
 			});
+			Optional.ofNullable(systemManagerId).ifPresent(id -> predicates.add(cb.equal(root.get("systemManagerId"), id)));
+			Optional.ofNullable(ownerOrganizationId).ifPresent(id -> predicates.add(cb.equal(root.get("ownerOrganizationId"), id)));
 			return cb.and(predicates.toArray(new Predicate[0]));
 		};
+	}
+
+	public List<System> getAllByManagerId(final String systemManagerId) {
+		return systemRepository.findBySystemManagerId(systemManagerId).stream()
+			.map(SystemMapper::toSystem)
+			.toList();
+
+	}
+
+	public List<System> getAllByOwnerOrganizationId(final String ownerOrganizationId) {
+		return systemRepository.findByOwnerOrganizationId(ownerOrganizationId).stream()
+			.map(SystemMapper::toSystem)
+			.toList();
+
 	}
 }
