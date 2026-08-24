@@ -37,7 +37,7 @@ public class SystemService {
 		if (result == null) {
 			throw Problem.valueOf(INTERNAL_SERVER_ERROR, "failed to create system");
 		}
-		return SystemMapper.toSystem(saved);
+		return result;
 	}
 
 	public System getById(final String id) {

@@ -62,6 +62,19 @@ class SystemServiceTest {
 	}
 
 	@Test
+	void createReturnsNull() {
+		final var model = System.create()
+			.withSystemId("SYS-001")
+			.withName("Test System");
+
+		when(systemRepository.save(any())).thenReturn(null);
+
+		assertThatThrownBy(() -> systemService.create(model))
+			.isInstanceOf(ThrowableProblem.class);
+		verify(systemRepository).save(any(SystemEntity.class));
+	}
+
+	@Test
 	void getByIdFound() {
 		final var entity = SystemEntity.create()
 			.withSystemId("SYS-001")
