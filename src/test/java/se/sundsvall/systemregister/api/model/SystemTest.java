@@ -16,7 +16,7 @@ class SystemTest {
 
 	@Test
 	void testBean() {
-		assertThat(se.sundsvall.systemregister.api.model.system.System.class, allOf(
+		assertThat(System.class, allOf(
 			hasValidBeanConstructor(),
 			hasValidGettersAndSetters(),
 			hasValidBeanHashCode(),
@@ -43,7 +43,7 @@ class SystemTest {
 		final var technicalContactId = "technicalContactId";
 		final var hostingType = "hostingType";
 		final var supplierId = "supplierId";
-		final var result = se.sundsvall.systemregister.api.model.system.System.create()
+		final var result = System.create()
 			.withId(id)
 			.withSystemId(systemId)
 			.withName(name)
@@ -83,7 +83,7 @@ class SystemTest {
 
 	@Test
 	void testNoDirtOnCreatedBean() {
-		assertThat(se.sundsvall.systemregister.api.model.system.System.create()).hasAllNullFieldsOrProperties();
+		assertThat(System.create()).hasAllNullFieldsOrProperties();
 		assertThat(new System()).hasAllNullFieldsOrProperties();
 	}
 }
