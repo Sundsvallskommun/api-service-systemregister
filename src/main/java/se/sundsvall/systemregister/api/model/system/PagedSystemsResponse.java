@@ -16,8 +16,8 @@ public class PagedSystemsResponse {
 	@Schema(implementation = PagingAndSortingMetaData.class)
 	private PagingAndSortingMetaData metadata;
 
-	@ArraySchema(schema = @Schema(implementation = se.sundsvall.systemregister.api.model.system.System.class))
-	private List<se.sundsvall.systemregister.api.model.system.System> systems;
+	@ArraySchema(schema = @Schema(implementation = System.class))
+	private List<System> systems;
 
 	public static PagedSystemsResponse create() {
 		return new PagedSystemsResponse();
@@ -36,11 +36,11 @@ public class PagedSystemsResponse {
 		return this;
 	}
 
-	public List<se.sundsvall.systemregister.api.model.system.System> getSystems() {
+	public List<System> getSystems() {
 		return this.systems;
 	}
 
-	public void setSystems(final List<se.sundsvall.systemregister.api.model.system.System> systems) {
+	public void setSystems(final List<System> systems) {
 		this.systems = systems;
 	}
 
