@@ -15,6 +15,7 @@ import se.sundsvall.systemregister.integration.db.model.SystemEntity;
 import se.sundsvall.systemregister.integration.db.specification.SystemSpecification;
 import se.sundsvall.systemregister.service.mapper.SystemMapper;
 
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
@@ -32,6 +33,10 @@ public class SystemService {
 	public System create(final System system) {
 		final SystemEntity entity = SystemMapper.toSystemEntity(system);
 		final SystemEntity saved = systemRepository.save(entity);
+		final System result = SystemMapper.toSystem(saved);
+		if (result == null) {
+			throw Problem.valueOf(INTERNAL_SERVER_ERROR, "failed to create system");
+		}
 		return SystemMapper.toSystem(saved);
 	}
 
