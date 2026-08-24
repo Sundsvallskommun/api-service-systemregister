@@ -1,6 +1,7 @@
 package se.sundsvall.systemregister.api.model;
 
 import org.junit.jupiter.api.Test;
+import se.sundsvall.systemregister.api.model.system.System;
 
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanEquals;
@@ -15,7 +16,7 @@ class SystemTest {
 
 	@Test
 	void testBean() {
-		assertThat(System.class, allOf(
+		assertThat(se.sundsvall.systemregister.api.model.system.System.class, allOf(
 			hasValidBeanConstructor(),
 			hasValidGettersAndSetters(),
 			hasValidBeanHashCode(),
@@ -42,7 +43,7 @@ class SystemTest {
 		final var technicalContactId = "technicalContactId";
 		final var hostingType = "hostingType";
 		final var supplierId = "supplierId";
-		final var result = System.create()
+		final var result = se.sundsvall.systemregister.api.model.system.System.create()
 			.withId(id)
 			.withSystemId(systemId)
 			.withName(name)
@@ -82,7 +83,7 @@ class SystemTest {
 
 	@Test
 	void testNoDirtOnCreatedBean() {
-		assertThat(System.create()).hasAllNullFieldsOrProperties();
+		assertThat(se.sundsvall.systemregister.api.model.system.System.create()).hasAllNullFieldsOrProperties();
 		assertThat(new System()).hasAllNullFieldsOrProperties();
 	}
 }

@@ -42,6 +42,11 @@
 			<artifactId>dept44-starter-jpa-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate.orm</groupId>
+			<artifactId>hibernate-processor</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -51,6 +56,7 @@
 				<configuration>
 					<excludes>
 						<exclude>generated/**</exclude>
+						<exclude>**/se/sundsvall/systemregister/integration/db/model/**/*_.*</exclude>
 					</excludes>
 				</configuration>
 			</plugin>

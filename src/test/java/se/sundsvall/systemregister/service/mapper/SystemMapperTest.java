@@ -2,7 +2,7 @@ package se.sundsvall.systemregister.service.mapper;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import se.sundsvall.systemregister.api.model.System;
+import se.sundsvall.systemregister.api.model.system.System;
 import se.sundsvall.systemregister.integration.db.model.SystemEntity;
 import se.sundsvall.systemregister.integration.db.model.enums.HostingType;
 import se.sundsvall.systemregister.integration.db.model.enums.SystemStatus;
