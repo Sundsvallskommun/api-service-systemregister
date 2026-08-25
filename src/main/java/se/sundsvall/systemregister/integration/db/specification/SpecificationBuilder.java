@@ -4,7 +4,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import static java.util.Objects.nonNull;
 
-public class SpecificationBuilder<T> {
+public class SpecificationBuilder {
 	private SpecificationBuilder() {}
 
 	/**
