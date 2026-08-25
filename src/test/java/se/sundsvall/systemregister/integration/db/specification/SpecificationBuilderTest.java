@@ -14,8 +14,6 @@ import static org.mockito.Mockito.when;
 
 class SpecificationBuilderTest {
 
-	private final SpecificationBuilder<Object> builder = new SpecificationBuilder<>();
-
 	@Test
 	void buildEqualFilterWithValue() {
 		final Root<Object> root = mock();
@@ -27,7 +25,7 @@ class SpecificationBuilderTest {
 		doReturn(path).when(root).get("status");
 		when(cb.equal(path, "PRODUCTION")).thenReturn(equalPred);
 
-		final var spec = builder.buildEqualFilter("status", "PRODUCTION");
+		final var spec = SpecificationBuilder.buildEqualFilter("status", "PRODUCTION");
 		final var result = spec.toPredicate(root, query, cb);
 
 		assertThat(result).isEqualTo(equalPred);
@@ -42,7 +40,7 @@ class SpecificationBuilderTest {
 
 		when(cb.and()).thenReturn(alwaysTruePred);
 
-		final var spec = builder.buildEqualFilter("status", null);
+		final var spec = SpecificationBuilder.buildEqualFilter("status", null);
 		final var result = spec.toPredicate(root, query, cb);
 
 		assertThat(result).isEqualTo(alwaysTruePred);

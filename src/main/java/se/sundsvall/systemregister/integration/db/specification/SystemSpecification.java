@@ -1,11 +1,12 @@
 package se.sundsvall.systemregister.integration.db.specification;
 
+import java.util.Locale;
+import java.util.Optional;
 import org.springframework.data.jpa.domain.Specification;
 import se.sundsvall.systemregister.api.model.system.SystemSearchParameters;
 import se.sundsvall.systemregister.integration.db.model.SystemEntity;
 import se.sundsvall.systemregister.integration.db.model.enums.SystemStatus;
 
-import static java.util.Objects.nonNull;
 import static se.sundsvall.systemregister.integration.db.model.SystemEntity_.NAME;
 import static se.sundsvall.systemregister.integration.db.model.SystemEntity_.OWNER_ORGANIZATION_ID;
 import static se.sundsvall.systemregister.integration.db.model.SystemEntity_.STATUS;
@@ -13,8 +14,7 @@ import static se.sundsvall.systemregister.integration.db.model.SystemEntity_.SYS
 import static se.sundsvall.systemregister.integration.db.model.SystemEntity_.SYSTEM_MANAGER_ID;
 
 public interface SystemSpecification {
-
-	SpecificationBuilder<SystemEntity> BUILDER = new SpecificationBuilder<>();
+	char ESCAPE_CHAR = '\\';
 
 	static Specification<SystemEntity> createSpecification(final SystemSearchParameters parameters) {
 		return Specification.allOf(
@@ -25,15 +25,17 @@ public interface SystemSpecification {
 	}
 
 	static Specification<SystemEntity> withStatus(final String status) {
-		return BUILDER.buildEqualFilter(STATUS, nonNull(status) ? SystemStatus.valueOf(status.toUpperCase()) : null);
+		return SpecificationBuilder.buildEqualFilter(STATUS, Optional.ofNullable(status)
+			.map(s -> SystemStatus.valueOf(s.toUpperCase(Locale.ROOT)))
+			.orElse(null));
 	}
 
 	static Specification<SystemEntity> withSystemManagerId(final String systemManagerId) {
-		return BUILDER.buildEqualFilter(SYSTEM_MANAGER_ID, systemManagerId);
+		return SpecificationBuilder.buildEqualFilter(SYSTEM_MANAGER_ID, systemManagerId);
 	}
 
 	static Specification<SystemEntity> withOwnerOrganizationId(final String ownerOrganizationId) {
-		return BUILDER.buildEqualFilter(OWNER_ORGANIZATION_ID, ownerOrganizationId);
+		return SpecificationBuilder.buildEqualFilter(OWNER_ORGANIZATION_ID, ownerOrganizationId);
 	}
 
 	static Specification<SystemEntity> withSearch(final String search) {
@@ -41,10 +43,14 @@ public interface SystemSpecification {
 			if (search == null) {
 				return cb.and();
 			}
-			final var pattern = "%" + search.toLowerCase() + "%";
+			final var escaped = search.toLowerCase(Locale.ROOT)
+				.replace("\\", "\\\\")
+				.replace("%", "\\%")
+				.replace("_", "\\_");
+			final var pattern = "%" + escaped + "%";
 			return cb.or(
-				cb.like(cb.lower(root.get(NAME)), pattern),
-				cb.like(cb.lower(root.get(SYSTEM_ID)), pattern));
+				cb.like(cb.lower(root.get(NAME)), pattern, ESCAPE_CHAR),
+				cb.like(cb.lower(root.get(SYSTEM_ID)), pattern, ESCAPE_CHAR));
 
 		};
 	}

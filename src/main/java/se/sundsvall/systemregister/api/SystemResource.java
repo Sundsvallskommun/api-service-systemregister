@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import se.sundsvall.dept44.common.validators.annotation.ValidMunicipalityId;
 import se.sundsvall.dept44.problem.Problem;
@@ -91,22 +89,6 @@ class SystemResource {
 		@Parameter(name = "municipalityId", description = "Municipality ID", example = "2281") @PathVariable @ValidMunicipalityId final String municipalityId,
 		@Valid final SystemSearchParameters searchParameters) {
 		return ok(systemService.search(searchParameters));
-	}
-
-	@GetMapping(params = "ownerId", produces = APPLICATION_JSON_VALUE)
-	@Operation(description = "Get all systems belonging to a specific organisation", responses = {
-		@ApiResponse(responseCode = "200", description = "OK - Successful operation", useReturnTypeSchema = true)
-	})
-	ResponseEntity<List<System>> getOrganizationsSystemsByOwnerOrganizationId(@PathVariable @ValidMunicipalityId final String municipalityId, @RequestParam("ownerId") final String ownerOrganizationId) {
-		return ok(systemService.getAllByOwnerOrganizationId(ownerOrganizationId));
-	}
-
-	@GetMapping(params = "managerId", produces = APPLICATION_JSON_VALUE)
-	@Operation(description = "Get all systems for a specific system manager", responses = {
-		@ApiResponse(responseCode = "200", description = "OK - Successful operation", useReturnTypeSchema = true)
-	})
-	ResponseEntity<List<System>> getSystemsBySystemManagerId(@PathVariable @ValidMunicipalityId final String municipalityId, @RequestParam("managerId") final String systemManagerId) {
-		return ok(systemService.getAllByManagerId(systemManagerId));
 	}
 
 	@PutMapping(path = "/{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)

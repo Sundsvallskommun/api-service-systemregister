@@ -1,6 +1,5 @@
 package se.sundsvall.systemregister.service;
 
-import java.util.List;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -46,7 +45,7 @@ public class SystemService {
 		return SystemMapper.toSystem(entity);
 	}
 
-	public PagedSystemsResponse search(SystemSearchParameters searchParameters) {
+	public PagedSystemsResponse search(final SystemSearchParameters searchParameters) {
 		var pageable = PageRequest.of(searchParameters.getPage() - 1, searchParameters.getLimit(), searchParameters.sort());
 		final Specification<SystemEntity> spec = SystemSpecification.createSpecification(searchParameters);
 		final var result = systemRepository.findAll(spec, pageable);
@@ -70,19 +69,5 @@ public class SystemService {
 			throw Problem.valueOf(NOT_FOUND, ENTITY_NOT_FOUND.formatted(id));
 		}
 		systemRepository.deleteById(id);
-	}
-
-	public List<System> getAllByManagerId(final String systemManagerId) {
-		return systemRepository.findAllBySystemManagerId(systemManagerId).stream()
-			.map(SystemMapper::toSystem)
-			.toList();
-
-	}
-
-	public List<System> getAllByOwnerOrganizationId(final String ownerOrganizationId) {
-		return systemRepository.findByOwnerOrganizationId(ownerOrganizationId).stream()
-			.map(SystemMapper::toSystem)
-			.toList();
-
 	}
 }

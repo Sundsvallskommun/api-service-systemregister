@@ -5,6 +5,7 @@ import org.springframework.data.jpa.domain.Specification;
 import static java.util.Objects.nonNull;
 
 public class SpecificationBuilder<T> {
+	private SpecificationBuilder() {}
 
 	/**
 	 * Method builds an equal filter if value is not null. If value is null, method returns an always-true predicate
@@ -14,7 +15,7 @@ public class SpecificationBuilder<T> {
 	 * @param  value     value (or null) to compare against
 	 * @return           Specification<T> matching sent in comparison
 	 */
-	public Specification<T> buildEqualFilter(String attribute, Object value) {
-		return (entity, cq, cb) -> nonNull(value) ? cb.equal(entity.get(attribute), value) : cb.and();
+	public static <T> Specification<T> buildEqualFilter(String attribute, Object value) {
+		return (entity, _, cb) -> nonNull(value) ? cb.equal(entity.get(attribute), value) : cb.and();
 	}
 }

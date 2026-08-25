@@ -1,7 +1,6 @@
-package se.sundsvall.systemregister.api.model;
+package se.sundsvall.systemregister.api.model.system;
 
 import org.junit.jupiter.api.Test;
-import se.sundsvall.systemregister.api.model.system.System;
 
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanEquals;

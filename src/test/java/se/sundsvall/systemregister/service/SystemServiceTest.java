@@ -111,7 +111,7 @@ class SystemServiceTest {
 			.withName("Beta System");
 		entity2.withId("id-2");
 
-		final var pageRequest = PageRequest.of(0, 20, Sort.unsorted());
+		final var pageRequest = PageRequest.of(0, 20, Sort.by("name"));
 		final var page = new PageImpl<>(List.of(entity1, entity2), pageRequest, 2);
 
 		when(systemRepository.findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest))).thenReturn(page);
@@ -136,7 +136,7 @@ class SystemServiceTest {
 			.withStatus(SystemStatus.PRODUCTION);
 		entity1.withId("id-1");
 
-		final var pageRequest = PageRequest.of(0, 10, Sort.unsorted());
+		final var pageRequest = PageRequest.of(0, 10, Sort.by("name"));
 		final var page = new PageImpl<>(List.of(entity1), pageRequest, 1);
 
 		when(systemRepository.findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest))).thenReturn(page);
@@ -159,7 +159,7 @@ class SystemServiceTest {
 			.withName("HR Management");
 		entity1.withId("id-1");
 
-		final var pageRequest = PageRequest.of(0, 20, Sort.unsorted());
+		final var pageRequest = PageRequest.of(0, 20, Sort.by("name"));
 		final var page = new PageImpl<>(List.of(entity1), pageRequest, 1);
 
 		when(systemRepository.findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest))).thenReturn(page);
@@ -181,7 +181,7 @@ class SystemServiceTest {
 			.withSystemManagerId("manager");
 		entity1.withId("id-1");
 
-		final var pageRequest = PageRequest.of(0, 20, Sort.unsorted());
+		final var pageRequest = PageRequest.of(0, 20, Sort.by("name"));
 		final var page = new PageImpl<>(List.of(entity1), pageRequest, 1);
 
 		when(systemRepository.findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest))).thenReturn(page);
@@ -203,7 +203,7 @@ class SystemServiceTest {
 			.withOwnerOrganizationId("org-test");
 		entity1.withId("id-1");
 
-		final var pageRequest = PageRequest.of(0, 20, Sort.unsorted());
+		final var pageRequest = PageRequest.of(0, 20, Sort.by("name"));
 		final var page = new PageImpl<>(List.of(entity1), pageRequest, 1);
 
 		when(systemRepository.findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest))).thenReturn(page);
@@ -225,7 +225,7 @@ class SystemServiceTest {
 			.withName("System 11");
 		entity1.withId("id-11");
 
-		final var pageRequest = PageRequest.of(1, 10, Sort.unsorted());
+		final var pageRequest = PageRequest.of(1, 10, Sort.by("name"));
 		final var page = new PageImpl<>(List.of(entity1), pageRequest, 11);
 
 		when(systemRepository.findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest))).thenReturn(page);
@@ -246,7 +246,7 @@ class SystemServiceTest {
 
 	@Test
 	void searchEmpty() {
-		final var pageRequest = PageRequest.of(0, 20, Sort.unsorted());
+		final var pageRequest = PageRequest.of(0, 20, Sort.by("name"));
 		final var page = new PageImpl<SystemEntity>(List.of(), pageRequest, 0);
 
 		when(systemRepository.findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest))).thenReturn(page);
@@ -259,40 +259,6 @@ class SystemServiceTest {
 		assertThat(result.getMetadata().getTotalRecords()).isZero();
 		assertThat(result.getMetadata().getTotalPages()).isZero();
 		verify(systemRepository).findAll(ArgumentMatchers.<Specification<SystemEntity>>any(), eq(pageRequest));
-	}
-
-	@Test
-	void getAllByManagerId() {
-		final var entity1 = SystemEntity.create()
-			.withSystemId("SYS-001")
-			.withName("System 1")
-			.withSystemManagerId("per-david");
-		entity1.withId("id-1");
-
-		when(systemRepository.findAllBySystemManagerId("per-david")).thenReturn(List.of(entity1));
-
-		final var result = systemService.getAllByManagerId("per-david");
-
-		assertThat(result).hasSize(1);
-		assertThat(result.getFirst().getSystemId()).isEqualTo("SYS-001");
-		verify(systemRepository).findAllBySystemManagerId("per-david");
-	}
-
-	@Test
-	void getAllByOwnerOrganization() {
-		final var entity1 = SystemEntity.create()
-			.withSystemId("SYS-002")
-			.withName("System 2")
-			.withOwnerOrganizationId("org-kommunen");
-		entity1.withId("id-2");
-
-		when(systemRepository.findByOwnerOrganizationId("org-kommunen")).thenReturn(List.of(entity1));
-
-		final var result = systemService.getAllByOwnerOrganizationId("org-kommunen");
-
-		assertThat(result).hasSize(1);
-		assertThat(result.getFirst().getSystemId()).isEqualTo("SYS-002");
-		verify(systemRepository).findByOwnerOrganizationId("org-kommunen");
 	}
 
 	@Test

@@ -7,28 +7,51 @@ import jakarta.persistence.criteria.Path;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import se.sundsvall.systemregister.api.model.system.SystemSearchParameters;
 import se.sundsvall.systemregister.integration.db.model.SystemEntity;
 import se.sundsvall.systemregister.integration.db.model.enums.SystemStatus;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyChar;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class SystemSpecificationTest {
 
 	@Test
-	void createSpecificationReturnsNonNullSpecification() {
+	void createSpecificationCombinesAllFilters() {
 		final var parameters = new SystemSearchParameters();
 		parameters.setStatus("PRODUCTION");
 		parameters.setSearch("HR");
 		parameters.setSystemManagerId("manager-1");
 		parameters.setOwnerOrganizationId("org-1");
 
-		final var spec = SystemSpecification.createSpecification(parameters);
+		final Root<SystemEntity> root = mock();
+		final CriteriaQuery<?> query = mock();
+		final CriteriaBuilder cb = mock();
 
-		assertThat(spec).isNotNull();
+		when(root.get(anyString())).thenReturn(mock(Path.class));
+		when(cb.lower(any())).thenReturn(mock(Expression.class));
+		when(cb.equal(any(), ArgumentMatchers.<Object>any())).thenReturn(mock(Predicate.class));
+		when(cb.like(any(), anyString(), anyChar())).thenReturn(mock(Predicate.class));
+		when(cb.or(any(), any())).thenReturn(mock(Predicate.class));
+		lenient().when(cb.and(any(Predicate.class), any(Predicate.class))).thenReturn(mock(Predicate.class));
+		lenient().when(cb.and(any(Predicate[].class))).thenReturn(mock(Predicate.class));
+
+		final var spec = SystemSpecification.createSpecification(parameters);
+		final var result = spec.toPredicate(root, query, cb);
+
+		assertThat(result).isNotNull();
+		verify(cb, times(3)).equal(any(), ArgumentMatchers.<Object>any());
+		verify(cb, times(2)).like(any(), anyString(), anyChar());
 	}
 
 	@Test
@@ -49,7 +72,7 @@ class SystemSpecificationTest {
 	}
 
 	@Test
-	void withStatusWithNull() {
+	void withStatusWithNullValue() {
 		final Root<SystemEntity> root = mock();
 		final CriteriaQuery<?> query = mock();
 		final CriteriaBuilder cb = mock();
@@ -61,6 +84,12 @@ class SystemSpecificationTest {
 		final var result = spec.toPredicate(root, query, cb);
 
 		assertThat(result).isEqualTo(alwaysTrue);
+	}
+
+	@Test
+	void withStatusWithInvalidValue() {
+		assertThatThrownBy(() -> SystemSpecification.withStatus("invalid"))
+			.isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
@@ -114,8 +143,8 @@ class SystemSpecificationTest {
 		doReturn(systemIdPath).when(root).get("systemId");
 		when(cb.lower(namePath)).thenReturn(lowerName);
 		when(cb.lower(systemIdPath)).thenReturn(lowerId);
-		when(cb.like(lowerName, "%hr%")).thenReturn(namePred);
-		when(cb.like(lowerId, "%hr%")).thenReturn(idPred);
+		when(cb.like(lowerName, "%hr%", SystemSpecification.ESCAPE_CHAR)).thenReturn(namePred);
+		when(cb.like(lowerId, "%hr%", SystemSpecification.ESCAPE_CHAR)).thenReturn(idPred);
 		when(cb.or(namePred, idPred)).thenReturn(orPred);
 
 		final var spec = SystemSpecification.withSearch("HR");
