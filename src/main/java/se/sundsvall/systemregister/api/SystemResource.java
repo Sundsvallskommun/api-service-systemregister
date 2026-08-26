@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,13 +17,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import se.sundsvall.dept44.common.validators.annotation.ValidMunicipalityId;
 import se.sundsvall.dept44.problem.Problem;
 import se.sundsvall.dept44.problem.violations.ConstraintViolationProblem;
-import se.sundsvall.systemregister.api.model.PagedSystemsResponse;
-import se.sundsvall.systemregister.api.model.System;
+import se.sundsvall.systemregister.api.model.system.PagedSystemsResponse;
+import se.sundsvall.systemregister.api.model.system.System;
+import se.sundsvall.systemregister.api.model.system.SystemSearchParameters;
 import se.sundsvall.systemregister.service.SystemService;
 
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
@@ -88,30 +87,8 @@ class SystemResource {
 	})
 	ResponseEntity<PagedSystemsResponse> getAll(
 		@Parameter(name = "municipalityId", description = "Municipality ID", example = "2281") @PathVariable @ValidMunicipalityId final String municipalityId,
-		@Parameter(name = "status", description = "Filter by status", example = "PRODUCTION") @RequestParam(required = false) final String status,
-		@Parameter(name = "search", description = "Search by name or system ID", example = "HR") @RequestParam(required = false) final String search,
-		@Parameter(name = "systemManagerId", description = "Filter by system manager id", example = "per-david") @RequestParam(required = false) final String systemManagerId,
-		@Parameter(name = "ownerOrganizationId", description = "Filter by owner organization id", example = "org-kommunen") @RequestParam(required = false) final String ownerOrganizationId,
-		@Parameter(name = "page", description = "Page number (1-based)", example = "1") @RequestParam(defaultValue = "1") final int page,
-		@Parameter(name = "limit", description = "Number of items per page", example = "20") @RequestParam(defaultValue = "20") final int limit) {
-
-		return ok(systemService.search(status, search, systemManagerId, ownerOrganizationId, page, limit));
-	}
-
-	@GetMapping(path = "/ownerOrganization/{ownerOrganizationId}")
-	@Operation(description = "Get all systems belonging to a specific organisation", responses = {
-		@ApiResponse(responseCode = "200", description = "OK - Successful operation", useReturnTypeSchema = true)
-	})
-	ResponseEntity<List<System>> getOrganizationsSystemsByOwnerOrganizationId(@PathVariable String ownerOrganizationId) {
-		return ok(systemService.getAllByOwnerOrganizationId(ownerOrganizationId));
-	}
-
-	@GetMapping(path = "/systemManager/{systemManagerId}")
-	@Operation(description = "Get all systems for a specific system manager", responses = {
-		@ApiResponse(responseCode = "200", description = "OK - Successful operation", useReturnTypeSchema = true)
-	})
-	ResponseEntity<List<System>> getSystemsBySystemManagerId(@PathVariable String systemManagerId) {
-		return ok(systemService.getAllByManagerId(systemManagerId));
+		@Valid final SystemSearchParameters searchParameters) {
+		return ok(systemService.search(searchParameters));
 	}
 
 	@PutMapping(path = "/{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)

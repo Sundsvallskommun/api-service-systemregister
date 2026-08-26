@@ -1,23 +1,20 @@
 package se.sundsvall.systemregister.service;
 
-import jakarta.persistence.criteria.Predicate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import se.sundsvall.dept44.models.api.paging.PagingMetaData;
+import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 import se.sundsvall.dept44.problem.Problem;
-import se.sundsvall.systemregister.api.model.PagedSystemsResponse;
-import se.sundsvall.systemregister.api.model.System;
+import se.sundsvall.systemregister.api.model.system.PagedSystemsResponse;
+import se.sundsvall.systemregister.api.model.system.System;
+import se.sundsvall.systemregister.api.model.system.SystemSearchParameters;
 import se.sundsvall.systemregister.integration.db.SystemRepository;
 import se.sundsvall.systemregister.integration.db.model.SystemEntity;
-import se.sundsvall.systemregister.integration.db.model.enums.SystemStatus;
+import se.sundsvall.systemregister.integration.db.specification.SystemSpecification;
 import se.sundsvall.systemregister.service.mapper.SystemMapper;
 
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
@@ -35,7 +32,11 @@ public class SystemService {
 	public System create(final System system) {
 		final SystemEntity entity = SystemMapper.toSystemEntity(system);
 		final SystemEntity saved = systemRepository.save(entity);
-		return SystemMapper.toSystem(saved);
+		final System result = SystemMapper.toSystem(saved);
+		if (result == null) {
+			throw Problem.valueOf(INTERNAL_SERVER_ERROR, "failed to create system");
+		}
+		return result;
 	}
 
 	public System getById(final String id) {
@@ -44,18 +45,15 @@ public class SystemService {
 		return SystemMapper.toSystem(entity);
 	}
 
-	public PagedSystemsResponse search(final String status, final String search, final String systemManagerId, final String organizationId, final int page, final int limit) {
-		final Specification<SystemEntity> spec = buildSpecification(status, search, systemManagerId, organizationId);
-		final var result = systemRepository.findAll(spec, PageRequest.of(page - 1, limit, Sort.by("name")));
+	public PagedSystemsResponse search(final SystemSearchParameters searchParameters) {
+		var pageable = PageRequest.of(searchParameters.getPage() - 1, searchParameters.getLimit(), searchParameters.sort());
+		final Specification<SystemEntity> spec = SystemSpecification.createSpecification(searchParameters);
+		final var result = systemRepository.findAll(spec, pageable);
 		final var systems = result.getContent().stream().map(SystemMapper::toSystem).toList();
 		return PagedSystemsResponse.create()
 			.withSystems(systems)
-			.withMetadata(PagingMetaData.create()
-				.withPage(page)
-				.withLimit(limit)
-				.withCount(systems.size())
-				.withTotalRecords(result.getTotalElements())
-				.withTotalPages(result.getTotalPages()));
+			.withMetadata(PagingAndSortingMetaData.create()
+				.withPageData(result));
 	}
 
 	public System update(final String id, final System system) {
@@ -71,35 +69,5 @@ public class SystemService {
 			throw Problem.valueOf(NOT_FOUND, ENTITY_NOT_FOUND.formatted(id));
 		}
 		systemRepository.deleteById(id);
-	}
-
-	private Specification<SystemEntity> buildSpecification(final String status, final String search, final String systemManagerId, final String ownerOrganizationId) {
-		return (root, _, cb) -> {
-			final var predicates = new ArrayList<Predicate>();
-			Optional.ofNullable(status).ifPresent(s -> predicates.add(cb.equal(root.get("status"), SystemStatus.valueOf(s.toUpperCase()))));
-			Optional.ofNullable(search).ifPresent(s -> {
-				final var pattern = "%" + s.toLowerCase() + "%";
-				predicates.add(cb.or(
-					cb.like(cb.lower(root.get("name")), pattern),
-					cb.like(cb.lower(root.get("systemId")), pattern)));
-			});
-			Optional.ofNullable(systemManagerId).ifPresent(id -> predicates.add(cb.equal(root.get("systemManagerId"), id)));
-			Optional.ofNullable(ownerOrganizationId).ifPresent(id -> predicates.add(cb.equal(root.get("ownerOrganizationId"), id)));
-			return cb.and(predicates.toArray(new Predicate[0]));
-		};
-	}
-
-	public List<System> getAllByManagerId(final String systemManagerId) {
-		return systemRepository.findBySystemManagerId(systemManagerId).stream()
-			.map(SystemMapper::toSystem)
-			.toList();
-
-	}
-
-	public List<System> getAllByOwnerOrganizationId(final String ownerOrganizationId) {
-		return systemRepository.findByOwnerOrganizationId(ownerOrganizationId).stream()
-			.map(SystemMapper::toSystem)
-			.toList();
-
 	}
 }

@@ -9,18 +9,19 @@ import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTest
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import se.sundsvall.dept44.models.api.paging.PagingMetaData;
+import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 import se.sundsvall.systemregister.Application;
-import se.sundsvall.systemregister.api.model.PagedSystemsResponse;
-import se.sundsvall.systemregister.api.model.System;
+import se.sundsvall.systemregister.api.model.system.PagedSystemsResponse;
+import se.sundsvall.systemregister.api.model.system.System;
+import se.sundsvall.systemregister.api.model.system.SystemSearchParameters;
 import se.sundsvall.systemregister.service.SystemService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -93,9 +94,10 @@ class SystemResourceTest {
 			.withSystems(List.of(
 				System.create().withId("id-1").withSystemId("SYS-001"),
 				System.create().withId("id-2").withSystemId("SYS-002")))
-			.withMetadata(PagingMetaData.create().withPage(1).withLimit(20).withCount(2).withTotalRecords(2).withTotalPages(1));
+			.withMetadata(PagingAndSortingMetaData.create().withPage(1).withLimit(20).withCount(2).withTotalRecords(2).withTotalPages(1));
 
-		when(serviceMock.search(isNull(), isNull(), isNull(), isNull(), eq(1), eq(20))).thenReturn(pagedResponse);
+		final var searchParameters = new SystemSearchParameters();
+		when(serviceMock.search(eq(searchParameters))).thenReturn(pagedResponse);
 
 		final var response = webTestClient.get()
 			.uri(builder -> builder.path(PATH).build(Map.of("municipalityId", MUNICIPALITY_ID)))
@@ -109,16 +111,18 @@ class SystemResourceTest {
 		assertThat(response.getSystems()).hasSize(2);
 		assertThat(response.getMetadata().getPage()).isEqualTo(1);
 		assertThat(response.getMetadata().getTotalRecords()).isEqualTo(2);
-		verify(serviceMock).search(isNull(), isNull(), isNull(), isNull(), eq(1), eq(20));
+		verify(serviceMock).search(eq(searchParameters));
 	}
 
 	@Test
 	void getAllSystemsWithStatusFilter() {
 		final var pagedResponse = PagedSystemsResponse.create()
 			.withSystems(List.of(System.create().withId("id-1").withSystemId("SYS-001").withStatus("PRODUCTION")))
-			.withMetadata(PagingMetaData.create().withPage(1).withLimit(20).withCount(1).withTotalRecords(1).withTotalPages(1));
+			.withMetadata(PagingAndSortingMetaData.create().withPage(1).withLimit(20).withCount(1).withTotalRecords(1).withTotalPages(1));
 
-		when(serviceMock.search(eq("PRODUCTION"), isNull(), isNull(), isNull(), eq(1), eq(20))).thenReturn(pagedResponse);
+		final var searchParameters = new SystemSearchParameters();
+		searchParameters.setStatus("PRODUCTION");
+		when(serviceMock.search(eq(searchParameters))).thenReturn(pagedResponse);
 
 		final var response = webTestClient.get()
 			.uri(builder -> builder.path(PATH)
@@ -132,16 +136,44 @@ class SystemResourceTest {
 
 		assertThat(response).isNotNull();
 		assertThat(response.getSystems()).hasSize(1);
-		verify(serviceMock).search(eq("PRODUCTION"), isNull(), isNull(), isNull(), eq(1), eq(20));
+		verify(serviceMock).search(eq(searchParameters));
+	}
+
+	@Test
+	void getAllSystemsWithInvalidStatus() {
+		webTestClient.get()
+			.uri(builder -> builder.path(PATH)
+				.queryParam("status", "NOT_A_REAL_STATUS")
+				.build(Map.of("municipalityId", MUNICIPALITY_ID)))
+			.exchange()
+			.expectStatus().isBadRequest();
+
+		verifyNoInteractions(serviceMock);
+	}
+
+	@Test
+	void getAllSystemsWithEmptyStatus() {
+		webTestClient.get()
+			.uri(builder -> builder.path(PATH)
+				.queryParam("status", "")
+				.build(Map.of("municipalityId", MUNICIPALITY_ID)))
+			.exchange()
+			.expectStatus().isBadRequest();
+
+		verifyNoInteractions(serviceMock);
 	}
 
 	@Test
 	void getAllSystemsWithSearchAndPagination() {
 		final var pagedResponse = PagedSystemsResponse.create()
 			.withSystems(List.of(System.create().withId("id-1").withSystemId("SYS-001").withName("HR System")))
-			.withMetadata(PagingMetaData.create().withPage(2).withLimit(10).withCount(1).withTotalRecords(11).withTotalPages(2));
+			.withMetadata(PagingAndSortingMetaData.create().withPage(2).withLimit(10).withCount(1).withTotalRecords(11).withTotalPages(2));
 
-		when(serviceMock.search(isNull(), eq("HR"), isNull(), isNull(), eq(2), eq(10))).thenReturn(pagedResponse);
+		final var searchParameters = new SystemSearchParameters();
+		searchParameters.setSearch("HR");
+		searchParameters.setPage(2);
+		searchParameters.setLimit(10);
+		when(serviceMock.search(eq(searchParameters))).thenReturn(pagedResponse);
 
 		final var response = webTestClient.get()
 			.uri(builder -> builder.path(PATH)
@@ -159,51 +191,43 @@ class SystemResourceTest {
 		assertThat(response.getSystems()).hasSize(1);
 		assertThat(response.getMetadata().getPage()).isEqualTo(2);
 		assertThat(response.getMetadata().getTotalRecords()).isEqualTo(11);
-		verify(serviceMock).search(isNull(), eq("HR"), isNull(), isNull(), eq(2), eq(10));
+		verify(serviceMock).search(eq(searchParameters));
 	}
 
 	@Test
-	void getSystemsBySystemManagerId() {
-		final var systems = List.of(
-			System.create().withId("id-1").withSystemId("SYS-001").withSystemManagerId("per-david"));
+	void getAllSystemsWithValidSort() {
+		final var pagedResponse = PagedSystemsResponse.create()
+			.withSystems(List.of(System.create().withId("id-1").withSystemId("SYS-001")))
+			.withMetadata(PagingAndSortingMetaData.create().withPage(2).withLimit(10).withCount(1).withTotalRecords(11).withTotalPages(2));
 
-		when(serviceMock.getAllByManagerId("per-david")).thenReturn(systems);
+		final var searchParameters = new SystemSearchParameters();
+		searchParameters.setSortBy(List.of("createdAt"));
+		when(serviceMock.search(eq(searchParameters))).thenReturn(pagedResponse);
 
 		final var response = webTestClient.get()
-			.uri(builder -> builder.path(PATH + "/systemManager/{systemManagerId}")
-				.build(Map.of("municipalityId", MUNICIPALITY_ID, "systemManagerId", "per-david")))
+			.uri(builder -> builder.path(PATH)
+				.queryParam("sortBy", "createdAt")
+				.build(Map.of("municipalityId", MUNICIPALITY_ID)))
 			.exchange()
 			.expectStatus().isOk()
-			.expectBodyList(System.class)
+			.expectBody(PagedSystemsResponse.class)
 			.returnResult()
 			.getResponseBody();
 
 		assertThat(response).isNotNull();
-		assertThat(response).hasSize(1);
-		assertThat(response.getFirst().getSystemId()).isEqualTo("SYS-001");
-		verify(serviceMock).getAllByManagerId("per-david");
+		verify(serviceMock).search(eq(searchParameters));
 	}
 
 	@Test
-	void getSystemsByOwnerOrganizationId() {
-		final var systems = List.of(
-			System.create().withId("id-1").withSystemId("SYS-001").withOwnerOrganizationId("org-kommunen"));
-
-		when(serviceMock.getAllByOwnerOrganizationId("org-kommunen")).thenReturn(systems);
-
-		final var response = webTestClient.get()
-			.uri(builder -> builder.path(PATH + "/ownerOrganization/{ownerOrganizationId}")
-				.build(Map.of("municipalityId", MUNICIPALITY_ID, "ownerOrganizationId", "org-kommunen")))
+	void getAllSystemsWithInvalidSort() {
+		webTestClient.get()
+			.uri(builder -> builder.path(PATH)
+				.queryParam("sortBy", "invalidSortParam")
+				.build(Map.of("municipalityId", MUNICIPALITY_ID)))
 			.exchange()
-			.expectStatus().isOk()
-			.expectBodyList(System.class)
-			.returnResult()
-			.getResponseBody();
+			.expectStatus().isBadRequest();
 
-		assertThat(response).isNotNull();
-		assertThat(response).hasSize(1);
-		assertThat(response.getFirst().getSystemId()).isEqualTo("SYS-001");
-		verify(serviceMock).getAllByOwnerOrganizationId("org-kommunen");
+		verifyNoInteractions(serviceMock);
 	}
 
 	@Test

@@ -1,4 +1,4 @@
-package se.sundsvall.systemregister.api.model;
+package se.sundsvall.systemregister.api.model.system;
 
 import org.junit.jupiter.api.Test;
 
