@@ -195,6 +195,42 @@ class SystemResourceTest {
 	}
 
 	@Test
+	void getAllSystemsWithValidSort() {
+		final var pagedResponse = PagedSystemsResponse.create()
+			.withSystems(List.of(System.create().withId("id-1").withSystemId("SYS-001")))
+			.withMetadata(PagingAndSortingMetaData.create().withPage(2).withLimit(10).withCount(1).withTotalRecords(11).withTotalPages(2));
+
+		final var searchParameters = new SystemSearchParameters();
+		searchParameters.setSortBy(List.of("createdAt"));
+		when(serviceMock.search(eq(searchParameters))).thenReturn(pagedResponse);
+
+		final var response = webTestClient.get()
+			.uri(builder -> builder.path(PATH)
+				.queryParam("sortBy", "createdAt")
+				.build(Map.of("municipalityId", MUNICIPALITY_ID)))
+			.exchange()
+			.expectStatus().isOk()
+			.expectBody(PagedSystemsResponse.class)
+			.returnResult()
+			.getResponseBody();
+
+		assertThat(response).isNotNull();
+		verify(serviceMock).search(eq(searchParameters));
+	}
+
+	@Test
+	void getAllSystemsWithInvalidSort() {
+		webTestClient.get()
+			.uri(builder -> builder.path(PATH)
+				.queryParam("sortBy", "invalidSortParam")
+				.build(Map.of("municipalityId", MUNICIPALITY_ID)))
+			.exchange()
+			.expectStatus().isBadRequest();
+
+		verifyNoInteractions(serviceMock);
+	}
+
+	@Test
 	void updateSystem() {
 		final var updateModel = System.create()
 			.withSystemId("SYS-001")

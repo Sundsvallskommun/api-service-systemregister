@@ -8,9 +8,15 @@ import java.util.Objects;
 import org.springdoc.core.annotations.ParameterObject;
 import se.sundsvall.dept44.common.validators.annotation.MemberOf;
 import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingAndSortingBase;
+import se.sundsvall.dept44.models.api.paging.validation.ValidSortByProperty;
+import se.sundsvall.systemregister.integration.db.model.SystemEntity;
 import se.sundsvall.systemregister.integration.db.model.enums.SystemStatus;
 
 @Schema(description = "System search parameters model")
+@ValidSortByProperty(value = SystemEntity.class,
+	include = {
+		"id", "createdAt", "updatedAt", "createdBy", "updatedBy"
+	})
 @ParameterObject
 public class SystemSearchParameters extends AbstractParameterPagingAndSortingBase {
 	private static final int DEFAULT_LIMIT = 20;
