@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import se.sundsvall.systemregister.api.model.System;
+import se.sundsvall.systemregister.api.model.system.System;
 import se.sundsvall.systemregister.integration.db.model.SystemEntity;
 import se.sundsvall.systemregister.integration.db.model.enums.HostingType;
 import se.sundsvall.systemregister.integration.db.model.enums.SystemStatus;
@@ -23,7 +23,7 @@ class SystemMapperTest {
 			.withVersion("1.0.0")
 			.withDocumentationUrl("https://docs.example.com")
 			.withCriticalityLevelId("critical-1")
-			.withKonfidentialitet(3)
+			.withKonfidentialitet(1)
 			.withRiktighet(2)
 			.withTillganglighet(3)
 			.withOwnerOrganizationId("org-1")
@@ -47,7 +47,7 @@ class SystemMapperTest {
 		assertThat(result.getVersion()).isEqualTo("1.0.0");
 		assertThat(result.getDocumentationUrl()).isEqualTo("https://docs.example.com");
 		assertThat(result.getCriticalityLevelId()).isEqualTo("critical-1");
-		assertThat(result.getKonfidentialitet()).isEqualTo(3);
+		assertThat(result.getKonfidentialitet()).isEqualTo(1);
 		assertThat(result.getRiktighet()).isEqualTo(2);
 		assertThat(result.getTillganglighet()).isEqualTo(3);
 		assertThat(result.getOwnerOrganizationId()).isEqualTo("org-1");
@@ -90,7 +90,7 @@ class SystemMapperTest {
 			.withVersion("1.0.0")
 			.withDocumentationUrl("https://docs.example.com")
 			.withCriticalityLevelId("critical-1")
-			.withKonfidentialitet(3)
+			.withKonfidentialitet(1)
 			.withRiktighet(2)
 			.withTillganglighet(3)
 			.withOwnerOrganizationId("org-1")
@@ -112,7 +112,7 @@ class SystemMapperTest {
 		assertThat(result.getVersion()).isEqualTo("1.0.0");
 		assertThat(result.getDocumentationUrl()).isEqualTo("https://docs.example.com");
 		assertThat(result.getCriticalityLevelId()).isEqualTo("critical-1");
-		assertThat(result.getKonfidentialitet()).isEqualTo(3);
+		assertThat(result.getKonfidentialitet()).isEqualTo(1);
 		assertThat(result.getRiktighet()).isEqualTo(2);
 		assertThat(result.getTillganglighet()).isEqualTo(3);
 		assertThat(result.getOwnerOrganizationId()).isEqualTo("org-1");
@@ -156,37 +156,6 @@ class SystemMapperTest {
 		assertThat(result).isNotNull();
 		assertThat(result.getSystemId()).isEqualTo("SYS-004");
 		assertThat(result.getHostingType()).isNull();
-	}
-
-	@Test
-	void toSystemList() {
-		final var entity1 = SystemEntity.create()
-			.withSystemId("SYS-001")
-			.withName("System 1");
-		final var entity2 = SystemEntity.create()
-			.withSystemId("SYS-002")
-			.withName("System 2");
-		final var entities = List.of(entity1, entity2);
-
-		final var result = SystemMapper.toSystemList(entities);
-
-		assertThat(result).isNotNull();
-		assertThat(result).hasSize(2);
-		assertThat(result.getFirst().getSystemId()).isEqualTo("SYS-001");
-		assertThat(result.get(1).getSystemId()).isEqualTo("SYS-002");
-	}
-
-	@Test
-	void toSystemListNull() {
-		assertThat(SystemMapper.toSystemList(null)).isNull();
-	}
-
-	@Test
-	void toSystemListEmpty() {
-		final var result = SystemMapper.toSystemList(List.of());
-
-		assertThat(result).isNotNull();
-		assertThat(result).isEmpty();
 	}
 
 	@Test

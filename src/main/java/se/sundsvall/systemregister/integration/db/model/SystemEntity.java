@@ -7,6 +7,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 
 import java.time.LocalDate;
+
 import java.util.Objects;
 
 import se.sundsvall.systemregister.integration.db.model.enums.HostingType;
@@ -322,7 +323,7 @@ public class SystemEntity extends AbstractAuditableEntity {
 			Objects.equals(this.systemId, that.systemId) &&
 			Objects.equals(this.name, that.name) &&
 			Objects.equals(this.description, that.description) &&
-			this.status == that.status &&
+			Objects.equals(this.status, that.status) &&
 			Objects.equals(this.version, that.version) &&
 			Objects.equals(this.documentationUrl, that.documentationUrl) &&
 			Objects.equals(this.criticalityLevelId, that.criticalityLevelId) &&
@@ -333,6 +334,8 @@ public class SystemEntity extends AbstractAuditableEntity {
 			Objects.equals(this.systemOwnerId, that.systemOwnerId) &&
 			Objects.equals(this.systemManagerId, that.systemManagerId) &&
 			Objects.equals(this.technicalContactId, that.technicalContactId) &&
+			Objects.equals(this.hostingType, that.hostingType) &&
+			Objects.equals(this.supplierId, that.supplierId);
 			this.hostingType == that.hostingType &&
 			Objects.equals(this.supplierId, that.supplierId) &&
 			Objects.equals(this.riskAnalysed, that.riskAnalysed) &&
@@ -343,6 +346,8 @@ public class SystemEntity extends AbstractAuditableEntity {
 	public int hashCode() {
 		return Objects.hash(this.getId(), this.systemId, this.name, this.description, this.status, this.version,
 			this.documentationUrl, this.criticalityLevelId, this.konfidentialitet, this.riktighet,
+			this.tillganglighet, this.ownerOrganizationId, this.systemOwnerId, this.technicalContactId,
+			this.hostingType, this.supplierId, this.systemManagerId);
 			this.tillganglighet, this.ownerOrganizationId, this.systemOwnerId, this.systemManagerId, this.technicalContactId,
 			this.hostingType, this.supplierId, this.riskAnalysed, this.riskAnalysedDate);
 	}
@@ -354,7 +359,7 @@ public class SystemEntity extends AbstractAuditableEntity {
 			", systemId='" + this.systemId + '\'' +
 			", name='" + this.name + '\'' +
 			", description='" + this.description + '\'' +
-			", status=" + this.status +
+			", status='" + this.status + '\'' +
 			", version='" + this.version + '\'' +
 			", documentationUrl='" + this.documentationUrl + '\'' +
 			", criticalityLevelId='" + this.criticalityLevelId + '\'' +
@@ -365,7 +370,7 @@ public class SystemEntity extends AbstractAuditableEntity {
 			", systemOwnerId='" + this.systemOwnerId + '\'' +
 			", systemManagerId='" + this.systemManagerId + '\'' +
 			", technicalContactId='" + this.technicalContactId + '\'' +
-			", hostingType=" + this.hostingType +
+			", hostingType='" + this.hostingType + '\'' +
 			", supplierId='" + this.supplierId + '\'' +
 			", riskAnalysed='" + this.riskAnalysed + '\'' +
 			", riskAnalysedDate='" + this.riskAnalysedDate + '\'' +

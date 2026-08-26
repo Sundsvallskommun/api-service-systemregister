@@ -1,8 +1,7 @@
 package se.sundsvall.systemregister.service.mapper;
 
-import java.util.List;
 import java.util.Optional;
-import se.sundsvall.systemregister.api.model.System;
+import se.sundsvall.systemregister.api.model.system.System;
 import se.sundsvall.systemregister.integration.db.model.SystemEntity;
 import se.sundsvall.systemregister.integration.db.model.enums.HostingType;
 import se.sundsvall.systemregister.integration.db.model.enums.SystemStatus;
@@ -73,14 +72,6 @@ public final class SystemMapper {
 				.withSupplierId(m.getSupplierId())
 				.withRiskAnalysed(Optional.ofNullable(m.getRiskAnalysed()).orElse(false))
 				.withRiskAnalysedDate(m.getRiskAnalysedDate()))
-			.orElse(null);
-	}
-
-	public static List<System> toSystemList(final List<SystemEntity> entities) {
-		return Optional.ofNullable(entities)
-			.map(list -> list.stream()
-				.map(SystemMapper::toSystem)
-				.toList())
 			.orElse(null);
 	}
 

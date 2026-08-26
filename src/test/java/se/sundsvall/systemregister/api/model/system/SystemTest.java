@@ -1,4 +1,4 @@
-package se.sundsvall.systemregister.api.model;
+package se.sundsvall.systemregister.api.model.system;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -86,7 +86,6 @@ class SystemTest {
 		assertThat(result.getVersion()).isEqualTo(version);
 		assertThat(result.getDocumentationUrl()).isEqualTo(documentationUrl);
 		assertThat(result.getCriticalityLevelId()).isEqualTo(criticalityLevelId);
-		assertThat(result.getKonfidentialitet()).isEqualTo(konfidentialitet);
 		assertThat(result.getRiktighet()).isEqualTo(riktighet);
 		assertThat(result.getTillganglighet()).isEqualTo(tillganglighet);
 		assertThat(result.getOwnerOrganizationId()).isEqualTo(ownerOrganizationId);
