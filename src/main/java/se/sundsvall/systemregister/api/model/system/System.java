@@ -460,10 +460,8 @@ public class System {
 			this.documentationUrl, this.criticalityLevelId, this.konfidentialitet, this.konfidentialitetMotivering,
 			this.riktighet, this.tillganglighet, this.riktighetMotivering, this.tillganglighetMotivering,
 			this.ownerOrganizationId, this.systemOwnerId, this.technicalContactId, this.hostingType,
-			this.supplierId, this.samhallsviktigt, this.samhallsviktigtMotivering, this.klassningsdatum);
-			this.documentationUrl, this.criticalityLevelId, this.konfidentialitet, this.riktighet,
-			this.tillganglighet, this.ownerOrganizationId, this.systemOwnerId, this.systemManagerId,
-			this.technicalContactId, this.hostingType, this.supplierId, this.riskAnalysed, this.riskAnalysedDate);
+			this.supplierId, this.samhallsviktigt, this.samhallsviktigtMotivering, this.klassningsdatum,
+			this.systemManagerId, this.riskAnalysed, this.riskAnalysedDate);
 	}
 
 	@Override

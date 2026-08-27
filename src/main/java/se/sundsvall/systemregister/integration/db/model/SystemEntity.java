@@ -447,11 +447,9 @@ public class SystemEntity extends AbstractAuditableEntity {
 		return Objects.hash(this.getId(), this.systemId, this.name, this.description, this.status, this.version,
 			this.documentationUrl, this.criticalityLevelId, this.konfidentialitet, this.riktighet,
 			this.tillganglighet, this.ownerOrganizationId, this.systemOwnerId, this.technicalContactId,
-			this.hostingType, this.supplierId, this.systemManagerId, this.riskAnalysed, this.riskAnalysedDate);
-			this.documentationUrl, this.criticalityLevelId, this.konfidentialitet, this.konfidentialitetMotivering,
-			this.riktighet, this.tillganglighet, this.riktighetMotivering, this.tillganglighetMotivering,
-			this.ownerOrganizationId, this.systemOwnerId, this.technicalContactId, this.hostingType,
-			this.supplierId, this.samhallsviktigt, this.samhallsviktigtMotivering, klassningsdatum);
+			this.hostingType, this.supplierId, this.systemManagerId, this.riskAnalysed, this.riskAnalysedDate,
+			this.konfidentialitetMotivering, this.riktighetMotivering, this.tillganglighetMotivering,
+			this.samhallsviktigt, this.samhallsviktigtMotivering, klassningsdatum);
 	}
 
 	@Override
