@@ -25,6 +25,7 @@ class SystemEntityTest {
 	@BeforeAll
 	static void setup() {
 		registerValueGenerator(() -> now().plusDays(new Random().nextInt()), OffsetDateTime.class);
+		registerValueGenerator(() -> LocalDate.now().plusDays(new Random().nextInt()), LocalDate.class);
 	}
 
 	@Test
@@ -56,9 +57,12 @@ class SystemEntityTest {
 		final var samhallsviktigMotivering = "motivering";
 		final var ownerOrganizationId = "ownerOrganizationId";
 		final var systemOwnerId = "systemOwnerId";
+		final var systemManagerId = "systemManagerId";
 		final var technicalContactId = "technicalContactId";
 		final var hostingType = HostingType.values()[0];
 		final var supplierId = "supplierId";
+		final var riskAnalysed = true;
+		final var riskAnalysedDate = LocalDate.of(2026, Month.JUNE, 23);
 		final var klassningsdatum = LocalDate.of(2026, Month.JUNE, 12);
 
 		final var result = SystemEntity.create()
@@ -80,9 +84,12 @@ class SystemEntityTest {
 			.withKlassningsdatum(klassningsdatum)
 			.withOwnerOrganizationId(ownerOrganizationId)
 			.withSystemOwnerId(systemOwnerId)
+			.withSystemManagerId(systemManagerId)
 			.withTechnicalContactId(technicalContactId)
 			.withHostingType(hostingType)
-			.withSupplierId(supplierId);
+			.withSupplierId(supplierId)
+			.withRiskAnalysed(riskAnalysed)
+			.withRiskAnalysedDate(riskAnalysedDate);
 
 		assertThat(result).isNotNull().hasNoNullFieldsOrPropertiesExcept("id", "createdAt", "updatedAt", "createdBy", "updatedBy");
 		assertThat(result.getSystemId()).isEqualTo(systemId);
@@ -103,9 +110,12 @@ class SystemEntityTest {
 		assertThat(result.getKlassningsdatum()).isEqualTo(klassningsdatum);
 		assertThat(result.getOwnerOrganizationId()).isEqualTo(ownerOrganizationId);
 		assertThat(result.getSystemOwnerId()).isEqualTo(systemOwnerId);
+		assertThat(result.getSystemManagerId()).isEqualTo(systemManagerId);
 		assertThat(result.getTechnicalContactId()).isEqualTo(technicalContactId);
 		assertThat(result.getHostingType()).isEqualTo(hostingType);
 		assertThat(result.getSupplierId()).isEqualTo(supplierId);
+		assertThat(result.getRiskAnalysed()).isEqualTo(riskAnalysed);
+		assertThat(result.getRiskAnalysedDate()).isEqualTo(riskAnalysedDate);
 	}
 
 	@Test

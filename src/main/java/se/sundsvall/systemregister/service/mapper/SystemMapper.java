@@ -1,8 +1,7 @@
 package se.sundsvall.systemregister.service.mapper;
 
-import java.util.List;
 import java.util.Optional;
-import se.sundsvall.systemregister.api.model.System;
+import se.sundsvall.systemregister.api.model.system.System;
 import se.sundsvall.systemregister.integration.db.model.SystemEntity;
 import se.sundsvall.systemregister.integration.db.model.enums.HostingType;
 import se.sundsvall.systemregister.integration.db.model.enums.SystemStatus;
@@ -33,9 +32,12 @@ public final class SystemMapper {
 				.withKlassningsdatum(e.getKlassningsdatum())
 				.withOwnerOrganizationId(e.getOwnerOrganizationId())
 				.withSystemOwnerId(e.getSystemOwnerId())
+				.withSystemManagerId(e.getSystemManagerId())
 				.withTechnicalContactId(e.getTechnicalContactId())
 				.withHostingType(Optional.ofNullable(e.getHostingType()).map(HostingType::toString).orElse(null))
-				.withSupplierId(e.getSupplierId()))
+				.withSupplierId(e.getSupplierId())
+				.withRiskAnalysed(e.getRiskAnalysed())
+				.withRiskAnalysedDate(e.getRiskAnalysedDate()))
 			.orElse(null);
 	}
 
@@ -68,6 +70,7 @@ public final class SystemMapper {
 				.withKlassningsdatum(m.getKlassningsdatum())
 				.withOwnerOrganizationId(m.getOwnerOrganizationId())
 				.withSystemOwnerId(m.getSystemOwnerId())
+				.withSystemManagerId(m.getSystemManagerId())
 				.withTechnicalContactId(m.getTechnicalContactId())
 				.withHostingType(Optional.ofNullable(m.getHostingType())
 					.flatMap(h -> {
@@ -78,15 +81,9 @@ public final class SystemMapper {
 						}
 					})
 					.orElse(null))
-				.withSupplierId(m.getSupplierId()))
-			.orElse(null);
-	}
-
-	public static List<System> toSystemList(final List<SystemEntity> entities) {
-		return Optional.ofNullable(entities)
-			.map(list -> list.stream()
-				.map(SystemMapper::toSystem)
-				.toList())
+				.withSupplierId(m.getSupplierId())
+				.withRiskAnalysed(Optional.ofNullable(m.getRiskAnalysed()).orElse(false))
+				.withRiskAnalysedDate(m.getRiskAnalysedDate()))
 			.orElse(null);
 	}
 
@@ -118,6 +115,7 @@ public final class SystemMapper {
 			Optional.ofNullable(m.getKlassningsdatum()).ifPresent(entity::withKlassningsdatum);
 			Optional.ofNullable(m.getOwnerOrganizationId()).ifPresent(entity::withOwnerOrganizationId);
 			Optional.ofNullable(m.getSystemOwnerId()).ifPresent(entity::withSystemOwnerId);
+			Optional.ofNullable(m.getSystemManagerId()).ifPresent(entity::withSystemManagerId);
 			Optional.ofNullable(m.getTechnicalContactId()).ifPresent(entity::withTechnicalContactId);
 			Optional.ofNullable(m.getHostingType())
 				.flatMap(h -> {
@@ -129,6 +127,8 @@ public final class SystemMapper {
 				})
 				.ifPresent(entity::withHostingType);
 			Optional.ofNullable(m.getSupplierId()).ifPresent(entity::withSupplierId);
+			Optional.ofNullable(m.getRiskAnalysed()).ifPresent(entity::withRiskAnalysed);
+			Optional.ofNullable(m.getRiskAnalysedDate()).ifPresent(entity::withRiskAnalysedDate);
 		});
 	}
 }

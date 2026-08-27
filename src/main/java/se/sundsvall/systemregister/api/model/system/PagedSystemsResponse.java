@@ -1,11 +1,11 @@
-package se.sundsvall.systemregister.api.model;
+package se.sundsvall.systemregister.api.model.system;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 import java.util.Objects;
-import se.sundsvall.dept44.models.api.paging.PagingMetaData;
+import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 
 import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 
@@ -13,8 +13,8 @@ import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 public class PagedSystemsResponse {
 
 	@JsonProperty("_meta")
-	@Schema(implementation = PagingMetaData.class)
-	private PagingMetaData metadata;
+	@Schema(implementation = PagingAndSortingMetaData.class)
+	private PagingAndSortingMetaData metadata;
 
 	@ArraySchema(schema = @Schema(implementation = System.class))
 	private List<System> systems;
@@ -23,15 +23,15 @@ public class PagedSystemsResponse {
 		return new PagedSystemsResponse();
 	}
 
-	public PagingMetaData getMetadata() {
+	public PagingAndSortingMetaData getMetadata() {
 		return this.metadata;
 	}
 
-	public void setMetadata(final PagingMetaData metadata) {
+	public void setMetadata(final PagingAndSortingMetaData metadata) {
 		this.metadata = metadata;
 	}
 
-	public PagedSystemsResponse withMetadata(final PagingMetaData metadata) {
+	public PagedSystemsResponse withMetadata(final PagingAndSortingMetaData metadata) {
 		this.metadata = metadata;
 		return this;
 	}

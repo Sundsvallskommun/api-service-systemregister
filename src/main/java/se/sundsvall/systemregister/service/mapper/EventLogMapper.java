@@ -1,6 +1,7 @@
 package se.sundsvall.systemregister.service.mapper;
 
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import se.sundsvall.systemregister.api.model.EventLog;
@@ -36,7 +37,7 @@ public final class EventLogMapper {
 	}
 
 	public static EventLogEntity acknowledgeEntity(final EventLogEntity entity) {
-		return entity.withAcknowledgedAt(OffsetDateTime.now());
+		return entity.withAcknowledgedAt(OffsetDateTime.now(ZoneId.systemDefault()));
 	}
 
 	public static EventLogEntity toEventLogEntity(final EventLog model) {

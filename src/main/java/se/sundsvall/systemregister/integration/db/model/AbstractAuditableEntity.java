@@ -6,6 +6,7 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.util.Objects;
 import java.util.UUID;
 import org.hibernate.annotations.TimeZoneStorage;
@@ -39,13 +40,13 @@ public abstract class AbstractAuditableEntity {
 		if (this.id == null) {
 			this.id = UUID.randomUUID().toString();
 		}
-		this.createdAt = OffsetDateTime.now();
+		this.createdAt = OffsetDateTime.now(ZoneId.systemDefault());
 		this.updatedAt = this.createdAt;
 	}
 
 	@PreUpdate
 	protected void preUpdate() {
-		this.updatedAt = OffsetDateTime.now();
+		this.updatedAt = OffsetDateTime.now(ZoneId.systemDefault());
 	}
 
 	public String getId() {

@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import se.sundsvall.systemregister.api.model.System;
+import se.sundsvall.systemregister.api.model.system.System;
 import se.sundsvall.systemregister.integration.db.model.SystemEntity;
 import se.sundsvall.systemregister.integration.db.model.enums.HostingType;
 import se.sundsvall.systemregister.integration.db.model.enums.SystemStatus;
@@ -33,9 +33,12 @@ class SystemMapperTest {
 			.withSamhallsviktigtMotivering("SamhallsviktigtMotivering")
 			.withOwnerOrganizationId("org-1")
 			.withSystemOwnerId("person-1")
+			.withSystemManagerId("person-3")
 			.withTechnicalContactId("person-2")
 			.withHostingType(HostingType.CLOUD)
-			.withSupplierId("supplier-1");
+			.withSupplierId("supplier-1")
+			.withRiskAnalysed(true)
+			.withRiskAnalysedDate(LocalDate.of(2026, Month.JUNE, 17));
 		entity.withId("id-1");
 
 		final var result = SystemMapper.toSystem(entity);
@@ -57,9 +60,12 @@ class SystemMapperTest {
 		assertThat(result.getTillganglighetMotivering()).isEqualTo("TillganglighetMotivering");
 		assertThat(result.getOwnerOrganizationId()).isEqualTo("org-1");
 		assertThat(result.getSystemOwnerId()).isEqualTo("person-1");
+		assertThat(result.getSystemManagerId()).isEqualTo("person-3");
 		assertThat(result.getTechnicalContactId()).isEqualTo("person-2");
 		assertThat(result.getHostingType()).isEqualTo("CLOUD");
 		assertThat(result.getSupplierId()).isEqualTo("supplier-1");
+		assertThat(result.getRiskAnalysed()).isTrue();
+		assertThat(result.getRiskAnalysedDate()).isEqualTo(LocalDate.of(2026, Month.JUNE, 17));
 	}
 
 	@Test
@@ -103,9 +109,12 @@ class SystemMapperTest {
 			.withKlassningsdatum(LocalDate.of(2026, Month.JUNE, 12))
 			.withOwnerOrganizationId("org-1")
 			.withSystemOwnerId("person-1")
+			.withSystemManagerId("person-3")
 			.withTechnicalContactId("person-2")
 			.withHostingType("CLOUD")
-			.withSupplierId("supplier-1");
+			.withSupplierId("supplier-1")
+			.withRiskAnalysed(true)
+			.withRiskAnalysedDate(LocalDate.of(2026, Month.JUNE, 17));
 
 		final var result = SystemMapper.toSystemEntity(model);
 
@@ -128,9 +137,12 @@ class SystemMapperTest {
 		assertThat(result.getSamhallsviktigtMotivering()).isEqualTo("SamhallsviktigtMotivering");
 		assertThat(result.getOwnerOrganizationId()).isEqualTo("org-1");
 		assertThat(result.getSystemOwnerId()).isEqualTo("person-1");
+		assertThat(result.getSystemManagerId()).isEqualTo("person-3");
 		assertThat(result.getTechnicalContactId()).isEqualTo("person-2");
 		assertThat(result.getHostingType()).isEqualTo(HostingType.CLOUD);
 		assertThat(result.getSupplierId()).isEqualTo("supplier-1");
+		assertThat(result.getRiskAnalysed()).isTrue();
+		assertThat(result.getRiskAnalysedDate()).isEqualTo(LocalDate.of(2026, Month.JUNE, 17));
 	}
 
 	@Test
@@ -167,37 +179,6 @@ class SystemMapperTest {
 	}
 
 	@Test
-	void toSystemList() {
-		final var entity1 = SystemEntity.create()
-			.withSystemId("SYS-001")
-			.withName("System 1");
-		final var entity2 = SystemEntity.create()
-			.withSystemId("SYS-002")
-			.withName("System 2");
-		final var entities = List.of(entity1, entity2);
-
-		final var result = SystemMapper.toSystemList(entities);
-
-		assertThat(result).isNotNull();
-		assertThat(result).hasSize(2);
-		assertThat(result.getFirst().getSystemId()).isEqualTo("SYS-001");
-		assertThat(result.get(1).getSystemId()).isEqualTo("SYS-002");
-	}
-
-	@Test
-	void toSystemListNull() {
-		assertThat(SystemMapper.toSystemList(null)).isNull();
-	}
-
-	@Test
-	void toSystemListEmpty() {
-		final var result = SystemMapper.toSystemList(List.of());
-
-		assertThat(result).isNotNull();
-		assertThat(result).isEmpty();
-	}
-
-	@Test
 	void updateSystemEntity() {
 		final var entity = SystemEntity.create()
 			.withSystemId("SYS-001")
@@ -206,7 +187,8 @@ class SystemMapperTest {
 		final var model = System.create()
 			.withName("New Name")
 			.withDescription("New Description")
-			.withStatus("DEPRECATED");
+			.withStatus("DEPRECATED")
+			.withHostingType("CLOUD");
 
 		SystemMapper.updateSystemEntity(entity, model);
 
@@ -214,6 +196,7 @@ class SystemMapperTest {
 		assertThat(entity.getName()).isEqualTo("New Name");
 		assertThat(entity.getDescription()).isEqualTo("New Description");
 		assertThat(entity.getStatus()).isEqualTo(SystemStatus.DEPRECATED);
+		assertThat(entity.getHostingType()).isEqualTo(HostingType.CLOUD);
 	}
 
 	@Test
@@ -224,5 +207,31 @@ class SystemMapperTest {
 		SystemMapper.updateSystemEntity(entity, null);
 
 		assertThat(entity.getSystemId()).isEqualTo("SYS-001");
+	}
+
+	@Test
+	void updateSystemEntityInvalidStatus() {
+		final var entity = SystemEntity.create()
+			.withSystemId("SYS-001")
+			.withStatus(SystemStatus.PRODUCTION);
+
+		final var model = System.create().withStatus("InvalidStatus");
+
+		SystemMapper.updateSystemEntity(entity, model);
+
+		assertThat(entity.getStatus()).isEqualTo(SystemStatus.PRODUCTION);
+	}
+
+	@Test
+	void updateStatusInvalidHosting() {
+		final var entity = SystemEntity.create()
+			.withSystemId("SYS-001")
+			.withHostingType(HostingType.INTERNAL);
+
+		final var model = System.create().withHostingType("InvalidHostingType");
+
+		SystemMapper.updateSystemEntity(entity, model);
+
+		assertThat(entity.getHostingType()).isEqualTo(HostingType.INTERNAL);
 	}
 }

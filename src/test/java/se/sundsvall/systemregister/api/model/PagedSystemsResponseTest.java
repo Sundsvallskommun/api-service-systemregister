@@ -1,6 +1,8 @@
 package se.sundsvall.systemregister.api.model;
 
 import org.junit.jupiter.api.Test;
+import se.sundsvall.systemregister.api.model.system.PagedSystemsResponse;
+import se.sundsvall.systemregister.api.model.system.System;
 
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanEquals;
@@ -25,7 +27,7 @@ class PagedSystemsResponseTest {
 
 	@Test
 	void testBuilderMethods() {
-		final var metadata = new se.sundsvall.dept44.models.api.paging.PagingMetaData();
+		final var metadata = new se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData();
 		final var systems = java.util.List.of(System.create().withId("id-1"));
 
 		final var result = PagedSystemsResponse.create()

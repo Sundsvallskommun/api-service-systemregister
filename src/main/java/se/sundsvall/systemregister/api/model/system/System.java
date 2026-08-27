@@ -1,4 +1,4 @@
-package se.sundsvall.systemregister.api.model;
+package se.sundsvall.systemregister.api.model.system;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -34,19 +34,19 @@ public class System {
 	@Schema(description = "Documentation URL", example = "https://docs.example.com/hr-system")
 	private String documentationUrl;
 
-	@Schema(description = "Criticality level ID", example = "critical-1")
+	@Schema(description = "Criticality level ID", example = "crit-p1")
 	private String criticalityLevelId;
 
-	@Schema(description = "Konfidentialitet level", example = "HIGH")
+	@Schema(description = "Konfidentialitet level", example = "1")
 	private Integer konfidentialitet;
 
-	@Schema(description = "Motivation of Confidentiality level", example = "This level of Confidentiality level was set because of reason XYZ")
+	@Schema(description = "Riktighet level", example = "3")
 	private String konfidentialitetMotivering;
 
 	@Schema(description = "Riktighet level", example = "MEDIUM")
 	private Integer riktighet;
 
-	@Schema(description = "Motivation of Correctness level", example = "This level of Correctness level was set because of reason XYZ")
+	@Schema(description = "Tillganglighet level", example = "5")
 	private String riktighetMotivering;
 
 	@Schema(description = "Tillganglighet level", example = "HIGH")
@@ -70,6 +70,9 @@ public class System {
 	@Schema(description = "System owner person ID", example = "person-1")
 	private String systemOwnerId;
 
+	@Schema(description = "System manager ID", example = "person-2")
+	private String systemManagerId;
+
 	@Schema(description = "Technical contact person ID", example = "person-2")
 	private String technicalContactId;
 
@@ -80,6 +83,12 @@ public class System {
 
 	@Schema(description = "Supplier ID", example = "supplier-1")
 	private String supplierId;
+
+	@Schema(description = "Is risk analysis done", example = "true")
+	private Boolean riskAnalysed;
+
+	@Schema(description = "Date of done risk analysis", example = "2026-06-07")
+	private LocalDate riskAnalysedDate;
 
 	public static System create() {
 		return new System();
@@ -332,6 +341,19 @@ public class System {
 		return this;
 	}
 
+	public String getSystemManagerId() {
+		return this.systemManagerId;
+	}
+
+	public void setSystemManagerId(final String systemManagerId) {
+		this.systemManagerId = systemManagerId;
+	}
+
+	public System withSystemManagerId(final String systemManagerId) {
+		this.systemManagerId = systemManagerId;
+		return this;
+	}
+
 	public String getTechnicalContactId() {
 		return this.technicalContactId;
 	}
@@ -371,6 +393,32 @@ public class System {
 		return this;
 	}
 
+	public Boolean getRiskAnalysed() {
+		return this.riskAnalysed;
+	}
+
+	public void setRiskAnalysed(final Boolean riskAnalysed) {
+		this.riskAnalysed = riskAnalysed;
+	}
+
+	public System withRiskAnalysed(final Boolean riskAnalysed) {
+		this.riskAnalysed = riskAnalysed;
+		return this;
+	}
+
+	public LocalDate getRiskAnalysedDate() {
+		return this.riskAnalysedDate;
+	}
+
+	public void setRiskAnalysedDate(final LocalDate riskAnalysedDate) {
+		this.riskAnalysedDate = riskAnalysedDate;
+	}
+
+	public System withRiskAnalysedDate(final LocalDate riskAnalysedDate) {
+		this.riskAnalysedDate = riskAnalysedDate;
+		return this;
+	}
+
 	@Override
 	public boolean equals(final Object o) {
 		if (this == o) {
@@ -398,9 +446,12 @@ public class System {
 			Objects.equals(this.samhallsviktigtMotivering, that.samhallsviktigtMotivering) &&
 			Objects.equals(this.ownerOrganizationId, that.ownerOrganizationId) &&
 			Objects.equals(this.systemOwnerId, that.systemOwnerId) &&
+			Objects.equals(this.systemManagerId, that.systemManagerId) &&
 			Objects.equals(this.technicalContactId, that.technicalContactId) &&
 			Objects.equals(this.hostingType, that.hostingType) &&
-			Objects.equals(this.supplierId, that.supplierId);
+			Objects.equals(this.supplierId, that.supplierId) &&
+			Objects.equals(this.riskAnalysed, that.riskAnalysed) &&
+			Objects.equals(this.riskAnalysedDate, that.riskAnalysedDate);
 	}
 
 	@Override
@@ -410,6 +461,9 @@ public class System {
 			this.riktighet, this.tillganglighet, this.riktighetMotivering, this.tillganglighetMotivering,
 			this.ownerOrganizationId, this.systemOwnerId, this.technicalContactId, this.hostingType,
 			this.supplierId, this.samhallsviktigt, this.samhallsviktigtMotivering, this.klassningsdatum);
+			this.documentationUrl, this.criticalityLevelId, this.konfidentialitet, this.riktighet,
+			this.tillganglighet, this.ownerOrganizationId, this.systemOwnerId, this.systemManagerId,
+			this.technicalContactId, this.hostingType, this.supplierId, this.riskAnalysed, this.riskAnalysedDate);
 	}
 
 	@Override
@@ -434,9 +488,12 @@ public class System {
 			", klassningsdatum=" + this.klassningsdatum +
 			", ownerOrganizationId='" + this.ownerOrganizationId + '\'' +
 			", systemOwnerId='" + this.systemOwnerId + '\'' +
+			", systemManagerId='" + this.systemManagerId + '\'' +
 			", technicalContactId='" + this.technicalContactId + '\'' +
 			", hostingType='" + this.hostingType + '\'' +
 			", supplierId='" + this.supplierId + '\'' +
+			", riskAnalysed='" + this.riskAnalysed + '\'' +
+			", riskAnalysedDate='" + this.riskAnalysedDate + '\'' +
 			'}';
 	}
 }
