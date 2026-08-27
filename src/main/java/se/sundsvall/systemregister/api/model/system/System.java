@@ -34,16 +34,16 @@ public class System {
 	@Schema(description = "Documentation URL", example = "https://docs.example.com/hr-system")
 	private String documentationUrl;
 
-	@Schema(description = "Criticality level ID", example = "critical-1")
+	@Schema(description = "Criticality level ID", example = "crit-p1")
 	private String criticalityLevelId;
 
-	@Schema(description = "Konfidentialitet level", example = "HIGH")
+	@Schema(description = "Konfidentialitet level", example = "1")
 	private Integer konfidentialitet;
 
-	@Schema(description = "Riktighet level", example = "MEDIUM")
+	@Schema(description = "Riktighet level", example = "3")
 	private Integer riktighet;
 
-	@Schema(description = "Tillganglighet level", example = "HIGH")
+	@Schema(description = "Tillganglighet level", example = "5")
 	private Integer tillganglighet;
 
 	@Schema(description = "Owner organization ID", example = "org-1")
