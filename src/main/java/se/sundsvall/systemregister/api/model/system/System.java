@@ -3,6 +3,7 @@ package se.sundsvall.systemregister.api.model.system;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Schema(description = "System")
@@ -33,16 +34,16 @@ public class System {
 	@Schema(description = "Documentation URL", example = "https://docs.example.com/hr-system")
 	private String documentationUrl;
 
-	@Schema(description = "Criticality level ID", example = "critical-1")
+	@Schema(description = "Criticality level ID", example = "crit-p1")
 	private String criticalityLevelId;
 
-	@Schema(description = "Konfidentialitet level", example = "HIGH")
+	@Schema(description = "Konfidentialitet level", example = "1")
 	private Integer konfidentialitet;
 
-	@Schema(description = "Riktighet level", example = "MEDIUM")
+	@Schema(description = "Riktighet level", example = "3")
 	private Integer riktighet;
 
-	@Schema(description = "Tillganglighet level", example = "HIGH")
+	@Schema(description = "Tillganglighet level", example = "5")
 	private Integer tillganglighet;
 
 	@Schema(description = "Owner organization ID", example = "org-1")
@@ -64,6 +65,12 @@ public class System {
 
 	@Schema(description = "Supplier ID", example = "supplier-1")
 	private String supplierId;
+
+	@Schema(description = "Is risk analysis done", example = "true")
+	private Boolean riskAnalysed;
+
+	@Schema(description = "Date of done risk analysis", example = "2026-06-07")
+	private LocalDate riskAnalysedDate;
 
 	public static System create() {
 		return new System();
@@ -290,6 +297,32 @@ public class System {
 		return this;
 	}
 
+	public Boolean getRiskAnalysed() {
+		return this.riskAnalysed;
+	}
+
+	public void setRiskAnalysed(final Boolean riskAnalysed) {
+		this.riskAnalysed = riskAnalysed;
+	}
+
+	public System withRiskAnalysed(final Boolean riskAnalysed) {
+		this.riskAnalysed = riskAnalysed;
+		return this;
+	}
+
+	public LocalDate getRiskAnalysedDate() {
+		return this.riskAnalysedDate;
+	}
+
+	public void setRiskAnalysedDate(final LocalDate riskAnalysedDate) {
+		this.riskAnalysedDate = riskAnalysedDate;
+	}
+
+	public System withRiskAnalysedDate(final LocalDate riskAnalysedDate) {
+		this.riskAnalysedDate = riskAnalysedDate;
+		return this;
+	}
+
 	@Override
 	public boolean equals(final Object o) {
 		if (this == o) {
@@ -314,15 +347,17 @@ public class System {
 			Objects.equals(this.systemManagerId, that.systemManagerId) &&
 			Objects.equals(this.technicalContactId, that.technicalContactId) &&
 			Objects.equals(this.hostingType, that.hostingType) &&
-			Objects.equals(this.supplierId, that.supplierId);
+			Objects.equals(this.supplierId, that.supplierId) &&
+			Objects.equals(this.riskAnalysed, that.riskAnalysed) &&
+			Objects.equals(this.riskAnalysedDate, that.riskAnalysedDate);
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.id, this.systemId, this.name, this.description, this.status, this.version,
 			this.documentationUrl, this.criticalityLevelId, this.konfidentialitet, this.riktighet,
-			this.tillganglighet, this.ownerOrganizationId, this.systemOwnerId, this.technicalContactId,
-			this.hostingType, this.supplierId, this.systemManagerId);
+			this.tillganglighet, this.ownerOrganizationId, this.systemOwnerId, this.systemManagerId,
+			this.technicalContactId, this.hostingType, this.supplierId, this.riskAnalysed, this.riskAnalysedDate);
 	}
 
 	@Override
@@ -345,6 +380,8 @@ public class System {
 			", technicalContactId='" + this.technicalContactId + '\'' +
 			", hostingType='" + this.hostingType + '\'' +
 			", supplierId='" + this.supplierId + '\'' +
+			", riskAnalysed='" + this.riskAnalysed + '\'' +
+			", riskAnalysedDate='" + this.riskAnalysedDate + '\'' +
 			'}';
 	}
 }

@@ -6,6 +6,8 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 
+import java.time.LocalDate;
+
 import java.util.Objects;
 
 import se.sundsvall.systemregister.integration.db.model.enums.HostingType;
@@ -64,6 +66,12 @@ public class SystemEntity extends AbstractAuditableEntity {
 
 	@Column(name = "supplier_id")
 	private String supplierId;
+
+	@Column(name = "risk_analysed", columnDefinition = "BOOLEAN DEFAULT false")
+	private Boolean riskAnalysed;
+
+	@Column(name = "risk_analysed_date")
+	private LocalDate riskAnalysedDate;
 
 	public static SystemEntity create() {
 		return new SystemEntity();
@@ -277,6 +285,32 @@ public class SystemEntity extends AbstractAuditableEntity {
 		return this;
 	}
 
+	public Boolean getRiskAnalysed() {
+		return this.riskAnalysed;
+	}
+
+	public void setRiskAnalysed(final Boolean riskAnalysed) {
+		this.riskAnalysed = riskAnalysed;
+	}
+
+	public SystemEntity withRiskAnalysed(final Boolean riskAnalysed) {
+		this.riskAnalysed = riskAnalysed;
+		return this;
+	}
+
+	public LocalDate getRiskAnalysedDate() {
+		return this.riskAnalysedDate;
+	}
+
+	public void setRiskAnalysedDate(final LocalDate riskAnalysedDate) {
+		this.riskAnalysedDate = riskAnalysedDate;
+	}
+
+	public SystemEntity withRiskAnalysedDate(final LocalDate riskAnalysedDate) {
+		this.riskAnalysedDate = riskAnalysedDate;
+		return this;
+	}
+
 	@Override
 	public boolean equals(final Object o) {
 		if (this == o) {
@@ -301,7 +335,9 @@ public class SystemEntity extends AbstractAuditableEntity {
 			Objects.equals(this.systemManagerId, that.systemManagerId) &&
 			Objects.equals(this.technicalContactId, that.technicalContactId) &&
 			Objects.equals(this.hostingType, that.hostingType) &&
-			Objects.equals(this.supplierId, that.supplierId);
+			Objects.equals(this.supplierId, that.supplierId) &&
+			Objects.equals(this.riskAnalysed, that.riskAnalysed) &&
+			Objects.equals(this.riskAnalysedDate, that.riskAnalysedDate);
 	}
 
 	@Override
@@ -309,7 +345,7 @@ public class SystemEntity extends AbstractAuditableEntity {
 		return Objects.hash(this.getId(), this.systemId, this.name, this.description, this.status, this.version,
 			this.documentationUrl, this.criticalityLevelId, this.konfidentialitet, this.riktighet,
 			this.tillganglighet, this.ownerOrganizationId, this.systemOwnerId, this.technicalContactId,
-			this.hostingType, this.supplierId, this.systemManagerId);
+			this.hostingType, this.supplierId, this.systemManagerId, this.riskAnalysed, this.riskAnalysedDate);
 	}
 
 	@Override
@@ -332,6 +368,8 @@ public class SystemEntity extends AbstractAuditableEntity {
 			", technicalContactId='" + this.technicalContactId + '\'' +
 			", hostingType='" + this.hostingType + '\'' +
 			", supplierId='" + this.supplierId + '\'' +
+			", riskAnalysed='" + this.riskAnalysed +
+			", riskAnalysedDate='" + this.riskAnalysedDate +
 			'}';
 	}
 }
