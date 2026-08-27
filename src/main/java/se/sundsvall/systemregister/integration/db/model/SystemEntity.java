@@ -335,8 +335,6 @@ public class SystemEntity extends AbstractAuditableEntity {
 			Objects.equals(this.systemManagerId, that.systemManagerId) &&
 			Objects.equals(this.technicalContactId, that.technicalContactId) &&
 			Objects.equals(this.hostingType, that.hostingType) &&
-			Objects.equals(this.supplierId, that.supplierId);
-			this.hostingType == that.hostingType &&
 			Objects.equals(this.supplierId, that.supplierId) &&
 			Objects.equals(this.riskAnalysed, that.riskAnalysed) &&
 			Objects.equals(this.riskAnalysedDate, that.riskAnalysedDate);
@@ -347,9 +345,7 @@ public class SystemEntity extends AbstractAuditableEntity {
 		return Objects.hash(this.getId(), this.systemId, this.name, this.description, this.status, this.version,
 			this.documentationUrl, this.criticalityLevelId, this.konfidentialitet, this.riktighet,
 			this.tillganglighet, this.ownerOrganizationId, this.systemOwnerId, this.technicalContactId,
-			this.hostingType, this.supplierId, this.systemManagerId);
-			this.tillganglighet, this.ownerOrganizationId, this.systemOwnerId, this.systemManagerId, this.technicalContactId,
-			this.hostingType, this.supplierId, this.riskAnalysed, this.riskAnalysedDate);
+			this.hostingType, this.supplierId, this.systemManagerId, this.riskAnalysed, this.riskAnalysedDate);
 	}
 
 	@Override
@@ -372,8 +368,8 @@ public class SystemEntity extends AbstractAuditableEntity {
 			", technicalContactId='" + this.technicalContactId + '\'' +
 			", hostingType='" + this.hostingType + '\'' +
 			", supplierId='" + this.supplierId + '\'' +
-			", riskAnalysed='" + this.riskAnalysed + '\'' +
-			", riskAnalysedDate='" + this.riskAnalysedDate + '\'' +
+			", riskAnalysed='" + this.riskAnalysed +
+			", riskAnalysedDate='" + this.riskAnalysedDate +
 			'}';
 	}
 }
