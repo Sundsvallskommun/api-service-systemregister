@@ -55,7 +55,7 @@ class SystemMapperTest {
 		assertThat(result.getTechnicalContactId()).isEqualTo("person-2");
 		assertThat(result.getHostingType()).isEqualTo("CLOUD");
 		assertThat(result.getSupplierId()).isEqualTo("supplier-1");
-		assertThat(result.getRiskAnalysed()).isEqualTo(true);
+		assertThat(result.getRiskAnalysed()).isTrue();
 		assertThat(result.getRiskAnalysedDate()).isEqualTo(LocalDate.of(2026, Month.JUNE, 17));
 	}
 

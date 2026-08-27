@@ -66,10 +66,10 @@ public class System {
 	@Schema(description = "Supplier ID", example = "supplier-1")
 	private String supplierId;
 
-	@Schema(description = "Risk analysed done", example = "true")
+	@Schema(description = "Is risk analysis done", example = "true")
 	private Boolean riskAnalysed;
 
-	@Schema(description = "Date of done risk analysation", example = "2026-06-07")
+	@Schema(description = "Date of done risk analysis", example = "2026-06-07")
 	private LocalDate riskAnalysedDate;
 
 	public static System create() {
