@@ -132,7 +132,7 @@ class SystemMapperTest {
 		assertThat(result.getTillganglighet()).isEqualTo(3);
 		assertThat(result.getTillganglighetMotivering()).isEqualTo("TillganglighetMotivering");
 		assertThat(result.getKlassningsdatum()).isEqualTo(LocalDate.of(2026, Month.JUNE, 12));
-		assertThat(result.getSamhallsviktigt()).isEqualTo(true);
+		assertThat(result.getSamhallsviktigt()).isTrue();
 		assertThat(result.getSamhallsviktigtMotivering()).isEqualTo("SamhallsviktigtMotivering");
 		assertThat(result.getOwnerOrganizationId()).isEqualTo("org-1");
 		assertThat(result.getSystemOwnerId()).isEqualTo("person-1");

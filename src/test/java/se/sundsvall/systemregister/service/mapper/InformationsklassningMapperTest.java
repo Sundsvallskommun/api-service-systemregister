@@ -1,13 +1,15 @@
 package se.sundsvall.systemregister.service.mapper;
 
 import java.time.LocalDate;
+import java.time.Month;
+
 import org.junit.jupiter.api.Test;
 import se.sundsvall.systemregister.api.model.Informationsklassning;
 import se.sundsvall.systemregister.integration.db.model.InformationsklassningEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class InformationsklassningMapperTest {
+class InformationsklassningMapperTest {
 	@Test
 	void toModel() {
 		final var entity = InformationsklassningEntity.create()
@@ -16,7 +18,7 @@ public class InformationsklassningMapperTest {
 			.withRiktighet(2)
 			.withTillganglighet(3)
 			.withSparbarhet(4)
-			.withKlassningDatum(LocalDate.of(2025, 1, 1))
+			.withKlassningDatum(LocalDate.of(2025, Month.JANUARY, 1))
 			.withKlassadAv("test person");
 
 		final var result = InformationsklassningMapper.toModel(entity);
@@ -27,7 +29,7 @@ public class InformationsklassningMapperTest {
 		assertThat(result.getRiktighet()).isEqualTo(2);
 		assertThat(result.getTillganglighet()).isEqualTo(3);
 		assertThat(result.getSparbarhet()).isEqualTo(4);
-		assertThat(result.getKlassningDatum()).isEqualTo(LocalDate.of(2025, 1, 1));
+		assertThat(result.getKlassningDatum()).isEqualTo(LocalDate.of(2025, Month.JANUARY, 1));
 		assertThat(result.getKlassadAv()).isEqualTo("test person");
 	}
 
@@ -46,7 +48,7 @@ public class InformationsklassningMapperTest {
 			.withRiktighet(2)
 			.withTillganglighet(3)
 			.withSparbarhet(4)
-			.withKlassningDatum(LocalDate.of(2024, 2, 3))
+			.withKlassningDatum(LocalDate.of(2024, Month.FEBRUARY, 3))
 			.withKlassadAv("test person");
 
 		final var result = InformationsklassningMapper.toEntity(model);
@@ -57,7 +59,7 @@ public class InformationsklassningMapperTest {
 		assertThat(result.getRiktighet()).isEqualTo(2);
 		assertThat(result.getTillganglighet()).isEqualTo(3);
 		assertThat(result.getSparbarhet()).isEqualTo(4);
-		assertThat(result.getKlassningDatum()).isEqualTo(LocalDate.of(2024, 2, 3));
+		assertThat(result.getKlassningDatum()).isEqualTo(LocalDate.of(2024, Month.FEBRUARY, 3));
 		assertThat(result.getKlassadAv()).isEqualTo("test person");
 
 	}
