@@ -1,0 +1,3 @@
+UPDATE persons SET first_name = 'Roger',  last_name = 'Engström', email = 'roger@test.domain',  title = 'IT-samordnare',    username = 'rog29eng' WHERE id = 'per-bertil';
+UPDATE persons SET first_name = 'Bobby',  last_name = 'Boss',     email = 'bobby@test.domain',  title = 'Admin',            username = 'bob01bos' WHERE id = 'per-cecilia';
+UPDATE persons SET first_name = 'Jimmie', last_name = 'Nordberg', email = 'jimmie@test.domain', title = 'Systemförvaltare', username = 'jim08no'  WHERE id = 'per-david';

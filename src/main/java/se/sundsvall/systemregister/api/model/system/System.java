@@ -1,6 +1,8 @@
 package se.sundsvall.systemregister.api.model.system;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
@@ -37,19 +39,25 @@ public class System {
 	@Schema(description = "Criticality level ID", example = "crit-p1")
 	private String criticalityLevelId;
 
-	@Schema(description = "Konfidentialitet level", example = "1")
+	@Min(1)
+	@Max(5)
+	@Schema(description = "Confidentiality level 1-5", example = "1")
 	private Integer konfidentialitet;
 
-	@Schema(description = "Riktighet level", example = "3")
+	@Schema(description = "Confidentiality level", example = "This level of Confidentiality level was set because of reason XYZ")
 	private String konfidentialitetMotivering;
 
-	@Schema(description = "Riktighet level", example = "MEDIUM")
+	@Min(1)
+	@Max(5)
+	@Schema(description = "Integrity level 1-5", example = "3")
 	private Integer riktighet;
 
-	@Schema(description = "Tillganglighet level", example = "5")
+	@Schema(description = "Integrity motivation", example = "This level of Integrity level was set because of reason XYZ")
 	private String riktighetMotivering;
 
-	@Schema(description = "Tillganglighet level", example = "HIGH")
+	@Min(1)
+	@Max(5)
+	@Schema(description = "Availability level 1-5", example = "5")
 	private Integer tillganglighet;
 
 	@Schema(description = "Motivation of Availability level", example = "This level of Availability level was set because of reason XYZ")
@@ -77,7 +85,7 @@ public class System {
 	private String technicalContactId;
 
 	@Schema(description = "Hosting type", allowableValues = {
-		"ON_PREMISE", "CLOUD", "HYBRID"
+		"CLOUD", "INTERNAL"
 	})
 	private String hostingType;
 
