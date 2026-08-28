@@ -2,7 +2,6 @@ package se.sundsvall.systemregister.service.mapper;
 
 import java.time.LocalDate;
 import java.time.Month;
-
 import org.junit.jupiter.api.Test;
 import se.sundsvall.systemregister.api.model.Informationsklassning;
 import se.sundsvall.systemregister.integration.db.model.InformationsklassningEntity;
