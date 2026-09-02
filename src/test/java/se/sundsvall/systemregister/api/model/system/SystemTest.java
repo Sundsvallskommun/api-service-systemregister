@@ -45,8 +45,13 @@ class SystemTest {
 		final var documentationUrl = "documentationUrl";
 		final var criticalityLevelId = "criticalityLevelId";
 		final var konfidentialitet = 3;
+		final var konfidentialitetMotivering = "konfidentialitetMotivering";
 		final var riktighet = 2;
+		final var riktighetMotivering = "riktighetMotiveringMotivering";
 		final var tillganglighet = 1;
+		final var tillganglighetMotiveringt = "tillganglighetMotiveringtMotivering";
+		final var samhallsviktigt = true;
+		final var samhallsviktigtMotivering = "samhallsviktigtMotivering";
 		final var ownerOrganizationId = "ownerOrganizationId";
 		final var systemOwnerId = "systemOwnerId";
 		final var systemManagerId = "systemManagerId";
@@ -55,6 +60,7 @@ class SystemTest {
 		final var supplierId = "supplierId";
 		final var riskAnalysed = true;
 		final var riskAnalysedDate = LocalDate.of(2026, Month.JUNE, 23);
+		final var klassningsdatum = LocalDate.of(2026, Month.JUNE, 12);
 
 		final var result = System.create()
 			.withId(id)
@@ -66,8 +72,14 @@ class SystemTest {
 			.withDocumentationUrl(documentationUrl)
 			.withCriticalityLevelId(criticalityLevelId)
 			.withKonfidentialitet(konfidentialitet)
+			.withKonfidentialitetMotivering(konfidentialitetMotivering)
 			.withRiktighet(riktighet)
+			.withRiktighetMotivering(riktighetMotivering)
 			.withTillganglighet(tillganglighet)
+			.withTillganglighetMotivering(tillganglighetMotiveringt)
+			.withSamhallsviktigt(samhallsviktigt)
+			.withSamhallsviktigtMotivering(samhallsviktigtMotivering)
+			.withKlassningsdatum(klassningsdatum)
 			.withOwnerOrganizationId(ownerOrganizationId)
 			.withSystemOwnerId(systemOwnerId)
 			.withSystemManagerId(systemManagerId)
@@ -86,8 +98,12 @@ class SystemTest {
 		assertThat(result.getVersion()).isEqualTo(version);
 		assertThat(result.getDocumentationUrl()).isEqualTo(documentationUrl);
 		assertThat(result.getCriticalityLevelId()).isEqualTo(criticalityLevelId);
+		assertThat(result.getKonfidentialitetMotivering()).isEqualTo(konfidentialitetMotivering);
 		assertThat(result.getRiktighet()).isEqualTo(riktighet);
+		assertThat(result.getRiktighetMotivering()).isEqualTo(riktighetMotivering);
 		assertThat(result.getTillganglighet()).isEqualTo(tillganglighet);
+		assertThat(result.getTillganglighetMotivering()).isEqualTo(tillganglighetMotiveringt);
+		assertThat(result.getKlassningsdatum()).isEqualTo(klassningsdatum);
 		assertThat(result.getOwnerOrganizationId()).isEqualTo(ownerOrganizationId);
 		assertThat(result.getSystemOwnerId()).isEqualTo(systemOwnerId);
 		assertThat(result.getSystemManagerId()).isEqualTo(systemManagerId);

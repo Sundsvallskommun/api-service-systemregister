@@ -22,8 +22,14 @@ public final class SystemMapper {
 				.withDocumentationUrl(e.getDocumentationUrl())
 				.withCriticalityLevelId(e.getCriticalityLevelId())
 				.withKonfidentialitet(e.getKonfidentialitet())
+				.withKonfidentialitetMotivering(e.getKonfidentialitetMotivering())
 				.withRiktighet(e.getRiktighet())
+				.withRiktighetMotivering(e.getRiktighetMotivering())
 				.withTillganglighet(e.getTillganglighet())
+				.withTillganglighetMotivering(e.getTillganglighetMotivering())
+				.withSamhallsviktigt(e.getSamhallsviktigt())
+				.withSamhallsviktigtMotivering(e.getSamhallsviktigtMotivering())
+				.withKlassningsdatum(e.getKlassningsdatum())
 				.withOwnerOrganizationId(e.getOwnerOrganizationId())
 				.withSystemOwnerId(e.getSystemOwnerId())
 				.withSystemManagerId(e.getSystemManagerId())
@@ -54,8 +60,14 @@ public final class SystemMapper {
 				.withDocumentationUrl(m.getDocumentationUrl())
 				.withCriticalityLevelId(m.getCriticalityLevelId())
 				.withKonfidentialitet(m.getKonfidentialitet())
+				.withKonfidentialitetMotivering(m.getKonfidentialitetMotivering())
 				.withRiktighet(m.getRiktighet())
+				.withRiktighetMotivering(m.getRiktighetMotivering())
 				.withTillganglighet(m.getTillganglighet())
+				.withTillganglighetMotivering(m.getTillganglighetMotivering())
+				.withSamhallsviktigt(Optional.ofNullable(m.getSamhallsviktigt()).orElse(false))
+				.withSamhallsviktigtMotivering(m.getSamhallsviktigtMotivering())
+				.withKlassningsdatum(m.getKlassningsdatum())
 				.withOwnerOrganizationId(m.getOwnerOrganizationId())
 				.withSystemOwnerId(m.getSystemOwnerId())
 				.withSystemManagerId(m.getSystemManagerId())
@@ -93,8 +105,14 @@ public final class SystemMapper {
 			Optional.ofNullable(m.getDocumentationUrl()).ifPresent(entity::withDocumentationUrl);
 			Optional.ofNullable(m.getCriticalityLevelId()).ifPresent(entity::withCriticalityLevelId);
 			Optional.ofNullable(m.getKonfidentialitet()).ifPresent(entity::withKonfidentialitet);
+			Optional.ofNullable(m.getKonfidentialitetMotivering()).ifPresent(entity::withKonfidentialitetMotivering);
 			Optional.ofNullable(m.getRiktighet()).ifPresent(entity::withRiktighet);
+			Optional.ofNullable(m.getRiktighetMotivering()).ifPresent(entity::withRiktighetMotivering);
 			Optional.ofNullable(m.getTillganglighet()).ifPresent(entity::withTillganglighet);
+			Optional.ofNullable(m.getTillganglighetMotivering()).ifPresent(entity::withTillganglighetMotivering);
+			Optional.ofNullable(m.getSamhallsviktigt()).ifPresent(entity::setSamhallsviktigt);
+			Optional.ofNullable(m.getSamhallsviktigtMotivering()).ifPresent(entity::withSamhallsviktigtMotivering);
+			Optional.ofNullable(m.getKlassningsdatum()).ifPresent(entity::withKlassningsdatum);
 			Optional.ofNullable(m.getOwnerOrganizationId()).ifPresent(entity::withOwnerOrganizationId);
 			Optional.ofNullable(m.getSystemOwnerId()).ifPresent(entity::withSystemOwnerId);
 			Optional.ofNullable(m.getSystemManagerId()).ifPresent(entity::withSystemManagerId);

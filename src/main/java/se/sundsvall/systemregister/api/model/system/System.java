@@ -1,6 +1,8 @@
 package se.sundsvall.systemregister.api.model.system;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
@@ -37,14 +39,38 @@ public class System {
 	@Schema(description = "Criticality level ID", example = "crit-p1")
 	private String criticalityLevelId;
 
-	@Schema(description = "Konfidentialitet level", example = "1")
+	@Min(1)
+	@Max(5)
+	@Schema(description = "Confidentiality level 1-5", example = "1")
 	private Integer konfidentialitet;
 
-	@Schema(description = "Riktighet level", example = "3")
+	@Schema(description = "Confidentiality level", example = "This level of Confidentiality level was set because of reason XYZ")
+	private String konfidentialitetMotivering;
+
+	@Min(1)
+	@Max(5)
+	@Schema(description = "Integrity level 1-5", example = "3")
 	private Integer riktighet;
 
-	@Schema(description = "Tillganglighet level", example = "5")
+	@Schema(description = "Integrity motivation", example = "This level of Integrity level was set because of reason XYZ")
+	private String riktighetMotivering;
+
+	@Min(1)
+	@Max(5)
+	@Schema(description = "Availability level 1-5", example = "5")
 	private Integer tillganglighet;
+
+	@Schema(description = "Motivation of Availability level", example = "This level of Availability level was set because of reason XYZ")
+	private String tillganglighetMotivering;
+
+	@Schema(description = "Is system a essential service ", example = "true")
+	private Boolean samhallsviktigt;
+
+	@Schema(description = "Essential status motivation/reasoning")
+	private String samhallsviktigtMotivering;
+
+	@Schema(description = "Date of the last of the system classification done")
+	private LocalDate klassningsdatum;
 
 	@Schema(description = "Owner organization ID", example = "org-1")
 	private String ownerOrganizationId;
@@ -59,7 +85,7 @@ public class System {
 	private String technicalContactId;
 
 	@Schema(description = "Hosting type", allowableValues = {
-		"ON_PREMISE", "CLOUD", "HYBRID"
+		"CLOUD", "INTERNAL"
 	})
 	private String hostingType;
 
@@ -193,6 +219,19 @@ public class System {
 		return this;
 	}
 
+	public String getKonfidentialitetMotivering() {
+		return this.konfidentialitetMotivering;
+	}
+
+	public void setKonfidentialitetMotivering(final String konfidentialitetMotivering) {
+		this.konfidentialitetMotivering = konfidentialitetMotivering;
+	}
+
+	public System withKonfidentialitetMotivering(final String konfidentialitetMotivering) {
+		this.konfidentialitetMotivering = konfidentialitetMotivering;
+		return this;
+	}
+
 	public Integer getRiktighet() {
 		return this.riktighet;
 	}
@@ -206,6 +245,19 @@ public class System {
 		return this;
 	}
 
+	public String getRiktighetMotivering() {
+		return this.riktighetMotivering;
+	}
+
+	public void setRiktighetMotivering(final String riktighetMotivering) {
+		this.riktighetMotivering = riktighetMotivering;
+	}
+
+	public System withRiktighetMotivering(final String riktighetMotivering) {
+		this.riktighetMotivering = riktighetMotivering;
+		return this;
+	}
+
 	public Integer getTillganglighet() {
 		return this.tillganglighet;
 	}
@@ -216,6 +268,58 @@ public class System {
 
 	public System withTillganglighet(final Integer tillganglighet) {
 		this.tillganglighet = tillganglighet;
+		return this;
+	}
+
+	public String getTillganglighetMotivering() {
+		return this.tillganglighetMotivering;
+	}
+
+	public void setTillganglighetMotivering(final String tillganglighetMotivering) {
+		this.tillganglighetMotivering = tillganglighetMotivering;
+	}
+
+	public System withTillganglighetMotivering(final String tillganglighetMotivering) {
+		this.tillganglighetMotivering = tillganglighetMotivering;
+		return this;
+	}
+
+	public Boolean getSamhallsviktigt() {
+		return this.samhallsviktigt;
+	}
+
+	public void setSamhallsviktigt(final Boolean samhallsviktigt) {
+		this.samhallsviktigt = samhallsviktigt;
+	}
+
+	public System withSamhallsviktigt(final Boolean samhallsviktigt) {
+		this.samhallsviktigt = samhallsviktigt;
+		return this;
+	}
+
+	public String getSamhallsviktigtMotivering() {
+		return this.samhallsviktigtMotivering;
+	}
+
+	public void setSamhallsviktigtMotivering(final String samhallsviktigtMotivering) {
+		this.samhallsviktigtMotivering = samhallsviktigtMotivering;
+	}
+
+	public System withSamhallsviktigtMotivering(final String samhallsviktigtMotivering) {
+		this.samhallsviktigtMotivering = samhallsviktigtMotivering;
+		return this;
+	}
+
+	public LocalDate getKlassningsdatum() {
+		return this.klassningsdatum;
+	}
+
+	public void setKlassningsdatum(final LocalDate klassningsdatum) {
+		this.klassningsdatum = klassningsdatum;
+	}
+
+	public System withKlassningsdatum(final LocalDate klassningsdatum) {
+		this.klassningsdatum = klassningsdatum;
 		return this;
 	}
 
@@ -340,8 +444,14 @@ public class System {
 			Objects.equals(this.documentationUrl, that.documentationUrl) &&
 			Objects.equals(this.criticalityLevelId, that.criticalityLevelId) &&
 			Objects.equals(this.konfidentialitet, that.konfidentialitet) &&
+			Objects.equals(this.konfidentialitetMotivering, that.konfidentialitetMotivering) &&
+			Objects.equals(this.klassningsdatum, that.klassningsdatum) &&
 			Objects.equals(this.riktighet, that.riktighet) &&
+			Objects.equals(this.riktighetMotivering, that.riktighetMotivering) &&
 			Objects.equals(this.tillganglighet, that.tillganglighet) &&
+			Objects.equals(this.tillganglighetMotivering, that.tillganglighetMotivering) &&
+			Objects.equals(this.samhallsviktigt, that.samhallsviktigt) &&
+			Objects.equals(this.samhallsviktigtMotivering, that.samhallsviktigtMotivering) &&
 			Objects.equals(this.ownerOrganizationId, that.ownerOrganizationId) &&
 			Objects.equals(this.systemOwnerId, that.systemOwnerId) &&
 			Objects.equals(this.systemManagerId, that.systemManagerId) &&
@@ -355,9 +465,11 @@ public class System {
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.id, this.systemId, this.name, this.description, this.status, this.version,
-			this.documentationUrl, this.criticalityLevelId, this.konfidentialitet, this.riktighet,
-			this.tillganglighet, this.ownerOrganizationId, this.systemOwnerId, this.systemManagerId,
-			this.technicalContactId, this.hostingType, this.supplierId, this.riskAnalysed, this.riskAnalysedDate);
+			this.documentationUrl, this.criticalityLevelId, this.konfidentialitet, this.konfidentialitetMotivering,
+			this.riktighet, this.tillganglighet, this.riktighetMotivering, this.tillganglighetMotivering,
+			this.ownerOrganizationId, this.systemOwnerId, this.technicalContactId, this.hostingType,
+			this.supplierId, this.samhallsviktigt, this.samhallsviktigtMotivering, this.klassningsdatum,
+			this.systemManagerId, this.riskAnalysed, this.riskAnalysedDate);
 	}
 
 	@Override
@@ -372,8 +484,14 @@ public class System {
 			", documentationUrl='" + this.documentationUrl + '\'' +
 			", criticalityLevelId='" + this.criticalityLevelId + '\'' +
 			", konfidentialitet=" + this.konfidentialitet +
+			", konfidentialitetMotivering=" + this.konfidentialitetMotivering +
 			", riktighet=" + this.riktighet +
+			", riktighetMotivering=" + this.riktighetMotivering +
 			", tillganglighet=" + this.tillganglighet +
+			", tillganglighetMotivering=" + this.tillganglighetMotivering +
+			", samhallsviktigt=" + this.samhallsviktigt +
+			", samhallsviktigtMotivering=" + this.samhallsviktigtMotivering +
+			", klassningsdatum=" + this.klassningsdatum +
 			", ownerOrganizationId='" + this.ownerOrganizationId + '\'' +
 			", systemOwnerId='" + this.systemOwnerId + '\'' +
 			", systemManagerId='" + this.systemManagerId + '\'' +

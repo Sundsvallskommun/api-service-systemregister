@@ -23,8 +23,13 @@ class SystemMapperTest {
 			.withDocumentationUrl("https://docs.example.com")
 			.withCriticalityLevelId("critical-1")
 			.withKonfidentialitet(1)
+			.withKonfidentialitetMotivering("KonfidentialitetMotivering")
 			.withRiktighet(2)
+			.withRiktighetMotivering("RiktighetMotivering")
 			.withTillganglighet(3)
+			.withTillganglighetMotivering("TillganglighetMotivering")
+			.withSamhallsviktigt(true)
+			.withSamhallsviktigtMotivering("SamhallsviktigtMotivering")
 			.withOwnerOrganizationId("org-1")
 			.withSystemOwnerId("person-1")
 			.withSystemManagerId("person-3")
@@ -47,8 +52,11 @@ class SystemMapperTest {
 		assertThat(result.getDocumentationUrl()).isEqualTo("https://docs.example.com");
 		assertThat(result.getCriticalityLevelId()).isEqualTo("critical-1");
 		assertThat(result.getKonfidentialitet()).isEqualTo(1);
+		assertThat(result.getKonfidentialitetMotivering()).isEqualTo("KonfidentialitetMotivering");
 		assertThat(result.getRiktighet()).isEqualTo(2);
+		assertThat(result.getRiktighetMotivering()).isEqualTo("RiktighetMotivering");
 		assertThat(result.getTillganglighet()).isEqualTo(3);
+		assertThat(result.getTillganglighetMotivering()).isEqualTo("TillganglighetMotivering");
 		assertThat(result.getOwnerOrganizationId()).isEqualTo("org-1");
 		assertThat(result.getSystemOwnerId()).isEqualTo("person-1");
 		assertThat(result.getSystemManagerId()).isEqualTo("person-3");
@@ -90,8 +98,14 @@ class SystemMapperTest {
 			.withDocumentationUrl("https://docs.example.com")
 			.withCriticalityLevelId("critical-1")
 			.withKonfidentialitet(1)
+			.withKonfidentialitetMotivering("KonfidentialitetMotivering")
 			.withRiktighet(2)
+			.withRiktighetMotivering("RiktighetMotivering")
 			.withTillganglighet(3)
+			.withTillganglighetMotivering("TillganglighetMotivering")
+			.withSamhallsviktigt(true)
+			.withSamhallsviktigtMotivering("SamhallsviktigtMotivering")
+			.withKlassningsdatum(LocalDate.of(2026, Month.JUNE, 12))
 			.withOwnerOrganizationId("org-1")
 			.withSystemOwnerId("person-1")
 			.withSystemManagerId("person-3")
@@ -112,8 +126,14 @@ class SystemMapperTest {
 		assertThat(result.getDocumentationUrl()).isEqualTo("https://docs.example.com");
 		assertThat(result.getCriticalityLevelId()).isEqualTo("critical-1");
 		assertThat(result.getKonfidentialitet()).isEqualTo(1);
+		assertThat(result.getKonfidentialitetMotivering()).isEqualTo("KonfidentialitetMotivering");
 		assertThat(result.getRiktighet()).isEqualTo(2);
+		assertThat(result.getRiktighetMotivering()).isEqualTo("RiktighetMotivering");
 		assertThat(result.getTillganglighet()).isEqualTo(3);
+		assertThat(result.getTillganglighetMotivering()).isEqualTo("TillganglighetMotivering");
+		assertThat(result.getKlassningsdatum()).isEqualTo(LocalDate.of(2026, Month.JUNE, 12));
+		assertThat(result.getSamhallsviktigt()).isTrue();
+		assertThat(result.getSamhallsviktigtMotivering()).isEqualTo("SamhallsviktigtMotivering");
 		assertThat(result.getOwnerOrganizationId()).isEqualTo("org-1");
 		assertThat(result.getSystemOwnerId()).isEqualTo("person-1");
 		assertThat(result.getSystemManagerId()).isEqualTo("person-3");
